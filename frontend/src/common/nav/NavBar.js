@@ -13,8 +13,11 @@ import {
 	useDisclosure,
 	useColorModeValue,
 	Stack,
+	Image,
+	Heading,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import imgLogo from "../../resources/StockMatch Logo.png";
 
 const Links = ["Watchlist", "Settings", "Log Out"];
 
@@ -43,7 +46,7 @@ const NavBar = () => {
 
 	return (
 		<>
-			<Box px={4}>
+			<Box px={4} borderBottom={"1px"} borderBottomColor={"gray.400"}>
 				<Flex h={12} alignItems={"center"} justifyContent={"space-between"}>
 					<HStack
 						spacing={8}
@@ -51,7 +54,18 @@ const NavBar = () => {
 						justifyContent={"space-between"}
 						w={"100vw"}
 					>
-						<Box>Logo</Box>
+						<Flex class="logo" alignItems={"center"}>
+							<Image
+								boxSize="40px"
+								objectFit="contain"
+								src={imgLogo}
+								alt="StockMatch Logo"
+							/>
+							<Heading as="h1" fontSize={"lg"}>
+								StockMatch
+							</Heading>
+						</Flex>
+
 						<HStack
 							as={"nav"}
 							spacing={4}
