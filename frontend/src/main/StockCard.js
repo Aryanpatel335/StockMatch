@@ -14,8 +14,8 @@ import StockChart from "./StockChart";
 const StockCard = (props) => {
 	const { fullName, shortName, attributes } = props;
 	return (
-		<Container maxW="sm" mt="2">
-			<Card>
+		<Container maxW={"sm"} pt={"2"} pb={"4"} h={"100%"}>
+			<Card h={"100%"}>
 				<CardBody>
 					<Stack align="start" direction="column">
 						<Heading as="h1">{fullName}</Heading>
@@ -23,7 +23,7 @@ const StockCard = (props) => {
 							{shortName}
 						</Heading>
 						<Stack direction="row" flexWrap="wrap">
-							<Badge>Low Risk</Badge>
+							<Badge colorScheme="blue">Low Risk</Badge>
 							<Badge colorScheme="green">Sector: Technology</Badge>
 							<Badge colorScheme="red">Large Company</Badge>
 							<Badge colorScheme="purple">Upcoming Earnings</Badge>
