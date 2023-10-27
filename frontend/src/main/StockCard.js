@@ -19,14 +19,35 @@ import {
 	CloseOutlined,
 	DownCircleOutlined,
 	HeartFilled,
+	UpCircleOutlined,
 } from "@ant-design/icons";
 import StockChart from "./StockChart";
 import StockCardExpanded from "./StockCardExpanded";
+import { useEffect, useState } from "react";
 
 const StockCard = (props) => {
 	const { fullName, shortName, companyLogo, companyNews, attributes } = props;
+
+	const [expanded, setExpanded] = useState(false);
+	const [windowSize, setWindowSize] = useState({
+		width: undefined,
+		height: undefined,
+	});
+
+	useEffect(() => {
+		function handleResize() {
+			setWindowSize({
+				width: window.innerWidth,
+				height: window.innerHeight,
+			});
+		}
+		window.addEventListener("resize", handleResize);
+		handleResize();
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
 	return (
-		<Container maxW={"sm"} pt={"2"} pb={"4"} h={"100%"}>
+		<Container maxW={"sm"} pt={"2"} pb={"2"} h={"100%"}>
 			<Card h={"100%"}>
 				<CardBody>
 					<Flex
@@ -48,10 +69,11 @@ const StockCard = (props) => {
 									</Heading>
 								</Flex>
 								<Image
-									boxSize="40px"
+									boxSize="50px"
 									objectFit="contain"
 									src={companyLogo}
 									alt="StockMatch Logo"
+									borderRadius={"10%"}
 								/>
 							</Flex>
 							<Stack direction="row" flexWrap="wrap">
@@ -89,24 +111,39 @@ const StockCard = (props) => {
 									Company Website
 								</Button>
 							</Flex>
-							<Show breakpoint="(max-height: 888px)">
+							{windowSize.height < 888 && (
 								<Button
 									bg="white"
 									color="black"
 									aria-label="View Live Price"
 									w={"100%"}
 									h={"2em"}
+									onClick={() => setExpanded((current_state) => !current_state)}
 								>
-									<DownCircleOutlined />
-									<span>&nbsp;&nbsp;</span>
-									See Relevant News
+									{expanded ? (
+										<>
+											<UpCircleOutlined />
+											<span>&nbsp;&nbsp;</span>
+											Hide Relevant News
+										</>
+									) : (
+										<>
+											<DownCircleOutlined />
+											<span>&nbsp;&nbsp;</span>
+											Show Relevant News
+										</>
+									)}
 								</Button>
-							</Show>
-							<Hide breakpoint="(max-height: 888px)">
+							)}
+							{(windowSize.height >= 888 || expanded) && (
 								<StockCardExpanded companyNews={companyNews} />
-							</Hide>
+							)}
 						</Stack>
-						<Flex flexDirection={"row"} justifyContent={"space-between"}>
+						<Flex
+							flexDirection={"row"}
+							justifyContent={"space-between"}
+							mt={"4"}
+						>
 							<IconButton
 								color="white"
 								bg="#9C7CF4"

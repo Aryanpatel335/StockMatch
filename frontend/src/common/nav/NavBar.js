@@ -46,7 +46,7 @@ const NavBar = () => {
 
 	return (
 		<>
-			<Box px={4} borderBottom={"1px"} borderBottomColor={"gray.400"}>
+			<Box px={4} boxShadow="md">
 				<Flex h={12} alignItems={"center"} justifyContent={"space-between"}>
 					<HStack
 						spacing={8}
@@ -54,7 +54,7 @@ const NavBar = () => {
 						justifyContent={"space-between"}
 						w={"100vw"}
 					>
-						<Flex class="logo" alignItems={"center"}>
+						<Flex className="logo" alignItems={"center"}>
 							<Image
 								boxSize="40px"
 								objectFit="contain"
