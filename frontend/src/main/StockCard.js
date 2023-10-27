@@ -14,6 +14,7 @@ import {
 	Image,
 	Hide,
 	Show,
+	Link,
 } from "@chakra-ui/react";
 import {
 	CloseOutlined,
@@ -30,14 +31,22 @@ const mapAttributeColors = {
 	"High Risk": "red",
 	"Large Company": "blue",
 	"Small Company": "blue",
-	Sector: "green",
+	Sector: "teal",
 	Established: "yellow",
 	Emerging: "yellow",
 	"Analyst Score": "purple",
 };
 
 const StockCard = (props) => {
-	const { fullName, shortName, companyLogo, companyNews, attributes } = props;
+	const {
+		fullName,
+		ticker,
+		exchange,
+		companyLogo,
+		companyNews,
+		attributes,
+		weburl,
+	} = props.currentCompany;
 	console.log(fullName);
 	console.log(attributes);
 
@@ -74,11 +83,14 @@ const StockCard = (props) => {
 								justifyContent={"space-between"}
 								w={"100%"}
 								alignItems={"center"}
+								mb={"1"}
 							>
 								<Flex flexDirection={"column"}>
-									<Heading as="h1">{fullName}</Heading>
-									<Heading as="h2" size="sm">
-										{shortName}
+									<Heading as="h1" size={"lg"}>
+										{fullName}
+									</Heading>
+									<Heading as="h2" size="xs" fontWeight={"medium"}>
+										{`${exchange}:${ticker}`}
 									</Heading>
 								</Flex>
 								<Image
@@ -89,7 +101,7 @@ const StockCard = (props) => {
 									borderRadius={"10%"}
 								/>
 							</Flex>
-							<Stack direction="row" flexWrap="wrap">
+							<Stack direction="row" flexWrap="wrap" h={"44px"} mb={"1"}>
 								{attributes.map((attr) => (
 									<Badge colorScheme={mapAttributeColors[attr.type]}>
 										{attr.detail
@@ -112,20 +124,24 @@ const StockCard = (props) => {
 								</Text>
 							</Flex>
 							<Flex justifyContent={"space-between"} w={"100%"}>
-								<Button
-									colorScheme="blue"
-									aria-label="View Live Price"
+								<Link
+									href={`https://finance.yahoo.com/quote/${ticker}/`}
+									isExternal
 									w={"48%"}
 								>
-									View Live Price
-								</Button>
-								<Button
-									colorScheme="teal"
-									aria-label="Company Website"
-									w={"48%"}
-								>
-									Company Website
-								</Button>
+									<Button colorScheme="blue" aria-label="View Live Price">
+										View Live Price
+									</Button>
+								</Link>
+								<Link href={weburl} isExternal w={"48%"}>
+									<Button
+										colorScheme="teal"
+										aria-label="Company Website"
+										w={"100%"}
+									>
+										Company Site
+									</Button>
+								</Link>
 							</Flex>
 							{windowSize.height < 888 && (
 								<Button

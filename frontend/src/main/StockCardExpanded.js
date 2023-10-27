@@ -1,4 +1,12 @@
-import { Stack, Flex, Image, Heading, Divider, Text } from "@chakra-ui/react";
+import {
+	Stack,
+	Flex,
+	Image,
+	Heading,
+	Divider,
+	Text,
+	Link,
+} from "@chakra-ui/react";
 import moment from "moment";
 
 const StockCardExpanded = (props) => {
@@ -21,7 +29,7 @@ const StockCardExpanded = (props) => {
 							borderRadius={"25%"}
 						/>
 						<Flex flexDirection={"column"}>
-							<a href={article.url} rel="noreferrer" target="_blank">
+							<Link href={article.url} isExternal>
 								<Heading
 									as={"h4"}
 									fontSize={"sm"}
@@ -30,7 +38,7 @@ const StockCardExpanded = (props) => {
 								>
 									{article.headline}
 								</Heading>
-							</a>
+							</Link>
 							<Text fontSize={"xs"}>
 								{moment(article.datetime * 1000).format("LL")}
 							</Text>

@@ -4,9 +4,10 @@ import StockCard from "./StockCard";
 const Main = () => {
 	const mockCompany = {
 		fullName: "Apple Inc",
-		shortName: "NASDAQ:AAPL",
+		ticker: "AAPL",
+		exchange: "NASDAQ",
 		companyLogo:
-			"https://static.finnhub.io/logo/87cb30d8-80df-11ea-8951-00000000092a.png",
+			"https://media.zenfs.com/en/us.finance.gurufocus/46b33df5eee32f0e3f1280f21950eade",
 		attributes: [
 			{ type: "Low Risk", detail: "" },
 			{ type: "Established", detail: "" },
@@ -14,6 +15,7 @@ const Main = () => {
 			{ type: "Sector", detail: "Technology" },
 			{ type: "Analyst Score", detail: "Buy" },
 		],
+		weburl: "https://www.apple.com/",
 		companyNews: [
 			{
 				category: "company news",
@@ -66,13 +68,7 @@ const Main = () => {
 			flexDirection={"column"}
 			flexGrow={"1"}
 		>
-			<StockCard
-				fullName={mockCompany.fullName}
-				shortName={mockCompany.shortName}
-				companyLogo={mockCompany.companyLogo}
-				companyNews={mockCompany.companyNews}
-				attributes={mockCompany.attributes}
-			/>
+			<StockCard currentCompany={mockCompany} />
 		</Flex>
 	);
 };
