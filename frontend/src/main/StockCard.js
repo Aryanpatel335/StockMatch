@@ -25,8 +25,21 @@ import StockChart from "./StockChart";
 import StockCardExpanded from "./StockCardExpanded";
 import { useEffect, useState } from "react";
 
+const mapAttributeColors = {
+	"Low Risk": "red",
+	"High Risk": "red",
+	"Large Company": "blue",
+	"Small Company": "blue",
+	Sector: "green",
+	Established: "yellow",
+	Emerging: "yellow",
+	"Analyst Score": "purple",
+};
+
 const StockCard = (props) => {
 	const { fullName, shortName, companyLogo, companyNews, attributes } = props;
+	console.log(fullName);
+	console.log(attributes);
 
 	const [expanded, setExpanded] = useState(false);
 	const [windowSize, setWindowSize] = useState({
@@ -77,10 +90,13 @@ const StockCard = (props) => {
 								/>
 							</Flex>
 							<Stack direction="row" flexWrap="wrap">
-								<Badge colorScheme="blue">Low Risk</Badge>
-								<Badge colorScheme="green">Sector: Technology</Badge>
-								<Badge colorScheme="red">Large Company</Badge>
-								<Badge colorScheme="purple">Upcoming Earnings</Badge>
+								{attributes.map((attr) => (
+									<Badge colorScheme={mapAttributeColors[attr.type]}>
+										{attr.detail
+											? `${attr.type}: ${attr.detail}`
+											: `${attr.type}`}
+									</Badge>
+								))}
 							</Stack>
 							<StockChart />
 							<Flex

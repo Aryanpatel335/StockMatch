@@ -7,7 +7,13 @@ const Main = () => {
 		shortName: "NASDAQ:AAPL",
 		companyLogo:
 			"https://static.finnhub.io/logo/87cb30d8-80df-11ea-8951-00000000092a.png",
-		attributes: [],
+		attributes: [
+			{ type: "Low Risk", detail: "" },
+			{ type: "Established", detail: "" },
+			{ type: "Large Company", detail: "" },
+			{ type: "Sector", detail: "Technology" },
+			{ type: "Analyst Score", detail: "Buy" },
+		],
 		companyNews: [
 			{
 				category: "company news",
@@ -65,6 +71,7 @@ const Main = () => {
 				shortName={mockCompany.shortName}
 				companyLogo={mockCompany.companyLogo}
 				companyNews={mockCompany.companyNews}
+				attributes={mockCompany.attributes}
 			/>
 		</Flex>
 	);
