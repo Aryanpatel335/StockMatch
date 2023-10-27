@@ -11,6 +11,9 @@ import {
 	Flex,
 	Button,
 	IconButton,
+	Image,
+	Hide,
+	Show,
 } from "@chakra-ui/react";
 import {
 	CloseOutlined,
@@ -18,9 +21,10 @@ import {
 	HeartFilled,
 } from "@ant-design/icons";
 import StockChart from "./StockChart";
+import StockCardExpanded from "./StockCardExpanded";
 
 const StockCard = (props) => {
-	const { fullName, shortName, attributes } = props;
+	const { fullName, shortName, companyLogo, companyNews, attributes } = props;
 	return (
 		<Container maxW={"sm"} pt={"2"} pb={"4"} h={"100%"}>
 			<Card h={"100%"}>
@@ -31,10 +35,25 @@ const StockCard = (props) => {
 						h={"100%"}
 					>
 						<Stack align="start" direction="column">
-							<Heading as="h1">{fullName}</Heading>
-							<Heading as="h2" size="sm">
-								{shortName}
-							</Heading>
+							<Flex
+								flexDirection={"row"}
+								justifyContent={"space-between"}
+								w={"100%"}
+								alignItems={"center"}
+							>
+								<Flex flexDirection={"column"}>
+									<Heading as="h1">{fullName}</Heading>
+									<Heading as="h2" size="sm">
+										{shortName}
+									</Heading>
+								</Flex>
+								<Image
+									boxSize="40px"
+									objectFit="contain"
+									src={companyLogo}
+									alt="StockMatch Logo"
+								/>
+							</Flex>
 							<Stack direction="row" flexWrap="wrap">
 								<Badge colorScheme="blue">Low Risk</Badge>
 								<Badge colorScheme="green">Sector: Technology</Badge>
@@ -45,8 +64,11 @@ const StockCard = (props) => {
 							<Flex
 								flexDirection={"row"}
 								w={"100%"}
-								justifyContent={"flex-end"}
+								justifyContent={"space-between"}
 							>
+								<Text fontSize={"xs"} color={"gray.500"}>
+									Last updated 12:00AM 09/09/2023
+								</Text>
 								<Text fontSize={"xs"} color={"gray.500"}>
 									1 month view
 								</Text>
@@ -61,23 +83,28 @@ const StockCard = (props) => {
 								</Button>
 								<Button
 									colorScheme="teal"
-									aria-label="View Live Price"
+									aria-label="Company Website"
 									w={"48%"}
 								>
-									Button
+									Company Website
 								</Button>
 							</Flex>
-							<Button
-								bg="white"
-								color="black"
-								aria-label="View Live Price"
-								w={"100%"}
-								h={"2em"}
-							>
-								<DownCircleOutlined />
-								<span>&nbsp;&nbsp;</span>
-								See More
-							</Button>
+							<Show breakpoint="(max-height: 888px)">
+								<Button
+									bg="white"
+									color="black"
+									aria-label="View Live Price"
+									w={"100%"}
+									h={"2em"}
+								>
+									<DownCircleOutlined />
+									<span>&nbsp;&nbsp;</span>
+									See Relevant News
+								</Button>
+							</Show>
+							<Hide breakpoint="(max-height: 888px)">
+								<StockCardExpanded companyNews={companyNews} />
+							</Hide>
 						</Stack>
 						<Flex flexDirection={"row"} justifyContent={"space-between"}>
 							<IconButton
