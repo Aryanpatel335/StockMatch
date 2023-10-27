@@ -18,7 +18,7 @@ const StockCardExpanded = (props) => {
 				<Heading as="h3" fontSize="md">
 					Relevant News
 				</Heading>
-				{companyNews.map((article) => (
+				{companyNews.slice(0, 3).map((article) => (
 					<Flex flexDirection={"row"} alignItems={"center"} key={article.id}>
 						<Image
 							boxSize={"40px"}
@@ -40,7 +40,7 @@ const StockCardExpanded = (props) => {
 								</Heading>
 							</Link>
 							<Text fontSize={"xs"}>
-								{moment(article.datetime * 1000).format("LL")}
+								{moment(article.datetime * 1000).format("llll")}
 							</Text>
 						</Flex>
 					</Flex>
