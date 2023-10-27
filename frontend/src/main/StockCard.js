@@ -1,8 +1,6 @@
 import {
 	Card,
-	CardHeader,
 	CardBody,
-	CardFooter,
 	Text,
 	Container,
 	Stack,
@@ -12,10 +10,7 @@ import {
 	Button,
 	IconButton,
 	Image,
-	Hide,
-	Show,
 	Link,
-	Slide,
 	Fade,
 } from "@chakra-ui/react";
 import {
