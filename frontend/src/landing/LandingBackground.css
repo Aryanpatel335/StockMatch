@@ -3,6 +3,12 @@
 	position: absolute;
 }
 
+@media (max-width: 576px) {
+	.hidden-on-mobile {
+		display: none;
+	}
+}
+
 .floating {
 	animation-name: floating;
 	animation-duration: 3s;

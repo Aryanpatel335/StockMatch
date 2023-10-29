@@ -1,4 +1,4 @@
-import { Box, Flex, Image } from "@chakra-ui/react";
+import { Box, Image } from "@chakra-ui/react";
 import imgCross from "../resources/background/cross_btn.png";
 import imgLike from "../resources/background/like_btn.png";
 import imgChart from "../resources/background/chart_emoji.png";
@@ -40,8 +40,38 @@ const LandingBackground = () => {
 				className="floating4"
 				style={{ position: "relative", top: "28vh", left: "20vw" }}
 			/>
-			<Image />
-			<Image />
+			<Image
+				boxSize="70px"
+				objectFit="contain"
+				src={imgChart}
+				alt="Chart Emoji"
+				className="floating3 hidden-on-mobile"
+				style={{ position: "relative", top: "10vh", left: "6vw" }}
+			/>
+			<Image
+				boxSize="65px"
+				objectFit="contain"
+				src={imgCross}
+				alt="Cross Button"
+				className="floating hidden-on-mobile"
+				style={{ position: "relative", top: "-20vh", left: "75vw" }}
+			/>
+			<Image
+				boxSize="90px"
+				objectFit="contain"
+				src={imgLike}
+				alt="Like Button"
+				className="floating2 hidden-on-mobile"
+				style={{ position: "relative", top: "-35vh", left: "30vw" }}
+			/>
+			<Image
+				boxSize="60px"
+				objectFit="contain"
+				src={imgMoney}
+				alt="Money Bag Emoji"
+				className="floating4 hidden-on-mobile"
+				style={{ position: "relative", top: "-60vh", left: "85vw" }}
+			/>
 		</Box>
 	);
 };

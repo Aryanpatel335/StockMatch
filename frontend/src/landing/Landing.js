@@ -21,7 +21,8 @@ const Landing = () => {
 					alignItems={"center"}
 					justifyContent={"space-between"}
 					w={"100vw"}
-					p={"1em"}
+					py={"1em"}
+					px={"1.5em"}
 				>
 					<Flex className="logo" alignItems={"center"}>
 						<Image
@@ -38,7 +39,7 @@ const Landing = () => {
 				<Flex
 					flexDirection={"column"}
 					textAlign={"center"}
-					h={"70vh"}
+					h={"75vh"}
 					alignItems={"center"}
 					w={"100vw"}
 					justifyContent={"center"}
@@ -62,7 +63,7 @@ const Landing = () => {
 					w={"100vw"}
 					bg={"gray.200"}
 				>
-					<Heading as="h2" my="8" size={"lg"} h={"300vh"}>
+					<Heading as="h2" my="8" size={"lg"}>
 						How it Works
 					</Heading>
 				</Flex>
