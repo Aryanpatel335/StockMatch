@@ -1,6 +1,7 @@
-import { Flex, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import StockCard from "./StockCard";
 import { useState } from "react";
+import NavBar from "../common/nav/NavBar";
 
 const Main = () => {
 	const mockCompanies = [
@@ -202,17 +203,20 @@ const Main = () => {
 	};
 
 	return (
-		<Flex
-			bg={useColorModeValue("gray.100", "gray.900")}
-			flexDirection={"column"}
-			flexGrow={"1"}
-		>
-			<StockCard
-				currentCompany={mockCompanies[currentCompany]}
-				stockRejected={stockRejected}
-				stockAdded={stockAdded}
-			/>
-		</Flex>
+		<Box>
+			<NavBar />
+			<Flex
+				bg={useColorModeValue("gray.100", "gray.900")}
+				flexDirection={"column"}
+				flexGrow={"1"}
+			>
+				<StockCard
+					currentCompany={mockCompanies[currentCompany]}
+					stockRejected={stockRejected}
+					stockAdded={stockAdded}
+				/>
+			</Flex>
+		</Box>
 	);
 };
 

@@ -61,7 +61,7 @@ const Landing = () => {
 					textAlign={"center"}
 					alignItems={"center"}
 					w={"100vw"}
-					bg={"gray.200"}
+					bg={"gray.100"}
 				>
 					<Heading as="h2" my="8" size={"lg"}>
 						How it Works
@@ -74,7 +74,7 @@ const Landing = () => {
 					w={"100vw"}
 					py={"2"}
 					bg={"gray.800"}
-					px={"4"}
+					px={"2em"}
 				>
 					<Flex className="logo" alignItems={"center"}>
 						<Image

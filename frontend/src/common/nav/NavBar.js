@@ -12,7 +12,7 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import imgLogo from "../../resources/StockMatch Logo.png";
 
-const Links = ["Watchlist", "Settings", "Log Out"];
+const Links = ["Watchlist", "Log Out"];
 
 const NavLink = (props) => {
 	const { children } = props;
