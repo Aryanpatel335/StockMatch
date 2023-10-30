@@ -1,6 +1,8 @@
 import { ChakraProvider, Flex, extendTheme } from "@chakra-ui/react";
 import Main from "./main/Main";
 import Landing from "./landing/Landing";
+import Watchlist from "./watchlist/Watchlist";
+import Preferences from "./preferences/Preferences";
 
 const theme = extendTheme({});
 
@@ -13,8 +15,10 @@ function App() {
 				flexDirection={"column"}
 				style={{ overflowX: "hidden" }}
 			>
-				<Main />
+				{/* <Main /> */}
 				{/* <Landing /> */}
+				{/* <Watchlist /> */}
+				<Preferences />
 			</Flex>
 		</ChakraProvider>
 	);
