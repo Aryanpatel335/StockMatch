@@ -96,7 +96,8 @@ const Watchlist = () => {
 													isExternal
 												>
 													<Button
-														colorScheme="blue"
+														color="white"
+														bg={"blue.500"}
 														aria-label="View Live Price"
 														size={"md"}
 													>
@@ -104,7 +105,8 @@ const Watchlist = () => {
 													</Button>
 												</Link>
 												<Button
-													colorScheme="red"
+													color={"white"}
+													bg={"red.500"}
 													aria-label="View Live Price"
 													size={"md"}
 												>

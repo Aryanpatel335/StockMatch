@@ -14,7 +14,7 @@ const LandingBackground = () => {
 				src={imgChart}
 				alt="Chart Emoji"
 				className="floating3"
-				style={{ position: "relative", top: "15vh", left: "50vw" }}
+				style={{ position: "relative", top: "18vh", left: "50vw" }}
 			/>
 			<Image
 				boxSize="55px"
