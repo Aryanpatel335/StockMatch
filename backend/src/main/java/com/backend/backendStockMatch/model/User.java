@@ -1,4 +1,5 @@
 package com.backend.backendStockMatch.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,10 @@ public class User {
     private String currentStockView;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference(value="user")
     private Preferences preferences;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference(value="user")
     private Set<Watchlist> watchlists = new HashSet<>();
 }

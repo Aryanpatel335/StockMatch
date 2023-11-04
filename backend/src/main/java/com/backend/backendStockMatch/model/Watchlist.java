@@ -1,4 +1,5 @@
 package com.backend.backendStockMatch.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,12 @@ public class Watchlist {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id") // This should be the name of the foreign key column in the 'watchlists' table.
+    @JoinColumn(name = "user_id", referencedColumnName = "id") // This should be the name of the foreign key column in the 'watchlists' table.
+    @JsonBackReference("user")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "stock_id")
+    @JoinColumn(name = "stock_id", referencedColumnName = "id")
+    @JsonBackReference("stock")
     private StockTable stock;
 }
