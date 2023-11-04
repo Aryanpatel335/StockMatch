@@ -4,6 +4,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.time.Instant;
@@ -26,6 +27,6 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Preferences preferences;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Watchlist> watchlists;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Watchlist> watchlists = new HashSet<>();
 }
