@@ -1,9 +1,11 @@
 package com.backend.backendStockMatch.model;
+import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 import java.time.Instant;
