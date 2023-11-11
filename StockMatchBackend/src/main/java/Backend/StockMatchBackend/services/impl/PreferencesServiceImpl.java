@@ -1,4 +1,6 @@
 package Backend.StockMatchBackend.services.impl;
 
-public class PreferencesServiceImpl {
+import Backend.StockMatchBackend.services.PreferencesService;
+
+public class PreferencesServiceImpl implements PreferencesService {
 }

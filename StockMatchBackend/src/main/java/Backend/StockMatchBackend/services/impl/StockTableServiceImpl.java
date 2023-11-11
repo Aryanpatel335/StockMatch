@@ -1,4 +1,6 @@
 package Backend.StockMatchBackend.services.impl;
 
-public class StockTableServiceImpl {
+import Backend.StockMatchBackend.services.StockTableService;
+
+public class StockTableServiceImpl implements StockTableService {
 }

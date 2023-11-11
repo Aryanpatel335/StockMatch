@@ -1,4 +1,6 @@
 package Backend.StockMatchBackend.services.impl;
 
-public class WatchlistServiceImpl {
+import Backend.StockMatchBackend.services.WatchlistService;
+
+public class WatchlistServiceImpl implements WatchlistService {
 }

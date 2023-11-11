@@ -1,4 +1,4 @@
 package Backend.StockMatchBackend.services;
 
-public class UserService {
+public interface UserService {
 }

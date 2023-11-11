@@ -1,4 +1,6 @@
 package Backend.StockMatchBackend.services.impl;
 
-public class UserServiceImpl {
+import Backend.StockMatchBackend.services.UserService;
+
+public class UserServiceImpl implements UserService {
 }

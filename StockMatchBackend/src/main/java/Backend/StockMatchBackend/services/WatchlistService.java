@@ -1,4 +1,4 @@
 package Backend.StockMatchBackend.services;
 
-public class WatchlistService {
+public interface WatchlistService {
 }
