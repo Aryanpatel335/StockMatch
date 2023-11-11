@@ -1,8 +1,28 @@
 package com.backend.backendStockMatch.controller;
 
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
+import com.backend.backendStockMatch.model.Preferences;
+import com.backend.backendStockMatch.repository.PreferencesRepository;
 
 @RestController
+@RequestMapping("/preferences")
 public class PreferencesController {
+
+    @Autowired
+    private PreferencesRepository preferencesRepository;
+
+    @GetMapping("/{id}")
+    public Preferences getPreferencesById(@PathVariable UUID id) {
+        return preferencesRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Preferences not found"));
+    }
+
+    @PostMapping
+    public Preferences createPreferences(@RequestBody Preferences preferences) {
+        return preferencesRepository.save(preferences);
+    }
+
+    // Additional CRUD operations (update, delete) can be added here
 }

@@ -1,33 +1,35 @@
 package com.backend.backendStockMatch.model;
+
+import lombok.*;
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import java.util.Set;
 import java.util.UUID;
-
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "StockTable",  schema = "public")
+@Table(name = "stocks")
 public class StockTable {
     @Id
-    @GeneratedValue
     private UUID id;
+
     private String symbol;
     private String name;
     private double marketCapitalization;
-    // ... other fields
+    private String ipo; // Assuming this is a string representation, e.g., a date
+    private double beta;
+    private double fiftyTwoWeekHigh;
+    private double fiftyTwoWeekLow;
+    private double previousDayClosePrice;
+    private String marketLink1;
+    private String marketLink2;
+    private String webUrl;
 
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
+    private Set<Watchlist> watchlists;
 
-    private Set<WatchlistStock> watchlistStocks;
-
-
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     private Set<StockCandle> stockCandles;
 }

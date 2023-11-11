@@ -1,35 +1,28 @@
 package com.backend.backendStockMatch.model;
-import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.backend.backendStockMatch.model.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
+import lombok.*;
+import javax.persistence.*;
+import java.util.UUID;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "User",  schema = "public")
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
     private UUID id;
+
     private String username;
-    private String password;
     private String email;
+    private String password;
     private String currentStockView;
 
-
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Preferences preferences;
 
-
-    private Set<WatchlistStock> watchlistStocks = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Watchlist> watchlists;
 }
