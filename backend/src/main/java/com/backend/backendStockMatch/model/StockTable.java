@@ -1,14 +1,13 @@
 package com.backend.backendStockMatch.model;
 import javax.persistence.*;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.util.Set;
 import java.util.UUID;
-import java.time.Instant;
 
 
 @Getter
@@ -16,7 +15,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "stock_table")
+@Table(name = "StockTable",  schema = "public")
 public class StockTable {
     @Id
     @GeneratedValue
@@ -26,9 +25,9 @@ public class StockTable {
     private double marketCapitalization;
     // ... other fields
 
-    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
-    private Set<Watchlist> watchlists;
 
-    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
+    private Set<WatchlistStock> watchlistStocks;
+
+
     private Set<StockCandle> stockCandles;
 }

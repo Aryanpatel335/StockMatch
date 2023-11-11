@@ -2,7 +2,7 @@ package com.backend.backendStockMatch.model;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.backend.backendStockMatch.model.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -10,8 +10,6 @@ import lombok.AllArgsConstructor;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import java.time.Instant;
-
 
 
 @Getter
@@ -19,7 +17,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "User",  schema = "public")
 public class User {
     @Id
     @GeneratedValue
@@ -29,11 +27,9 @@ public class User {
     private String email;
     private String currentStockView;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonBackReference(value="user")
+
     private Preferences preferences;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference(value="user")
-    private Set<Watchlist> watchlists = new HashSet<>();
+
+    private Set<WatchlistStock> watchlistStocks = new HashSet<>();
 }

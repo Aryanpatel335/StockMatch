@@ -17,19 +17,19 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "watchlists")
-public class Watchlist {
+@Table(name = "WatchlistStock",  schema = "public")
+public class WatchlistStock {
     @Id
     @GeneratedValue
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id") // This should be the name of the foreign key column in the 'watchlists' table.
-    @JsonBackReference("user")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonBackReference
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "stock_id", referencedColumnName = "id")
-    @JsonBackReference("stock")
+    @JsonBackReference
     private StockTable stock;
 }
