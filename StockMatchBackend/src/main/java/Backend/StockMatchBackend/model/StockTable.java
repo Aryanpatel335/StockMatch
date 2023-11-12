@@ -26,6 +26,7 @@ public class StockTable {
     private String marketLink1;
     private String marketLink2;
     private String webUrl;
+    private double prevDayClose;
 
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     private Set<Watchlist> watchlists;
