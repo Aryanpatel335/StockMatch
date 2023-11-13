@@ -13,20 +13,22 @@ import java.util.Set;
 @Table(name = "stocks")
 public class StockTable {
     @Id
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
+    @Column(unique = true)
     private String symbol;
     private String name;
-    private double marketCapitalization;
+    private Double marketCapitalization;
     private String ipo; // Assuming this is a string representation, e.g., a date
-    private double beta;
-    private double fiftyTwoWeekHigh;
-    private double fiftyTwoWeekLow;
-    private double previousDayClosePrice;
+    private Double beta;
+    private Double fiftyTwoWeekHigh;
+    private Double fiftyTwoWeekLow;
+    private Double previousDayClosePrice;
     private String marketLink1;
     private String marketLink2;
     private String webUrl;
-    private double prevDayClose;
+    private Double prevDayClose;
 
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     private Set<Watchlist> watchlists;

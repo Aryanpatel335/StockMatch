@@ -41,15 +41,27 @@ func StockQuoteHandler() {
 			return
 		}
 
-		quote, err := fetchStockPrice(symbol)
+		prevDayClose, err := fetchStockPrice(symbol)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
+		// Create a new struct that includes both the quote and the symbol
+		type QuotePayload struct {
+			Symbol string      `json:"symbol"`
+			PrevDayClose  *float32 `json:"prevDayClose"`
+		}
+	
+		// Initialize the new struct with the fetched quote and the symbol
+		payload := QuotePayload{
+			Symbol: symbol,
+			PrevDayClose:  prevDayClose,
+		}
+
 		// Convert the quote to the desired format, if necessary.
 		// For simplicity, we marshal the quote into JSON.
-		jsonData, err := json.Marshal(quote)
+		jsonData, err := json.Marshal(payload)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			
@@ -67,7 +79,7 @@ func StockQuoteHandler() {
 		}
 
 		// Respond to the original request indicating success
-		fmt.Fprintln(w, "Stock price sent to Spring backend successfully")
+		fmt.Fprintln(w, "Stock Data sent to Spring backend successfully")
 		
 	})
 	
