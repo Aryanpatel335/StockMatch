@@ -2,6 +2,7 @@ package Backend.StockMatchBackend.model;
 
 import lombok.*;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.UUID;
 import java.time.Instant;
 
@@ -13,6 +14,7 @@ import java.time.Instant;
 @Table(name = "stock_candles")
 public class StockCandle {
     @Id
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @ManyToOne
@@ -20,10 +22,17 @@ public class StockCandle {
     private StockTable stock;
 
     private String ticker;
-    private Instant timestamp;
-    private double open;
-    private double high;
-    private double low;
-    private double close;
-    private Instant uniqueCandleTimestamp;
+    private Instant uniqueCandleTimestamp; // Consider renaming this to reflect its purpose, e.g., "candleTimestamp"
+
+    // Using BigDecimal for financial data to avoid precision issues
+    private BigDecimal open;
+    private BigDecimal high;
+    private BigDecimal low;
+    private BigDecimal close;
+
+    // Additional field for volume, nullable
+    private Long volume;
+
+    // If you don't need two separate timestamps, consider removing one
+    // private Instant uniqueCandleTimestamp;
 }

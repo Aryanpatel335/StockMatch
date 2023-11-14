@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -14,6 +13,7 @@ import (
 )
 
 type StockCandleData struct {
+	Ticker 	  string	`json:"ticker"`
 	Close     []float32 `json:"c"`
 	High      []float32 `json:"h"`
 	Low       []float32 `json:"l"`
@@ -23,49 +23,49 @@ type StockCandleData struct {
 	Volume    []int64   `json:"v"`
 }
 
-func StockCandlesHandler() {
-	http.HandleFunc("/stockCandles", func(w http.ResponseWriter, r *http.Request) {
-		symbol := r.URL.Query().Get("symbol")
-		if symbol == "" {
-			http.Error(w, "Missing symbol parameter", http.StatusBadRequest)
-			return
-		}
+func StockCandlesHandler(w http.ResponseWriter, r *http.Request) {
+	// http.HandleFunc("/stockCandles", func(w http.ResponseWriter, r *http.Request) {
+	symbol := r.URL.Query().Get("symbol")
+	if symbol == "" {
+		http.Error(w, "Missing symbol parameter", http.StatusBadRequest)
+		return
+	}
 
-		// Define the time range for one month
-		now := time.Now()
-		oneMonthAgo := now.AddDate(0, -1, 0) // Subtract one month from the current time
+	// Define the time range for one month
+	now := time.Now()
+	oneMonthAgo := now.AddDate(0, -1, 0) // Subtract one month from the current time
 
-		// Fetch the stock candles data
-		candles, err := fetchStockCandles(symbol, oneMonthAgo, now)
-		if err != nil {
-			http.Error(w, "Error fetching stock candles: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
+	// Fetch the stock candles data
+	candles, err := fetchStockCandles(symbol, oneMonthAgo, now)
+	if err != nil {
+		http.Error(w, "Error fetching stock candles: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-		// Convert the candles to the desired format, if necessary.
-		// For simplicity, we marshal the candles into JSON.
-		jsonData, err := json.Marshal(candles)
-		if err != nil {
-			http.Error(w, "Error marshalling JSON: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
+	// Convert the candles to the desired format, if necessary.
+	// For simplicity, we marshal the candles into JSON.
+	jsonData, err := json.Marshal(candles)
+	if err != nil {
+		http.Error(w, "Error marshalling JSON: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-		// Define the URL of your Spring backend endpoint
-		springURL := "http://localhost:8080/stockCandles/receiveStockQuote"
+	// Define the URL of your Spring backend endpoint
+	springURL := "http://localhost:8080/stockCandles/receiveStockQuote"
 
-		// Send the JSON data to the Spring backend
-		err = sendToSpringBackendStockCandles(jsonData, springURL)
-		if err != nil {
-			http.Error(w, "Error sending data to backend: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
+	// Send the JSON data to the Spring backend
+	err = sendToSpringBackendStockCandles(jsonData, springURL)
+	if err != nil {
+		http.Error(w, "Error sending data to backend: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-		// Respond to the original request indicating success
-		fmt.Fprintln(w, "Stock candle data sent to Spring backend successfully")
-	})
+	// Respond to the original request indicating success
+	fmt.Fprintln(w, "Stock candle data sent to Spring backend successfully")
+// })
 
-	log.Println("Stock candles handler is starting on :3000...")
-	log.Fatal(http.ListenAndServe(":3000", nil))
+// log.Println("Stock candles handler is starting on :3000...")
+// log.Fatal(http.ListenAndServe(":3000", nil))
 }
 
 func fetchStockCandles(symbol string, oneMonthAgo, now time.Time) (StockCandleData, error) {
@@ -89,6 +89,7 @@ func fetchStockCandles(symbol string, oneMonthAgo, now time.Time) (StockCandleDa
 
 	// Extract data using getters
 	candles := StockCandleData{
+		Ticker: symbol,
 		Close:     res.GetC(),
 		High:      res.GetH(),
 		Low:       res.GetL(),
