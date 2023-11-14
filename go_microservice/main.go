@@ -9,5 +9,6 @@ import (
 
 
 func main() {
-	handlers.StockQuoteHandler()
+	// handlers.StockQuoteHandler()
+	handlers.StockCandlesHandler()
 }
