@@ -1,0 +1,16 @@
+com\backend\backendStockMatch\model\Preferences.class
+com\backend\backendStockMatch\repository\UserRepository.class
+com\backend\backendStockMatch\controller\WatchlistController.class
+com\backend\backendStockMatch\model\Watchlist.class
+com\backend\backendStockMatch\BackendStockMatchApplication.class
+com\backend\backendStockMatch\controller\StockTableController.class
+com\backend\backendStockMatch\repository\PreferencesRepository.class
+com\backend\backendStockMatch\repository\WatchlistRepository.class
+com\backend\backendStockMatch\repository\StockTableRepository.class
+com\backend\backendStockMatch\repository\StockCandleRepository.class
+com\backend\backendStockMatch\controller\PreferencesController.class
+com\backend\backendStockMatch\model\User.class
+com\backend\backendStockMatch\controller\UserController.class
+com\backend\backendStockMatch\model\StockCandle.class
+com\backend\backendStockMatch\model\StockTable.class
+com\backend\backendStockMatch\controller\StockCandleController.class
