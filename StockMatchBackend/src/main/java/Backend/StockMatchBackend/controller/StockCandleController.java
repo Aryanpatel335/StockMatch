@@ -59,7 +59,7 @@ public class StockCandleController {
 //        stockCandleService.saveStockCandles(stockCandleDTO);
 //        return ResponseEntity.ok().build();
 //    }
-    @PostMapping("/receiveStockQuote")
+    @PostMapping("/receiveStockCandles")
     public ResponseEntity<?> saveStockCandles(@RequestBody StockCandleDTO stockCandleDTO) {
         // Convert DTOs to Entities
 //        List<StockCandle> candles = stockCandleDTO.getC().stream()

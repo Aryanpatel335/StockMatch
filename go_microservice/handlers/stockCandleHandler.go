@@ -51,7 +51,7 @@ func StockCandlesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Define the URL of your Spring backend endpoint
-	springURL := "http://localhost:8080/stockCandles/receiveStockQuote"
+	springURL := "http://localhost:8080/stockCandles/receiveStockCandles"
 
 	// Send the JSON data to the Spring backend
 	err = sendToSpringBackendStockCandles(jsonData, springURL)
