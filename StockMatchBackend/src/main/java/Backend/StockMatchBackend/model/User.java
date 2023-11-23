@@ -13,6 +13,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
+    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     private String username;
