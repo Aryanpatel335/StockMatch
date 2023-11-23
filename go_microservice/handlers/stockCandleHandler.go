@@ -118,7 +118,7 @@ func sendToSpringBackendStockCandles(jsonData []byte, springURL string) error {
 
 	// Check for a successful response
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Spring backend returned error: %s", resp.Status)
+		return fmt.Errorf("spring backend returned error: %s", resp.Status)
 	}
 
 	fmt.Println("Data sent to Spring backend successfully")
