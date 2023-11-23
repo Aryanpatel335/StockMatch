@@ -18,7 +18,10 @@ public class User {
 
     private String username;
     private String email;
+
+    @Column(unique = true)
     private String subID;
+
     private Integer currentStockView;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
