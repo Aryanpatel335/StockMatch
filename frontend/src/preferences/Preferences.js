@@ -56,8 +56,8 @@ const Preferences = () => {
 								Preferences
 							</Heading>
 							<Text as={"p"} mb={"1em"}>
-								Please fill out your preferences so we can start showing you
-								your matches!
+								Answer a few quick questions so we can start showing you your
+								matches!
 							</Text>
 							<Flex flexDirection={"column"}>
 								<FormControl>
@@ -175,9 +175,15 @@ const Preferences = () => {
 										onChange={handleCheckboxChange}
 									>
 										<Stack direction="column">
-											<Checkbox value="technology">Technology</Checkbox>
-											<Checkbox value="health-care">Health Care</Checkbox>
-											<Checkbox value="real-estate">Real Estate</Checkbox>
+											<Checkbox value="technology" colorScheme={"teal"}>
+												Technology
+											</Checkbox>
+											<Checkbox value="health-care" colorScheme={"teal"}>
+												Health Care
+											</Checkbox>
+											<Checkbox value="real-estate" colorScheme={"teal"}>
+												Real Estate
+											</Checkbox>
 										</Stack>
 									</CheckboxGroup>
 								</FormControl>
