@@ -17,8 +17,8 @@ public class User {
 
     private String username;
     private String email;
-    private String password;
-    private String currentStockView;
+    private String subID;
+    private Integer currentStockView;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Preferences preferences;
