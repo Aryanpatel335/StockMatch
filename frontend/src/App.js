@@ -1,14 +1,23 @@
-import "./App.css";
+import { ChakraProvider, Flex, extendTheme } from "@chakra-ui/react";
+import Layout from "./common/nav/Layout";
+import { BrowserRouter } from "react-router-dom";
+
+const theme = extendTheme({});
 
 function App() {
 	return (
-		<div className="App">
-			<header className="App-header">
-				<p>
-					Edit <code>src/App.js</code> and save to reload.
-				</p>
-			</header>
-		</div>
+		<BrowserRouter>
+			<ChakraProvider theme={theme}>
+				<Flex
+					className="App"
+					h={"100vh"}
+					flexDirection={"column"}
+					style={{ overflowX: "hidden" }}
+				>
+					<Layout />
+				</Flex>
+			</ChakraProvider>
+		</BrowserRouter>
 	);
 }
 

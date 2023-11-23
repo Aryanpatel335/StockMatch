@@ -1,0 +1,86 @@
+.backgroundBox {
+	z-index: -1;
+	position: absolute;
+}
+
+@media (max-width: 576px) {
+	.hidden-on-mobile {
+		display: none;
+	}
+}
+
+.floating {
+	animation-name: floating;
+	animation-duration: 3s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes floating {
+	from {
+		transform: translate(0, 0px);
+	}
+	65% {
+		transform: translate(0, 15px);
+	}
+	to {
+		transform: translate(0, -0px);
+	}
+}
+
+.floating2 {
+	animation-name: floating;
+	animation-duration: 3.5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes floating2 {
+	from {
+		transform: translate(0, 0px);
+	}
+	45% {
+		transform: translate(0, -60px);
+	}
+	to {
+		transform: translate(0, 0px);
+	}
+}
+
+.floating3 {
+	animation-name: floating;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes floating3 {
+	from {
+		transform: translate(0, 0px);
+	}
+	35% {
+		transform: translate(0, -25px);
+	}
+	to {
+		transform: translate(0, -0px);
+	}
+}
+
+.floating4 {
+	animation-name: floating;
+	animation-duration: 4s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes floating4 {
+	from {
+		transform: translate(0, 0px);
+	}
+	72% {
+		transform: translate(0, 30px);
+	}
+	to {
+		transform: translate(0, -0px);
+	}
+}
