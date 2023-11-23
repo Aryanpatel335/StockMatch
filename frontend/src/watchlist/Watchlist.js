@@ -8,9 +8,9 @@ import {
 	Flex,
 	Heading,
 	Image,
-	Link,
 } from "@chakra-ui/react";
 import NavBar from "../common/nav/NavBar";
+import { Link } from "react-router-dom";
 
 const Watchlist = () => {
 	const mockWatchlist = [
@@ -52,7 +52,9 @@ const Watchlist = () => {
 								<Heading as={"h1"} size={"lg"}>
 									Watchlist
 								</Heading>
-								<Button>Back</Button>
+								<Link to="/main">
+									<Button>Back</Button>
+								</Link>
 							</Flex>
 
 							<Flex flexDirection={"column"}>

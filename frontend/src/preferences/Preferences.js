@@ -17,8 +17,10 @@ import {
 } from "@chakra-ui/react";
 import NavBar from "../common/nav/NavBar";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Preferences = () => {
+	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
 		risk: "",
 		companyAge: "",
@@ -43,11 +45,12 @@ const Preferences = () => {
 
 	const handleSubmit = () => {
 		console.log("Form Data:", formData);
+		navigate("/main");
 	};
 
 	return (
 		<Box h={"100vh"}>
-			<NavBar />
+			<NavBar isPreferencesPage={true} />
 			<Flex flexDirection={"column"} w={"100vw"} bg={"gray.100"} minH={"100%"}>
 				<Container maxW={"sm"} pt={"2"} pb={"2"} minH={"100%"}>
 					<Card minH={"100%"}>

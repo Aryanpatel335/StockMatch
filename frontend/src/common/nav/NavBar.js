@@ -11,8 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import imgLogo from "../../resources/StockMatch Logo.png";
+import { Link } from "react-router-dom";
 
-const Links = ["Watchlist", "Log Out"];
+const Links = [
+	{ text: "Watchlist", link: "/watchlist" },
+	{ text: "Log Out", link: "" },
+];
 
 const NavLink = (props) => {
 	const { children } = props;
@@ -33,58 +37,88 @@ const NavLink = (props) => {
 	);
 };
 
-const NavBar = () => {
+const NavBar = (props) => {
+	const { isPreferencesPage = false } = props;
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	return (
 		<>
 			<Box px={4} boxShadow="md">
 				<Flex h={12} alignItems={"center"} justifyContent={"space-between"}>
-					<HStack
-						spacing={8}
-						alignItems={"center"}
-						justifyContent={"space-between"}
-						w={"100vw"}
-					>
-						<Flex className="logo" alignItems={"center"}>
-							<Image
-								boxSize="40px"
-								objectFit="contain"
-								src={imgLogo}
-								alt="StockMatch Logo"
-							/>
-							<Heading as="h1" fontSize={"lg"}>
-								StockMatch
-							</Heading>
-						</Flex>
-
+					{!isPreferencesPage ? (
 						<HStack
-							as={"nav"}
-							spacing={4}
-							display={{ base: "none", md: "flex" }}
-							justifyContent={"flex-end"}
-							overflowX={"hidden"}
+							spacing={8}
+							alignItems={"center"}
+							justifyContent={"space-between"}
+							w={"100vw"}
 						>
-							{Links.map((link) => (
-								<NavLink key={link}>{link}</NavLink>
-							))}
+							<Link to="/main">
+								<Flex className="logo" alignItems={"center"}>
+									<Image
+										boxSize="40px"
+										objectFit="contain"
+										src={imgLogo}
+										alt="StockMatch Logo"
+									/>
+									<Heading as="h1" fontSize={"lg"}>
+										StockMatch
+									</Heading>
+								</Flex>
+							</Link>
+							<HStack
+								as={"nav"}
+								spacing={4}
+								display={{ base: "none", md: "flex" }}
+								justifyContent={"flex-end"}
+								overflowX={"hidden"}
+							>
+								{Links.map((l) => (
+									<Link to={l.link}>
+										<NavLink key={l.text}>{l.text}</NavLink>
+									</Link>
+								))}
+							</HStack>
 						</HStack>
-					</HStack>
-					<IconButton
-						size={"md"}
-						icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-						aria-label={"Open Menu"}
-						display={{ md: "none" }}
-						onClick={isOpen ? onClose : onOpen}
-						bg={"white"}
-					/>
+					) : (
+						<HStack
+							spacing={8}
+							alignItems={"center"}
+							justifyContent={"space-between"}
+							w={"100vw"}
+						>
+							<Flex className="logo" alignItems={"center"}>
+								<Image
+									boxSize="40px"
+									objectFit="contain"
+									src={imgLogo}
+									alt="StockMatch Logo"
+								/>
+								<Heading as="h1" fontSize={"lg"}>
+									StockMatch
+								</Heading>
+							</Flex>
+						</HStack>
+					)}
+
+					{!isPreferencesPage && (
+						<IconButton
+							size={"md"}
+							icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+							aria-label={"Open Menu"}
+							display={{ md: "none" }}
+							onClick={isOpen ? onClose : onOpen}
+							bg={"white"}
+						/>
+					)}
 				</Flex>
 
-				{isOpen ? (
+				{isOpen && !isPreferencesPage ? (
 					<Box pb={4} display={{ md: "none" }}>
 						<Stack as={"nav"} spacing={4}>
-							{Links.map((link) => (
-								<NavLink key={link}>{link}</NavLink>
+							{Links.map((l) => (
+								<Link to={l.link}>
+									<NavLink key={l.text}>{l.text}</NavLink>
+								</Link>
 							))}
 						</Stack>
 					</Box>
