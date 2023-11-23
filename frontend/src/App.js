@@ -16,9 +16,9 @@ function App() {
 				style={{ overflowX: "hidden" }}
 			>
 				{/* <Main /> */}
-				{/* <Landing /> */}
+				<Landing />
 				{/* <Watchlist /> */}
-				<Preferences />
+				{/* <Preferences /> */}
 			</Flex>
 		</ChakraProvider>
 	);

@@ -7,9 +7,9 @@ import {
 	Image,
 	Link,
 } from "@chakra-ui/react";
-import { GoogleLogin } from "@react-oauth/google";
 import imgLogo from "../resources/StockMatch Logo.png";
 import LandingBackground from "./LandingBackground";
+import Login from "../auth/Login.js";
 
 const Landing = () => {
 	return (
@@ -47,14 +47,7 @@ const Landing = () => {
 					<Heading as="h1" w={"80%"} my="8">
 						Swipe Your Way to Smart Investing.
 					</Heading>
-					<GoogleLogin
-						onSuccess={(credentialResponse) => {
-							console.log(credentialResponse);
-						}}
-						onError={() => {
-							console.log("Login Failed");
-						}}
-					/>
+					<Login />
 				</Flex>
 				<Flex
 					flexDirection={"column"}
