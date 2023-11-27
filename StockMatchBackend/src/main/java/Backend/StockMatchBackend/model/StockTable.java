@@ -1,5 +1,6 @@
 package Backend.StockMatchBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
 import java.util.UUID;
@@ -31,8 +32,10 @@ public class StockTable {
     private Double prevDayClose;
 
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
-    private Set<Watchlist> watchlists;
+    @JsonManagedReference
+    private Set<Watchlist> watchlist;
 
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<StockCandle> stockCandles;
 }

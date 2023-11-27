@@ -1,5 +1,6 @@
 package Backend.StockMatchBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
 import java.util.UUID;
@@ -28,5 +29,6 @@ public class User {
     private Preferences preferences;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Watchlist> watchlists;
+    @JsonManagedReference
+    private Set<Watchlist> watchlist;
 }
