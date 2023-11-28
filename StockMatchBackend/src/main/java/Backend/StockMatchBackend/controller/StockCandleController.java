@@ -77,7 +77,7 @@ public class StockCandleController {
         return ResponseEntity.ok("Stock candles processed successfully");
     }
 
-    @GetMapping("/{ticker}")
+    @GetMapping("/getStockCandles/{ticker}")
     public ResponseEntity<?> getStockCandles(@PathVariable String ticker) {
         List<StockCandle> candles = stockCandleService.getStockCandlesForGraph(ticker);
         return ResponseEntity.ok(candles);

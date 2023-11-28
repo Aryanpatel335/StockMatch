@@ -46,7 +46,7 @@ public class WatchlistController {
         return ResponseEntity.ok("Added to watchlist");
     }
 
-    @DeleteMapping("/remove")
+    @DeleteMapping("/removeFromWatchList")
     public ResponseEntity<?> removeFromWatchlist(@RequestBody WatchListDTO watchListDTO) {
         watchlistService.removeFromWatchlist(watchListDTO);
         return ResponseEntity.ok("Stock removed from watchlist");

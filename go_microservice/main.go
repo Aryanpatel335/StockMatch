@@ -9,8 +9,9 @@ import (
 
 
 func main() {
-	// Register handlers for different endpoints
-	http.HandleFunc("/quote", handlers.StockTableHandler)
+	
+	//this is what gets the StockInfo for the stocks
+	http.HandleFunc("/getStock", handlers.StockTableHandler)
 	http.HandleFunc("/stockCandles", handlers.StockCandlesHandler)
 	// You can add more handlers for different endpoints as needed
 

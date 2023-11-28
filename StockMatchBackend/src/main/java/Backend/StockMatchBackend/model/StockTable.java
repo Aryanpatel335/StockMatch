@@ -3,6 +3,7 @@ package Backend.StockMatchBackend.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.UUID;
 import java.util.Set;
 
@@ -19,17 +20,24 @@ public class StockTable {
 
     @Column(unique = true)
     private String symbol;
+    private Float prevDayClose;
+    private String country;
+    private String currency;
+    private String exchange;
+    private String ipo; // Assuming this is a date in String format
+    private BigDecimal marketCapitalization;
     private String name;
-    private Double marketCapitalization;
-    private String ipo; // Assuming this is a string representation, e.g., a date
-    private Double beta;
-    private Double fiftyTwoWeekHigh;
-    private Double fiftyTwoWeekLow;
-    private Double previousDayClosePrice;
+    private String ticker;
+    private String webUrl;
+    private String logo;
+    private String finnhubIndustry;
+    private BigDecimal weekHigh;
+    private BigDecimal weekLow;
+    private String weekLowDate;
+    private BigDecimal beta;
     private String marketLink1;
     private String marketLink2;
-    private String webUrl;
-    private Double prevDayClose;
+    private String marketLink3;
 
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     @JsonManagedReference
