@@ -10,6 +10,7 @@ public class PreferencesDTO {
     private Double beta;
     private Double analystScore;
     private Double timeInMarket;
-
+    private Double marketCapMillions;
+    private String industry;
     // Getters and setters
 }

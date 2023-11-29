@@ -34,12 +34,28 @@ public class PreferencesServiceImpl implements PreferencesService {
 
         // Set or update the preferences fields
         preferences.setUser(user);
+        Double beta = preferencesDTO.getBeta();
         preferences.setBeta(preferencesDTO.getBeta());
         preferences.setAnalystScore(preferencesDTO.getAnalystScore());
         preferences.setTimeInMarket(preferencesDTO.getTimeInMarket());
-
+        preferences.setMarketCapMillions(preferencesDTO.getMarketCapMillions());
+        preferences.setIndustry(preferencesDTO.getIndustry());
+        preferences.setRiskLevel((categorizeRiskLevel(beta)));
         // Save or update the preferences in the database
         preferencesRepository.save(preferences);
+    }
+
+    private String categorizeRiskLevel(Double beta) {
+        if (beta == null) {
+            return "unknown"; // or handle null as you see fit
+        }
+        if (beta < 1.0) {
+            return "low";
+        } else if (beta <= 1.5) {
+            return "medium";
+        } else {
+            return "high";
+        }
     }
 
 

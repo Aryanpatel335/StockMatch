@@ -38,6 +38,9 @@ public class StockTable {
     private String marketLink1;
     private String marketLink2;
     private String marketLink3;
+    //calculated for preferences;
+    private String riskLevel;
+    private Integer yearsInMarket;
 
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     @JsonManagedReference

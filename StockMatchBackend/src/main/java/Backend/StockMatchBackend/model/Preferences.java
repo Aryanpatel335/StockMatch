@@ -22,4 +22,7 @@ public class Preferences {
     private Double beta;
     private Double analystScore;
     private Double timeInMarket; // Assuming this is a numeric value representing years
+    private Double marketCapMillions;
+    private String industry;
+    private String riskLevel;
 }
