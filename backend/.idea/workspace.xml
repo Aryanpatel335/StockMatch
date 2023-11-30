@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b1dd7ed5-bb7e-42ac-9187-74794bb6fa9d" name="Changes" comment="general setup part 2.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/controller/WatchlistController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/model/Watchlist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/controller/PreferencesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/controller/PreferencesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/controller/StockCandleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/controller/StockCandleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/controller/StockTableController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/controller/StockTableController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/controller/WatchListStockController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/model/Preferences.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/model/Preferences.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/model/StockCandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/model/StockCandle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/model/StockTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/model/StockTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/model/WatchlistStock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/repository/PreferencesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/repository/PreferencesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/repository/StockCandleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/repository/StockCandleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/repository/StockTableRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/repository/StockTableRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/repository/WatchListRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/repository/WatchlistRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/service/PreferencesService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/service/PreferencesServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/service/StockCandleService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/service/StockCandleServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/service/StockTableService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/service/StockTableServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/service/UserServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/service/WatchListStockService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch/service/WatchListStockServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectId" id="2XYbpx51wHISVFxNggnaK9haonq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="postgresql" />
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/backend/backendStockMatch" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.annotationProcessors" />
+  </component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\aryan\Desktop\StockMatch\backend\src\main\java\com\backend\backendStockMatch" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.backend.backendStockMatch" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean install" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="BackendStockMatchApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="backendStockMatch" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.backend.backendStockMatch.BackendStockMatchApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b1dd7ed5-bb7e-42ac-9187-74794bb6fa9d" name="Changes" comment="" />
+      <created>1698809150595</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698809150595</updated>
+      <workItem from="1698809152685" duration="692000" />
+      <workItem from="1699119201929" duration="4559000" />
+      <workItem from="1699492629784" duration="2600000" />
+      <workItem from="1699495457515" duration="14610000" />
+      <workItem from="1699674282090" duration="139000" />
+      <workItem from="1699674441126" duration="391000" />
+      <workItem from="1699674854181" duration="398000" />
+    </task>
+    <task id="LOCAL-00001" summary="initial setup of model &quot;entity&quot; categories">
+      <created>1699119905861</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699119905861</updated>
+    </task>
+    <task id="LOCAL-00002" summary="db setup">
+      <created>1699121506014</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699121506014</updated>
+    </task>
+    <task id="LOCAL-00003" summary="db setup">
+      <created>1699121993057</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1699121993057</updated>
+    </task>
+    <task id="LOCAL-00004" summary="general setup part 2.">
+      <created>1699122990956</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1699122990956</updated>
+    </task>
+    <task id="LOCAL-00005" summary="general setup part 2.">
+      <created>1699496429390</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1699496429390</updated>
+    </task>
+    <task id="LOCAL-00006" summary="general setup part 2.">
+      <created>1699667612041</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1699667612041</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="initial setup of model &quot;entity&quot; categories" />
+    <MESSAGE value="db setup" />
+    <MESSAGE value="general setup part 2." />
+    <option name="LAST_COMMIT_MESSAGE" value="general setup part 2." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.beans.BeanInstantiationException" package="org.springframework.beans" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
