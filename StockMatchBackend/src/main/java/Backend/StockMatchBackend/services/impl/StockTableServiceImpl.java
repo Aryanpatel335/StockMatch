@@ -138,6 +138,7 @@ public class StockTableServiceImpl implements StockTableService {
             spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
         }
 
+
         return stockTableRepository.findAll(spec, pageable);
     }
 
