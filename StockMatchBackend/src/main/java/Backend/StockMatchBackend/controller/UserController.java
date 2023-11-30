@@ -3,8 +3,10 @@ package Backend.StockMatchBackend.controller;
 import Backend.StockMatchBackend.model.Preferences;
 import Backend.StockMatchBackend.model.StockTable;
 import Backend.StockMatchBackend.model.User;
+import Backend.StockMatchBackend.repository.StockTableRepository;
 import Backend.StockMatchBackend.repository.UserRepository;
 import Backend.StockMatchBackend.services.dto.UserDTO;
+import Backend.StockMatchBackend.services.impl.StockTableServiceImpl;
 import Backend.StockMatchBackend.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,9 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private StockTableServiceImpl stockTableImpl;
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable UUID id) {
@@ -59,8 +64,17 @@ public class UserController {
     public ResponseEntity<Page<StockTable>> getStockRecommendations(@PathVariable String subId,
                                                                     @RequestParam(defaultValue = "0") int page,
                                                                     @RequestParam(defaultValue = "30") int size) {
+        Preferences preferences = userService.getUserPreferences(subId);
+        if (preferences == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        // Create Pageable object
         Pageable pageable = PageRequest.of(page, size);
-        Page<StockTable> recommendedStocks = userService.getUserStockRecommendations(subId, pageable);
+
+        // Fetch filtered stocks based on preferences
+        Page<StockTable> recommendedStocks = stockTableImpl.getFilteredStocks(preferences, pageable);
+
         return ResponseEntity.ok(recommendedStocks);
     }
 

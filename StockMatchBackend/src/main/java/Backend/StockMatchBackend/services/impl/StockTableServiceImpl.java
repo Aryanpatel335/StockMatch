@@ -5,10 +5,12 @@ import Backend.StockMatchBackend.model.StockTable;
 import Backend.StockMatchBackend.repository.StockTableRepository;
 import Backend.StockMatchBackend.services.StockTableService;
 import Backend.StockMatchBackend.services.dto.StockTableDTO;
+import Backend.StockMatchBackend.services.specifications.StockTableSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -107,7 +109,7 @@ public class StockTableServiceImpl implements StockTableService {
         int total = sortedStocks.size();
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), total);
-        
+
 
         List<StockTable> pageContent = sortedStocks.subList(start, end);
 
@@ -117,7 +119,26 @@ public class StockTableServiceImpl implements StockTableService {
     private int matchScore(StockTable stock, Preferences preferences) {
         // Implement your scoring logic here
         // Example: simple scoring based on matching industry
-        return stock.getFinnhubIndustry().equals(preferences.getIndustry()) ? 1 : 0;
+        return stock.getFinnhubIndustry().equals(preferences.getIndustry()) ? 0 : 1;
+    }
+
+    public Page<StockTable> getFilteredStocks(Preferences preferences, Pageable pageable) {
+        Specification<StockTable> spec = Specification.where(null);
+
+        if (preferences.getTimeInMarket() != null) {
+            spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(preferences.getTimeInMarket()));
+        }
+        if (preferences.getMarketCapMillions() != null) {
+            spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
+        }
+        if (preferences.getIndustry() != null) {
+            spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+        }
+        if (preferences.getRiskLevel() != null) {
+            spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
+        }
+
+        return stockTableRepository.findAll(spec, pageable);
     }
 
 }
