@@ -63,7 +63,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("Preferences not found")); // Replace with appropriate exception handling
     }
 
-
     public Page<StockTable> getUserStockRecommendations(String subId, Pageable pageable) {
         User user = userRepository.findBySubID(subId)
                 .orElseThrow(() -> new RuntimeException("User not found"));

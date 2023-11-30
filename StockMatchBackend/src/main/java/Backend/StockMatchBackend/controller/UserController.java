@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -71,11 +72,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
+        Set<UUID> alreadyInWatchList = stockTableImpl.getWatchlistStockIds(subID);
         // Create Pageable object
         Pageable pageable = PageRequest.of(page, size);
 
         // Fetch filtered stocks based on preferences
-        Page<StockTable> recommendedStocks = stockTableImpl.getFilteredStocks(preferences, pageable);
+        Page<StockTable> recommendedStocks = stockTableImpl.getFilteredStocksIteratively(preferences, alreadyInWatchList, pageable);
 
         return ResponseEntity.ok(recommendedStocks);
     }

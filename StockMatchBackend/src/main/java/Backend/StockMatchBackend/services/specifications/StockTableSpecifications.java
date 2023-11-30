@@ -3,6 +3,9 @@ package Backend.StockMatchBackend.services.specifications;
 import Backend.StockMatchBackend.model.StockTable;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.Set;
+import java.util.UUID;
+
 public class StockTableSpecifications {
 
     public static Specification<StockTable> hasMinimumTimeInMarket(Double timeInMarket) {
@@ -23,5 +26,12 @@ public class StockTableSpecifications {
     public static Specification<StockTable> hasRiskLevel(String riskLevel) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("riskLevel"), riskLevel);
+    }
+
+    public static Specification<StockTable> notInStockIds(Set<UUID> excludedStockIds) {
+        return (root, query, criteriaBuilder) ->
+                excludedStockIds.isEmpty() ?
+                        criteriaBuilder.conjunction() :
+                        root.get("id").in(excludedStockIds).not();
     }
 }

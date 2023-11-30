@@ -27,4 +27,16 @@ public class Preferences {
     private Double marketCapMillions;
     private String industry;
     private String riskLevel;
+
+    public Preferences(Preferences original) {
+        // Assuming you don't want to copy the ID and user as they should be unique
+        this.beta = original.getBeta();
+        this.analystScore = original.getAnalystScore();
+        this.timeInMarket = original.getTimeInMarket();
+        this.marketCapMillions = original.getMarketCapMillions();
+        this.industry = original.getIndustry();
+        this.riskLevel = original.getRiskLevel();
+        // Note: User is not copied as it's a reference to another entity
+    }
+
 }

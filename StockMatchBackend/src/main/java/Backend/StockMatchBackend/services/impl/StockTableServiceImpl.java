@@ -2,7 +2,11 @@ package Backend.StockMatchBackend.services.impl;
 
 import Backend.StockMatchBackend.model.Preferences;
 import Backend.StockMatchBackend.model.StockTable;
+import Backend.StockMatchBackend.model.User;
+import Backend.StockMatchBackend.model.Watchlist;
 import Backend.StockMatchBackend.repository.StockTableRepository;
+import Backend.StockMatchBackend.repository.UserRepository;
+import Backend.StockMatchBackend.repository.WatchlistRepository;
 import Backend.StockMatchBackend.services.StockTableService;
 import Backend.StockMatchBackend.services.dto.StockTableDTO;
 import Backend.StockMatchBackend.services.specifications.StockTableSpecifications;
@@ -11,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.relational.core.sql.TrueCondition;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,14 +24,19 @@ import java.time.Period;
 import java.time.format.DateTimeParseException;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class StockTableServiceImpl implements StockTableService {
     @Autowired
     private StockTableRepository stockTableRepository; // Assuming you have a repository
+
+    @Autowired
+    private WatchlistRepository watchlistRepository; // Assuming this repository exists
+
+    @Autowired
+    private UserRepository userRepository;
 
     public StockTable addStockInfo(StockTableDTO stockTableDTO) {
         StockTable stockTable = stockTableRepository.findBySymbol(stockTableDTO.getSymbol())
@@ -122,24 +132,125 @@ public class StockTableServiceImpl implements StockTableService {
         return stock.getFinnhubIndustry().equals(preferences.getIndustry()) ? 0 : 1;
     }
 
-    public Page<StockTable> getFilteredStocks(Preferences preferences, Pageable pageable) {
+    public Page<StockTable> getFilteredStocks(Preferences preferences, Set<UUID> alreadyRecommended , Pageable pageable, int iter) {
         Specification<StockTable> spec = Specification.where(null);
 
-        if (preferences.getTimeInMarket() != null) {
-            spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(preferences.getTimeInMarket()));
+        switch (iter){
+            case 1:
+                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(preferences.getTimeInMarket()));
+                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
+                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
+                break;
+            case 2:
+                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
+                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
+                break;
+            case 3:
+                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
+                break;
+            default:
+                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                break;
         }
-        if (preferences.getMarketCapMillions() != null) {
-            spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
-        }
-        if (preferences.getIndustry() != null) {
-            spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
-        }
-        if (preferences.getRiskLevel() != null) {
-            spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
-        }
+//        if (preferences.getTimeInMarket() != null) {
+//            spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(preferences.getTimeInMarket()));
+//        }
+//        if (preferences.getMarketCapMillions() != null) {
+//            spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
+//        }
+//        if (preferences.getIndustry() != null) {
+//            spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+//        }
+//        if (preferences.getRiskLevel() != null) {
+//            spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
+//        }
 
+        spec = spec.and(StockTableSpecifications.notInStockIds(alreadyRecommended));
 
         return stockTableRepository.findAll(spec, pageable);
+    }
+//=======================================================================================================
+    // Experimental approach to only show recommended stocks etc
+
+    public Page<StockTable> getFilteredStocksIteratively(Preferences preferences, Set<UUID> alreadyInWatchList, Pageable pageable) {
+        Set<UUID> accumulatedRecommendations = new HashSet<>(alreadyInWatchList);
+        List<StockTable> allRecommendations = new ArrayList<>();
+        int totalPages = 0;
+
+        Preferences currentPreferences = new Preferences(preferences); // Copy initial preferences
+        int iter = 1;
+        while (true) {
+            Page<StockTable> page = getFilteredStocks(currentPreferences, accumulatedRecommendations, pageable, iter);
+            allRecommendations.addAll(page.getContent());
+            accumulatedRecommendations.addAll(page.getContent().stream().map(StockTable::getId).collect(Collectors.toSet()));
+            totalPages += page.getTotalPages();
+
+            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences) || page.getTotalPages() <= pageable.getPageNumber()) {
+                break;
+            }
+
+            currentPreferences = removeNextSpecification(currentPreferences, iter);
+            iter++;
+        }
+
+        return new PageImpl<>(allRecommendations, pageable, totalPages);
+    }
+
+    private boolean shouldRemoveNextSpecification(Preferences preferences) {
+        // Logic to determine if another specification should be removed
+        // Return false if there are no more specifications to remove
+        if (preferences.getIndustry() != null){
+            return true;
+        }
+        return false;
+    }
+
+    public Preferences removeNextSpecification(Preferences preferences, int iteration) {
+
+        switch (iteration) {
+            case 1:
+                // Iteration 1: Remove YearsInMarket
+                preferences.setTimeInMarket(null);
+                break;
+            case 2:
+                // Iteration 2: Remove MarketCap
+                preferences.setMarketCapMillions(null);
+                break;
+            case 3:
+                // Iteration 3: Remove Beta
+                preferences.setBeta(null);
+                break;
+
+            case 4:
+                preferences.setIndustry(null);
+                break;
+            default:
+
+                break;
+        }
+
+        return preferences;
+    }
+
+
+//=======================================================================================================
+    public Set<UUID> getWatchlistStockIds(String subId) {
+        Optional<User> userOptional = userRepository.findBySubID(subId);
+        if (!userOptional.isPresent()) {
+            throw new RuntimeException("User not found"); // Or handle this more gracefully
+        }
+
+        User user = userOptional.get();
+
+        // Fetch the watchlist entries for the user and extract the stock IDs
+        List<Watchlist> watchlistEntries = watchlistRepository.findByUser(user);
+        return watchlistEntries.stream()
+                .map(Watchlist::getStock)
+                .map(StockTable::getId)
+                .collect(Collectors.toSet());
     }
 
 }
