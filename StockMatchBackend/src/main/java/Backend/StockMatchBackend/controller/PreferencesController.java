@@ -37,5 +37,5 @@ public class PreferencesController {
     }
 
 //    @GetMapping("/getRecommendations")
-    
+
 }

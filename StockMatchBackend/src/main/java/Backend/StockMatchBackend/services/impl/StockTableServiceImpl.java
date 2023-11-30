@@ -1,10 +1,14 @@
 package Backend.StockMatchBackend.services.impl;
 
+import Backend.StockMatchBackend.model.Preferences;
 import Backend.StockMatchBackend.model.StockTable;
 import Backend.StockMatchBackend.repository.StockTableRepository;
 import Backend.StockMatchBackend.services.StockTableService;
 import Backend.StockMatchBackend.services.dto.StockTableDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,6 +17,9 @@ import java.time.Period;
 import java.time.format.DateTimeParseException;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StockTableServiceImpl implements StockTableService {
@@ -87,6 +94,30 @@ public class StockTableServiceImpl implements StockTableService {
         LocalDate currentDate = LocalDate.now();
         Period period = Period.between(ipoDate, currentDate);
         return period.getYears(); // Autoboxing converts int to Integer
+    }
+
+    public Page<StockTable> getRecommendedStocks(Preferences preferences, Pageable pageable) {
+        List<StockTable> allStocks = stockTableRepository.findAll();
+
+        // Sort stocks based on preferences (this is a simplified example)
+        List<StockTable> sortedStocks = allStocks.stream()
+                .sorted(Comparator.comparing(stock -> matchScore(stock, preferences)))
+                .collect(Collectors.toList());
+
+        int total = sortedStocks.size();
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), total);
+        
+
+        List<StockTable> pageContent = sortedStocks.subList(start, end);
+
+        return new PageImpl<>(pageContent, pageable, total);
+    }
+
+    private int matchScore(StockTable stock, Preferences preferences) {
+        // Implement your scoring logic here
+        // Example: simple scoring based on matching industry
+        return stock.getFinnhubIndustry().equals(preferences.getIndustry()) ? 1 : 0;
     }
 
 }
