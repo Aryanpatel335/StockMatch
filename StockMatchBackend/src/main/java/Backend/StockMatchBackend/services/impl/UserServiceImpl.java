@@ -1,6 +1,8 @@
 package Backend.StockMatchBackend.services.impl;
 
+import Backend.StockMatchBackend.model.Preferences;
 import Backend.StockMatchBackend.model.User;
+import Backend.StockMatchBackend.repository.PreferencesRepository;
 import Backend.StockMatchBackend.repository.UserRepository;
 import Backend.StockMatchBackend.services.UserService;
 import Backend.StockMatchBackend.services.dto.UserDTO;
@@ -13,6 +15,9 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PreferencesRepository preferencesRepository;
 
     public User processUserLogin(UserDTO userDTO) {
         Optional<User> userOptional = userRepository.findBySubID(userDTO.getSub());
@@ -41,5 +46,14 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setUsername(userDTO.getName());
         // Update preferences and watchlists if necessary
+    }
+
+    public Preferences getUserPreferences(String subId) {
+        User user = userRepository.findBySubID(subId)
+                .orElseThrow(() -> new RuntimeException("User not found")); // Replace with appropriate exception handling
+
+
+        return preferencesRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Preferences not found")); // Replace with appropriate exception handling
     }
 }

@@ -1,5 +1,6 @@
 package Backend.StockMatchBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import javax.persistence.*;
 import java.util.UUID;
@@ -17,6 +18,7 @@ public class Preferences {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     private Double beta;

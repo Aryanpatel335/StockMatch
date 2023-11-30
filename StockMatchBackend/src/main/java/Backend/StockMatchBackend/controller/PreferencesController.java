@@ -30,13 +30,12 @@ public class PreferencesController {
         return preferencesRepository.save(preferences);
     }
 
-    // Additional CRUD operations (update, delete) can be added here
-
-
-
     @PostMapping("/saveUserPreferences")
     public ResponseEntity<?> saveUserPreferences(@RequestBody PreferencesDTO preferencesDTO) {
         preferencesService.saveUserPreferences(preferencesDTO);
         return ResponseEntity.ok("Preferences saved successfully");
     }
+
+//    @GetMapping("/getRecommendations")
+    
 }

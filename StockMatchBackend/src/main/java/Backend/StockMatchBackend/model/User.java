@@ -26,6 +26,7 @@ public class User {
     private Integer currentStockView;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Preferences preferences;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
