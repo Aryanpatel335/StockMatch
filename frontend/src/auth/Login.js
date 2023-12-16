@@ -29,7 +29,7 @@ const Login = () => {
 					if (body === true) {
 						dispatch(googleSignInUser(data, navigate));
 					} else {
-						navigate("/preferences");
+						navigate("/");
 					}
 				});
 		} catch (error) {
