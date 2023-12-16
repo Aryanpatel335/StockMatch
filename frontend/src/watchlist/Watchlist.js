@@ -166,7 +166,7 @@ const Watchlist = () => {
 													<Button
 														color={"white"}
 														bg={"red.500"}
-														aria-label="View Live Price"
+														aria-label="Remove from watchlist"
 														size={"md"}
 														onClick={() => removeFromWatchlist(stock.ticker)}
 													>
