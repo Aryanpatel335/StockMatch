@@ -187,6 +187,7 @@ const Main = () => {
 	];
 
 	const [stocks, setStocks] = useState([]);
+	const [currentStock, setCurrentStock] = useState(0);
 
 	const loginStatus = useSelector(userLoginStatusSelector);
 	const userId = useSelector(userIdSelector);
@@ -217,13 +218,48 @@ const Main = () => {
 		}
 	}, []);
 
-	const [currentCompany, setCurrentCompany] = useState(0);
+	useEffect(() => {
+		try {
+			fetch(`/users/${userId}/users/userStockView`, {
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+			})
+				.then((res) => res.json())
+				.then((body) => {
+					if (body) {
+						setCurrentStock(body.currentStockView);
+					}
+				});
+		} catch (error) {
+			console.log(error);
+		}
+
+		return () => {
+			try {
+				fetch(
+					`/users/${userId}/users/userStockView?lastStockView=${currentStock}`,
+					{
+						method: "POST",
+						headers: {
+							Accept: "application/json",
+							"Content-Type": "application/json",
+						},
+					}
+				).then((res) => res.json());
+			} catch (error) {
+				console.log(error);
+			}
+		};
+	}, []);
 
 	const nextCompany = () => {
-		if (currentCompany === mockCompanies.length - 1) {
-			setCurrentCompany(0);
+		if (currentStock === stocks.length - 1) {
+			setCurrentStock(0);
 		} else {
-			setCurrentCompany((currentIndex) => currentIndex + 1);
+			setCurrentStock((currentIndex) => currentIndex + 1);
 		}
 	};
 
@@ -244,7 +280,7 @@ const Main = () => {
 				flexGrow={"1"}
 			>
 				<StockCard
-					currentCompany={mockCompanies[currentCompany]}
+					currentStock={mockCompanies[currentStock]}
 					stockRejected={stockRejected}
 					stockAdded={stockAdded}
 				/>
