@@ -22,6 +22,7 @@ import {
 import StockChart from "./StockChart";
 import StockCardExpanded from "./StockCardExpanded";
 import { useEffect, useState } from "react";
+import CandleChart from "./CandleChart";
 
 const mapAttributeColors = {
 	"Low Risk": "red",
@@ -117,7 +118,7 @@ const StockCard = (props) => {
 										</Badge>
 									))}
 								</Stack>
-								<StockChart />
+								<CandleChart />
 								<Flex
 									flexDirection={"row"}
 									w={"100%"}

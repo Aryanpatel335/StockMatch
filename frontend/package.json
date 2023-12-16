@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@canvasjs/react-charts": "^1.0.0",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",

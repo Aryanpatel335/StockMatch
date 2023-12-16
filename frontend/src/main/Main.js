@@ -1,7 +1,9 @@
 import { Flex, useColorModeValue } from "@chakra-ui/react";
 import StockCard from "./StockCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../common/nav/NavBar";
+import { useSelector } from "react-redux";
+import { userIdSelector, userLoginStatusSelector } from "../store/authSlice";
 
 const Main = () => {
 	const mockCompanies = [
@@ -183,6 +185,37 @@ const Main = () => {
 			],
 		},
 	];
+
+	const [stocks, setStocks] = useState([]);
+
+	const loginStatus = useSelector(userLoginStatusSelector);
+	const userId = useSelector(userIdSelector);
+
+	// useEffect(() => {
+	// 	if (!loginStatus) {
+	// 		navigate("/");
+	// 	}
+	// });
+
+	useEffect(() => {
+		try {
+			fetch(`/users/${userId}/stocks/recommendations?page=0`, {
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+			})
+				.then((res) => res.json())
+				.then((body) => {
+					if (body) {
+						setStocks(body.content);
+					}
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	}, []);
 
 	const [currentCompany, setCurrentCompany] = useState(0);
 
