@@ -2,6 +2,7 @@ import CanvasJSReact from "@canvasjs/react-charts";
 import { Flex } from "@chakra-ui/react";
 import moment from "moment";
 import { useRef } from "react";
+import "./CandleChart.css";
 
 const CandleChart = () => {
 	const mockCandles = [
@@ -252,11 +253,14 @@ const CandleChart = () => {
 
 	const options = {
 		exportEnabled: false,
+		theme: "light2",
 		axisX: {
 			valueFormatString: "D MMM",
+			labelFormatter: function () {
+				return " ";
+			},
 		},
 		axisY: {
-			title: "Price",
 			prefix: "$",
 		},
 		data: [
@@ -272,8 +276,10 @@ const CandleChart = () => {
 	};
 
 	return (
-		<Flex width={"100%"}>
+		<Flex w={"100%"} h={"246px"} className="candlechart-flex">
 			<CanvasJSChart
+				className="candlechart-canvasjschart"
+				height={246}
 				options={options}
 				onRef={(ref) => (chartRef.current = ref)}
 			/>

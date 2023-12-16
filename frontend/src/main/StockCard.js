@@ -19,7 +19,6 @@ import {
 	HeartFilled,
 	UpCircleOutlined,
 } from "@ant-design/icons";
-import StockChart from "./StockChart";
 import StockCardExpanded from "./StockCardExpanded";
 import { useEffect, useState } from "react";
 import CandleChart from "./CandleChart";
