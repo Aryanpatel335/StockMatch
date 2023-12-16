@@ -1,4 +1,4 @@
-import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Flex, useColorModeValue } from "@chakra-ui/react";
 import StockCard from "./StockCard";
 import { useState } from "react";
 import NavBar from "../common/nav/NavBar";
@@ -203,7 +203,7 @@ const Main = () => {
 	};
 
 	return (
-		<Box>
+		<Flex h={"100vh"} flexDirection={"column"}>
 			<NavBar />
 			<Flex
 				bg={useColorModeValue("gray.100", "gray.900")}
@@ -216,7 +216,7 @@ const Main = () => {
 					stockAdded={stockAdded}
 				/>
 			</Flex>
-		</Box>
+		</Flex>
 	);
 };
 

@@ -95,9 +95,9 @@ const Watchlist = () => {
 	};
 
 	return (
-		<Box h={"100vh"}>
+		<Flex h={"100vh"} flexDirection={"column"}>
 			<NavBar />
-			<Flex flexDirection={"column"} w={"100vw"} bg={"gray.100"} minH={"100%"}>
+			<Flex flexDirection={"column"} w={"100vw"} bg={"gray.100"} flexGrow={"1"}>
 				<Container maxW={"sm"} pt={"2"} pb={"2"} minH={"100%"}>
 					<Card minH={"100%"}>
 						<CardBody>
@@ -191,7 +191,7 @@ const Watchlist = () => {
 					</Card>
 				</Container>
 			</Flex>
-		</Box>
+		</Flex>
 	);
 };
 
