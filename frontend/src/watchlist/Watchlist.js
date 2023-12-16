@@ -8,6 +8,7 @@ import {
 	Flex,
 	Heading,
 	Image,
+	Text,
 } from "@chakra-ui/react";
 import NavBar from "../common/nav/NavBar";
 import { Link, useNavigate } from "react-router-dom";
@@ -112,16 +113,15 @@ const Watchlist = () => {
 									<Button>Back</Button>
 								</Link>
 							</Flex>
-
+							<Divider
+								w={"100%"}
+								borderColor={"gray.300"}
+								borderWidth={"1px"}
+							/>
 							<Flex flexDirection={"column"}>
 								{watchlist.length > 0 ? (
 									watchlist.map((stock) => (
 										<>
-											<Divider
-												w={"100%"}
-												borderColor={"gray.300"}
-												borderWidth={"1px"}
-											/>
 											<Flex
 												w={"100%"}
 												py={"1em"}
@@ -174,16 +174,18 @@ const Watchlist = () => {
 													</Button>
 												</Flex>
 											</Flex>
+											<Divider
+												w={"100%"}
+												borderColor={"gray.300"}
+												borderWidth={"1px"}
+											/>
 										</>
 									))
 								) : (
-									<Heading>You have no stocks in your watchlist yet...</Heading>
+									<Text my={8}>
+										You have no stocks in your watchlist yet...
+									</Text>
 								)}
-								<Divider
-									w={"100%"}
-									borderColor={"gray.300"}
-									borderWidth={"1px"}
-								/>
 							</Flex>
 						</CardBody>
 					</Card>
