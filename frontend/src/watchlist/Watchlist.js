@@ -72,6 +72,27 @@ const Watchlist = () => {
 		}
 	}, []);
 
+	const removeFromWatchlist = (tickerToRemove) => {
+		const body = { subID: userId, ticker: tickerToRemove, action: "remove" };
+
+		try {
+			fetch(`/watchlists/removeFromWatchList`, {
+				method: "DELETE",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				body: body,
+			});
+			const updatedWatchlist = watchlist.filter(
+				(stock) => stock.ticker !== tickerToRemove
+			);
+			setWatchlist(updatedWatchlist);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<Box h={"100vh"}>
 			<NavBar />
@@ -147,6 +168,7 @@ const Watchlist = () => {
 														bg={"red.500"}
 														aria-label="View Live Price"
 														size={"md"}
+														onClick={() => removeFromWatchlist(stock.ticker)}
 													>
 														Remove
 													</Button>
