@@ -70,8 +70,6 @@ const NavBar = (props) => {
 								spacing={4}
 								display={{ base: "none", md: "flex" }}
 								justifyContent={"flex-end"}
-								overflowX={"hidden"}
-								overflowY={"hidden"}
 							>
 								{Links.map((l) => (
 									<Link to={l.link}>

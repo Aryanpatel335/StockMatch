@@ -279,11 +279,14 @@ const Main = () => {
 				flexDirection={"column"}
 				flexGrow={"1"}
 			>
-				<StockCard
-					currentStock={mockCompanies[currentStock]}
-					stockRejected={stockRejected}
-					stockAdded={stockAdded}
-				/>
+				{" "}
+				{stocks.length > 0 && (
+					<StockCard
+						currentStock={stocks[currentStock]}
+						stockRejected={stockRejected}
+						stockAdded={stockAdded}
+					/>
+				)}
 			</Flex>
 		</Flex>
 	);
