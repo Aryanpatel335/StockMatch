@@ -11,6 +11,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/joho/godotenv"
+
 	finnhub "github.com/Finnhub-Stock-API/finnhub-go/v2" // assuming this is the package
 )
 
@@ -76,6 +78,7 @@ func fetchStockInfo(symbol string) (*StockInfo, error) {
         log.Fatal("FINNHUB_API_TOKEN is not set")
     }
 	now := time.Now()
+    
 
     // Format the 'to' date as YYYY-MM-DD
     toDate := now.Format("2006-01-02")
@@ -169,6 +172,10 @@ func fetchStockInfo(symbol string) (*StockInfo, error) {
 
 
 func StockTableHandler(w http.ResponseWriter, r *http.Request) {
+    err := godotenv.Load()
+    if err != nil {
+        log.Fatal("Error loading .env file")
+    }
     symbol := r.URL.Query().Get("symbol")
     if symbol == "" {
         http.Error(w, "Missing symbol parameter", http.StatusBadRequest)
@@ -187,7 +194,14 @@ func StockTableHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    springURL := "http://localhost:8080/stocks/addStock"
+    springAPIBaseURL := os.Getenv("SPRING_API_URL")
+    if springAPIBaseURL == "" {
+        log.Fatal("SPRING_API_URL is not set")
+    }
+
+
+    springURL := springAPIBaseURL + "/stocks/addStock"
+    
     err = sendToSpringBackend(jsonData, springURL)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)

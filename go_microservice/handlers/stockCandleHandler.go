@@ -5,9 +5,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/joho/godotenv"
 
 	finnhub "github.com/Finnhub-Stock-API/finnhub-go/v2"
 )
@@ -25,6 +28,11 @@ type StockCandleData struct {
 
 func StockCandlesHandler(w http.ResponseWriter, r *http.Request) {
 	// http.HandleFunc("/stockCandles", func(w http.ResponseWriter, r *http.Request) {
+	err := godotenv.Load()
+    if err != nil {
+        log.Fatal("Error loading .env file")
+    }
+
 	symbol := r.URL.Query().Get("symbol")
 	if symbol == "" {
 		http.Error(w, "Missing symbol parameter", http.StatusBadRequest)
@@ -49,9 +57,13 @@ func StockCandlesHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error marshalling JSON: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
+	springAPIBaseURL := os.Getenv("SPRING_API_URL")
+    if springAPIBaseURL == "" {
+        log.Fatal("SPRING_API_URL is not set")
+    }
 
 	// Define the URL of your Spring backend endpoint
-	springURL := "http://localhost:8080/stockCandles/receiveStockCandles"
+	springURL := springAPIBaseURL + "/stockCandles/receiveStockCandles"
 
 	// Send the JSON data to the Spring backend
 	err = sendToSpringBackendStockCandles(jsonData, springURL)
