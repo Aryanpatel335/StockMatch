@@ -1,0 +1,16 @@
+.canvasjs-chart-credit {
+	display: none;
+}
+
+.canvasjs-chart-canvas {
+	height: 246px !important;
+}
+
+.canvasjs-chart-container {
+	height: 246px !important;
+}
+
+.candlechart-flex,
+.candlechart-flex > div {
+	height: 246px !important;
+}

@@ -1,7 +1,9 @@
-import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Flex, useColorModeValue } from "@chakra-ui/react";
 import StockCard from "./StockCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../common/nav/NavBar";
+import { useSelector } from "react-redux";
+import { userIdSelector, userLoginStatusSelector } from "../store/authSlice";
 
 const Main = () => {
 	const mockCompanies = [
@@ -184,13 +186,80 @@ const Main = () => {
 		},
 	];
 
-	const [currentCompany, setCurrentCompany] = useState(0);
+	const [stocks, setStocks] = useState([]);
+	const [currentStock, setCurrentStock] = useState(0);
+
+	const loginStatus = useSelector(userLoginStatusSelector);
+	const userId = useSelector(userIdSelector);
+
+	// useEffect(() => {
+	// 	if (!loginStatus) {
+	// 		navigate("/");
+	// 	}
+	// });
+
+	useEffect(() => {
+		try {
+			fetch(`/users/${userId}/stocks/recommendations?page=0`, {
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+			})
+				.then((res) => res.json())
+				.then((body) => {
+					if (body) {
+						setStocks(body.content);
+					}
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	}, []);
+
+	useEffect(() => {
+		try {
+			fetch(`/users/${userId}/users/userStockView`, {
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+			})
+				.then((res) => res.json())
+				.then((body) => {
+					if (body) {
+						setCurrentStock(body.currentStockView);
+					}
+				});
+		} catch (error) {
+			console.log(error);
+		}
+
+		return () => {
+			try {
+				fetch(
+					`/users/${userId}/users/userStockView?lastStockView=${currentStock}`,
+					{
+						method: "POST",
+						headers: {
+							Accept: "application/json",
+							"Content-Type": "application/json",
+						},
+					}
+				).then((res) => res.json());
+			} catch (error) {
+				console.log(error);
+			}
+		};
+	}, []);
 
 	const nextCompany = () => {
-		if (currentCompany === mockCompanies.length - 1) {
-			setCurrentCompany(0);
+		if (currentStock === stocks.length - 1) {
+			setCurrentStock(0);
 		} else {
-			setCurrentCompany((currentIndex) => currentIndex + 1);
+			setCurrentStock((currentIndex) => currentIndex + 1);
 		}
 	};
 
@@ -203,20 +272,23 @@ const Main = () => {
 	};
 
 	return (
-		<Box>
+		<Flex h={"100vh"} flexDirection={"column"}>
 			<NavBar />
 			<Flex
 				bg={useColorModeValue("gray.100", "gray.900")}
 				flexDirection={"column"}
 				flexGrow={"1"}
 			>
-				<StockCard
-					currentCompany={mockCompanies[currentCompany]}
-					stockRejected={stockRejected}
-					stockAdded={stockAdded}
-				/>
+				{" "}
+				{stocks.length > 0 && (
+					<StockCard
+						currentStock={stocks[currentStock]}
+						stockRejected={stockRejected}
+						stockAdded={stockAdded}
+					/>
+				)}
 			</Flex>
-		</Box>
+		</Flex>
 	);
 };
 

@@ -43,8 +43,8 @@ const NavBar = (props) => {
 
 	return (
 		<>
-			<Box px={4} boxShadow="md">
-				<Flex h={12} alignItems={"center"} justifyContent={"space-between"}>
+			<Box h={14} px={4} boxShadow="md">
+				<Flex h={14} alignItems={"center"} justifyContent={"space-between"}>
 					{!isPreferencesPage ? (
 						<HStack
 							spacing={8}
@@ -70,7 +70,6 @@ const NavBar = (props) => {
 								spacing={4}
 								display={{ base: "none", md: "flex" }}
 								justifyContent={"flex-end"}
-								overflowX={"hidden"}
 							>
 								{Links.map((l) => (
 									<Link to={l.link}>
