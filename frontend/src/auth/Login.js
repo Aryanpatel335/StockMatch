@@ -26,10 +26,10 @@ const Login = () => {
 			})
 				.then((res) => res.json())
 				.then((body) => {
-					if (body === true) {
-						dispatch(googleSignInUser(data, navigate));
+					if (body.length !== 0) {
+						dispatch(googleSignInUser(body, navigate));
 					} else {
-						navigate("/");
+						console.log("Not signed in successfully");
 					}
 				});
 		} catch (error) {
@@ -41,11 +41,7 @@ const Login = () => {
 		console.log("Google Sign Up unsuccessful");
 	};
 
-	return (
-		<div className="signInButton">
-			<GoogleLogin onSuccess={googleSuccess} onError={googleFailure} />
-		</div>
-	);
+	return <GoogleLogin onSuccess={googleSuccess} onError={googleFailure} />;
 };
 
 export default Login;

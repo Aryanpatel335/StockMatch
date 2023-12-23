@@ -16,8 +16,10 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import NavBar from "../common/nav/NavBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { userIdSelector, userLoginStatusSelector } from "../store/authSlice";
 
 const Preferences = () => {
 	const navigate = useNavigate();
@@ -28,6 +30,21 @@ const Preferences = () => {
 		analystRating: "",
 		sectors: [],
 	});
+
+	const loginStatus = useSelector(userLoginStatusSelector);
+	const userId = useSelector(userIdSelector);
+	const [userProfile, setUserProfile] = useState(null);
+
+	useEffect(() => {
+		if (!loginStatus) {
+			navigate("/");
+		} else {
+			setUserProfile(localStorage.getItem("profile"));
+			if (userProfile?.preferences) {
+				navigate("/main");
+			}
+		}
+	}, [userProfile]);
 
 	const handleRadioChange = (question, value) => {
 		setFormData({
@@ -43,9 +60,42 @@ const Preferences = () => {
 		});
 	};
 
+	const savePreferences = (formData) => {
+		const userPreferences = {
+			beta: formData.risk === "" ? null : parseFloat(formData.risk),
+			analystScore:
+				formData.analystRating === ""
+					? null
+					: parseFloat(formData.analystRating),
+			timeInMarket:
+				formData.companyAge === "" ? null : parseFloat(formData.companyAge),
+			marketCapMillions:
+				formData.companySize === "" ? null : parseFloat(formData.companySize),
+			// TODO: This is a temporary fix until the backend schema is updated
+			industry: formData.sectors[0],
+		};
+
+		const body = { subID: userId, ...userPreferences };
+
+		fetch(`/preferences/saveUserPreferences`, {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ body }),
+		})
+			.then((res) => res.json())
+			.then((body) => {
+				setUserProfile((oldProfile) => {
+					return { ...oldProfile, preferences: userPreferences };
+				});
+			})
+			.catch((error) => console.log(error));
+	};
+
 	const handleSubmit = () => {
-		console.log("Form Data:", formData);
-		navigate("/main");
+		savePreferences(formData);
 	};
 
 	return (
@@ -72,13 +122,16 @@ const Preferences = () => {
 										value={formData.risk}
 									>
 										<Stack direction="column">
-											<Radio value="low" colorScheme={"teal"}>
+											<Radio value={"0.0"} colorScheme={"green"}>
 												Low Risk
 											</Radio>
-											<Radio value="high" colorScheme={"teal"}>
+											<Radio value={"1.0"} colorScheme={"green"}>
+												Medium Risk
+											</Radio>
+											<Radio value={"1.5"} colorScheme={"green"}>
 												High Risk
 											</Radio>
-											<Radio value="no-preference" colorScheme={"teal"}>
+											<Radio value={""} colorScheme={"green"}>
 												No Preference
 											</Radio>
 										</Stack>
@@ -97,13 +150,13 @@ const Preferences = () => {
 										value={formData.companyAge}
 									>
 										<Stack direction="column">
-											<Radio value="established" colorScheme={"teal"}>
-												Well-Established Companies
-											</Radio>
-											<Radio value="emerging" colorScheme={"teal"}>
+											<Radio value={"0"} colorScheme={"green"}>
 												Newer/Emerging Companies
 											</Radio>
-											<Radio value="no-preference" colorScheme={"teal"}>
+											<Radio value={"10"} colorScheme={"green"}>
+												Well-Established Companies
+											</Radio>
+											<Radio value={""} colorScheme={"green"}>
 												No Preference
 											</Radio>
 										</Stack>
@@ -122,13 +175,16 @@ const Preferences = () => {
 										value={formData.companySize}
 									>
 										<Stack direction="column">
-											<Radio value="small" colorScheme={"teal"}>
+											<Radio value={"0"} colorScheme={"green"}>
 												Smaller Companies (Low Market Cap)
 											</Radio>
-											<Radio value="large" colorScheme={"teal"}>
+											<Radio value={"2000"} colorScheme={"green"}>
+												Medium-Size Companies (Mid Market Cap)
+											</Radio>
+											<Radio value={"10000"} colorScheme={"green"}>
 												Larger Companies (High Market Cap)
 											</Radio>
-											<Radio value="no-preference" colorScheme={"teal"}>
+											<Radio value={""} colorScheme={"green"}>
 												No Preference
 											</Radio>
 										</Stack>
@@ -147,21 +203,21 @@ const Preferences = () => {
 										value={formData.analystRating}
 									>
 										<Stack direction="column">
-											<Radio value="significant" colorScheme={"teal"}>
-												Significant
-												{/* Significant: Analyst ratings strongly influence my
-												decisions. */}
+											<Radio value={"1"} colorScheme={"green"}>
+												Minimal
+												{/* Minimal: I don't rely much on analyst ratings. */}
 											</Radio>
-											<Radio value="moderate" colorScheme={"teal"}>
+											<Radio value={"2"} colorScheme={"green"}>
 												Moderate
 												{/* Moderate: I consider analyst ratings, but they are not
 												the sole factor. */}
 											</Radio>
-											<Radio value="minimal" colorScheme={"teal"}>
-												Minimal
-												{/* Minimal: I don't rely much on analyst ratings. */}
+											<Radio value={"3"} colorScheme={"green"}>
+												Significant
+												{/* Significant: Analyst ratings strongly influence my
+												decisions. */}
 											</Radio>
-											<Radio value="no-preference" colorScheme={"teal"}>
+											<Radio value={""} colorScheme={"green"}>
 												No Preference
 												{/* No Preference: I'm indifferent to analyst ratings. */}
 											</Radio>
@@ -178,14 +234,17 @@ const Preferences = () => {
 										onChange={handleCheckboxChange}
 									>
 										<Stack direction="column">
-											<Checkbox value="technology" colorScheme={"teal"}>
+											<Checkbox value="Technology" colorScheme={"green"}>
 												Technology
 											</Checkbox>
-											<Checkbox value="health-care" colorScheme={"teal"}>
+											<Checkbox value="Health Care" colorScheme={"green"}>
 												Health Care
 											</Checkbox>
-											<Checkbox value="real-estate" colorScheme={"teal"}>
+											<Checkbox value="Real Estate" colorScheme={"green"}>
 												Real Estate
+											</Checkbox>
+											<Checkbox value="Energy" colorScheme={"green"}>
+												Energy
 											</Checkbox>
 										</Stack>
 									</CheckboxGroup>

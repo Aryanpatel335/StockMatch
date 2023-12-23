@@ -9,7 +9,7 @@ const authSlice = createSlice({
 	reducers: {
 		loginUser(state, action) {
 			state.userLoginStatus = true;
-			state.userId = action.payload.sub;
+			state.userId = action.payload.subID;
 			localStorage.setItem("profile", JSON.stringify(action.payload));
 		},
 		logOutUser(state) {
@@ -30,7 +30,12 @@ export const userIdSelector = (state) => state.auth.userId;
 export const googleSignInUser = (formData, navigate) => async (dispatch) => {
 	try {
 		dispatch(loginUser(formData));
-		navigate("/preferences");
+		console.log(formData);
+		if (!formData.preferences) {
+			navigate("/preferences");
+		} else {
+			navigate("/main");
+		}
 	} catch (error) {
 		console.log(error);
 	}
