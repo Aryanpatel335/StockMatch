@@ -3,8 +3,8 @@ package Backend.StockMatchBackend.controller;
 import Backend.StockMatchBackend.model.Preferences;
 import Backend.StockMatchBackend.model.StockTable;
 import Backend.StockMatchBackend.model.User;
-import Backend.StockMatchBackend.repository.StockTableRepository;
 import Backend.StockMatchBackend.repository.UserRepository;
+import Backend.StockMatchBackend.services.dto.UserStockViewDTO;
 import Backend.StockMatchBackend.services.dto.UserDTO;
 import Backend.StockMatchBackend.services.impl.StockTableServiceImpl;
 import Backend.StockMatchBackend.services.impl.UserServiceImpl;
@@ -34,10 +34,13 @@ public class UserController {
     @Autowired
     private StockTableServiceImpl stockTableImpl;
 
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable UUID id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-    }
+
+    private UserStockViewDTO userStockViewDTO;
+
+//    @GetMapping("/{id}")
+//    public User getUserById(@PathVariable UUID id) {
+//        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+//    }
 
     //testing purpose only we wont use this here
 //    @PostMapping
@@ -102,11 +105,38 @@ public class UserController {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             Integer currentStockView = user.getCurrentStockView();
-            return ResponseEntity.ok(currentStockView); // Return the current stock view
+            UserStockViewDTO response = new UserStockViewDTO(currentStockView);
+            return ResponseEntity.ok(response); // Return the response as JSON
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
+
+    @GetMapping("/{subID}")
+    public ResponseEntity<?> getUserBySubID(@PathVariable String subID) {
+        Optional<User> userOptional = userRepository.findBySubID(subID);
+
+        if (userOptional.isPresent()) {
+            return ResponseEntity.ok(userOptional.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
+
+//    @PutMapping("/{subID}/userStockView")
+//    public ResponseEntity<?> updateUserStockView(@PathVariable String subID, @RequestBody UserStockViewDTO stockViewUpdateDTO) {
+//        Optional<User> userOptional = userRepository.findBySubID(subID);
+//
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+//            user.setCurrentStockView(stockViewUpdateDTO.getCurrentStockView());
+//            userRepository.save(user);
+//            return ResponseEntity.ok().build(); // Successfully updated
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+//        }
+//    }
 
 
 
