@@ -221,7 +221,7 @@ public class StockTableServiceImpl implements StockTableService {
                 break;
             case 3:
                 // Iteration 3: Remove Beta
-                preferences.setBeta(null);
+                preferences.setRiskLevel(null);
                 break;
 
             case 4:
