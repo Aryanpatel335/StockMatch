@@ -188,10 +188,12 @@ public class StockTableServiceImpl implements StockTableService {
             accumulatedRecommendations.addAll(page.getContent().stream().map(StockTable::getId).collect(Collectors.toSet()));
             totalPages += page.getTotalPages();
 
-            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences) || page.getTotalPages() <= pageable.getPageNumber()) {
+//            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences) || page.getTotalPages() <= pageable.getPageNumber()) {
+//                break;
+//            }
+            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences)) {
                 break;
             }
-
             currentPreferences = removeNextSpecification(currentPreferences, iter);
             iter++;
         }
