@@ -25,8 +25,10 @@ import CandleChart from "./CandleChart";
 
 const mapAttributeColors = {
 	"Low Risk": "red",
+	"Medium Risk": "red",
 	"High Risk": "red",
 	"Large Company": "blue",
+	"Mid-size Company": "blue",
 	"Small Company": "blue",
 	Sector: "teal",
 	Established: "yellow",
@@ -35,22 +37,13 @@ const mapAttributeColors = {
 };
 
 const StockCard = (props) => {
-	const {
-		fullName,
-		ticker,
-		exchange,
-		companyLogo,
-		companyNews,
-		attributes,
-		weburl,
-	} = props.currentCompany;
-
 	const [expanded, setExpanded] = useState(false);
 	const [windowSize, setWindowSize] = useState({
 		width: undefined,
 		height: undefined,
 	});
 	const [triggerTransition, setTriggerTransition] = useState(true);
+	const [attributes, setAttributes] = useState([]);
 
 	useEffect(() => {
 		function handleResize() {
@@ -66,7 +59,51 @@ const StockCard = (props) => {
 
 	useEffect(() => {
 		setTriggerTransition(true);
+		parseAttributes();
 	}, [props]);
+
+	const {
+		name,
+		ticker,
+		exchange,
+		logo,
+		beta,
+		yearsInMarket,
+		marketCapitalization,
+		webUrl,
+		finnhubIndustry,
+	} = props.currentStock;
+
+	const parseAttributes = () => {
+		let tmpAttributes = [];
+
+		if (beta < 1.0) {
+			tmpAttributes.push({ type: "Low Risk", detail: "" });
+		} else if (beta < 1.5) {
+			tmpAttributes.push({ type: "Medium Risk", detail: "" });
+		} else {
+			tmpAttributes.push({ type: "High Risk", detail: "" });
+		}
+
+		if (marketCapitalization < 2000) {
+			tmpAttributes.push({ type: "Small Company", detail: "" });
+		} else if (marketCapitalization < 10000) {
+			tmpAttributes.push({ type: "Mid-size Company", detail: "" });
+		} else {
+			tmpAttributes.push({ type: "Large Company", detail: "" });
+		}
+
+		if (yearsInMarket < 10) {
+			tmpAttributes.push({ type: "Emerging", detail: "" });
+		} else {
+			tmpAttributes.push({ type: "Established", detail: "" });
+		}
+
+		if (finnhubIndustry) {
+			tmpAttributes.push({ type: "Sector", detail: finnhubIndustry });
+		}
+		setAttributes(tmpAttributes);
+	};
 
 	return (
 		<Container maxW={"sm"} pt={"2"} pb={"2"} h={"100%"}>
@@ -94,23 +131,26 @@ const StockCard = (props) => {
 								>
 									<Flex flexDirection={"column"}>
 										<Heading as="h1" size={"md"}>
-											{fullName}
+											{`${name} (${ticker})`}
 										</Heading>
 										<Heading as="h2" size="xs" fontWeight={"medium"}>
-											{`${exchange}:${ticker}`}
+											{`${exchange}`}
 										</Heading>
 									</Flex>
 									<Image
 										boxSize="50px"
 										objectFit="contain"
-										src={companyLogo}
-										alt="StockMatch Logo"
+										src={logo}
+										alt="Company Logo"
 										borderRadius={"10%"}
 									/>
 								</Flex>
 								<Stack direction="row" flexWrap="wrap" h={"44px"} mb={"1"}>
 									{attributes.map((attr) => (
-										<Badge colorScheme={mapAttributeColors[attr.type]}>
+										<Badge
+											colorScheme={mapAttributeColors[attr.type]}
+											key={attr.type}
+										>
 											{attr.detail
 												? `${attr.type}: ${attr.detail}`
 												: `${attr.type}`}
@@ -140,7 +180,7 @@ const StockCard = (props) => {
 											View Live Price
 										</Button>
 									</Link>
-									<Link href={weburl} isExternal w={"48%"}>
+									<Link href={webUrl} isExternal w={"48%"}>
 										<Button
 											colorScheme="teal"
 											aria-label="Company Website"
@@ -150,7 +190,8 @@ const StockCard = (props) => {
 										</Button>
 									</Link>
 								</Flex>
-								{windowSize.height < 888 && (
+								{/* TODO: Add this back in once we get CompanyNews working */}
+								{/* {windowSize.height < 888 && (
 									<Button
 										bg="white"
 										color="black"
@@ -175,10 +216,10 @@ const StockCard = (props) => {
 											</>
 										)}
 									</Button>
-								)}
-								{(windowSize.height >= 888 || expanded) && (
+								)} */}
+								{/* {(windowSize.height >= 888 || expanded) && (
 									<StockCardExpanded companyNews={companyNews} />
-								)}
+								)} */}
 							</Stack>
 						</Fade>
 						<Flex
