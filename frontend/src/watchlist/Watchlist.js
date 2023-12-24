@@ -47,11 +47,11 @@ const Watchlist = () => {
 	const loginStatus = useSelector(userLoginStatusSelector);
 	const userId = useSelector(userIdSelector);
 
-	useEffect(() => {
-		if (!loginStatus) {
-			navigate("/");
-		}
-	});
+	// useEffect(() => {
+	// 	if (!loginStatus) {
+	// 		navigate("/");
+	// 	}
+	// });
 
 	useEffect(() => {
 		try {
@@ -77,6 +77,10 @@ const Watchlist = () => {
 		const body = { subID: userId, ticker: tickerToRemove, action: "remove" };
 
 		try {
+			const updatedWatchlist = watchlist.filter(
+				(stock) => stock.ticker !== tickerToRemove
+			);
+			setWatchlist(updatedWatchlist);
 			fetch(`/watchlists/removeFromWatchList`, {
 				method: "DELETE",
 				headers: {
@@ -85,10 +89,6 @@ const Watchlist = () => {
 				},
 				body: body,
 			});
-			const updatedWatchlist = watchlist.filter(
-				(stock) => stock.ticker !== tickerToRemove
-			);
-			setWatchlist(updatedWatchlist);
 		} catch (error) {
 			console.log(error);
 		}
