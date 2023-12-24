@@ -4,6 +4,7 @@ import Backend.StockMatchBackend.model.Preferences;
 import Backend.StockMatchBackend.model.StockTable;
 import Backend.StockMatchBackend.model.User;
 import Backend.StockMatchBackend.repository.UserRepository;
+import Backend.StockMatchBackend.services.dto.StockTableResponseDTO;
 import Backend.StockMatchBackend.services.dto.UserStockViewDTO;
 import Backend.StockMatchBackend.services.dto.UserDTO;
 import Backend.StockMatchBackend.services.impl.StockTableServiceImpl;
@@ -67,9 +68,9 @@ public class UserController {
     }
 
     @GetMapping("/{subID}/stocks/recommendations")
-    public ResponseEntity<Page<StockTable>> getStockRecommendations(@PathVariable String subID,
-                                                                    @RequestParam(defaultValue = "0") int page,
-                                                                    @RequestParam(defaultValue = "30") int size) {
+    public ResponseEntity<Page<StockTableResponseDTO>> getStockRecommendations(@PathVariable String subID,
+                                                                               @RequestParam(defaultValue = "0") int page,
+                                                                               @RequestParam(defaultValue = "30") int size) {
         Preferences preferences = userService.getUserPreferences(subID);
         if (preferences == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -82,7 +83,8 @@ public class UserController {
         // Fetch filtered stocks based on preferences
         Page<StockTable> recommendedStocks = stockTableImpl.getFilteredStocksIteratively(preferences, alreadyInWatchList, pageable);
 
-        return ResponseEntity.ok(recommendedStocks);
+        Page<StockTableResponseDTO> dtoStockTablePage = recommendedStocks.map(this::mapToStockTableResponseDTO);
+        return ResponseEntity.ok(dtoStockTablePage);
     }
 
     @PostMapping("/{subID}/userStockView")
@@ -137,6 +139,38 @@ public class UserController {
 //            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
 //        }
 //    }
+    public StockTableResponseDTO mapToStockTableResponseDTO(StockTable stockTable) {
+        StockTableResponseDTO dto = new StockTableResponseDTO();
+
+        dto.setId(stockTable.getId());
+        dto.setSymbol(stockTable.getSymbol());
+        dto.setPrevDayClose(stockTable.getPrevDayClose());
+        dto.setCountry(stockTable.getCountry());
+        dto.setCurrency(stockTable.getCurrency());
+        dto.setExchange(stockTable.getExchange());
+        dto.setIpo(stockTable.getIpo()); // Consider converting this to a date object if needed
+        dto.setMarketCapitalization(stockTable.getMarketCapitalization());
+        dto.setName(stockTable.getName());
+        dto.setTicker(stockTable.getTicker());
+        dto.setWebUrl(stockTable.getWebUrl());
+        dto.setLogo(stockTable.getLogo());
+        dto.setFinnhubIndustry(stockTable.getFinnhubIndustry());
+        dto.setWeekHigh(stockTable.getWeekHigh());
+        dto.setWeekLow(stockTable.getWeekLow());
+        dto.setWeekLowDate(stockTable.getWeekLowDate()); // Consider converting this to a date object if needed
+        dto.setBeta(stockTable.getBeta());
+        dto.setMarketLink1(stockTable.getMarketLink1());
+        dto.setMarketLink2(stockTable.getMarketLink2());
+        dto.setMarketLink3(stockTable.getMarketLink3());
+        dto.setRiskLevel(stockTable.getRiskLevel());
+        dto.setYearsInMarket(stockTable.getYearsInMarket());
+
+        // Exclude relationships like 'watchlist' and 'stockCandles' from the DTO
+        // If needed, map them to corresponding DTOs and add to the list in StockTableResponseDTO
+
+        return dto;
+    }
+
 
 
 
