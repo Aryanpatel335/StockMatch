@@ -13,6 +13,7 @@ func main() {
 	//this is what gets the StockInfo for the stocks
 	http.HandleFunc("/getStock", handlers.StockTableHandler)
 	http.HandleFunc("/stockCandles", handlers.StockCandlesHandler)
+	http.HandleFunc("/getCompanyNews", handlers.CompanyNewsHandler)
 	// You can add more handlers for different endpoints as needed
 
 	// Start the server on port 3000
