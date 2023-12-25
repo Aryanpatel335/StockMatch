@@ -3,6 +3,8 @@ package Backend.StockMatchBackend.services.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class PreferencesDTO {
@@ -12,5 +14,6 @@ public class PreferencesDTO {
     private Double timeInMarket;
     private Double marketCapMillions;
     private String industry;
+    private List<String> industryList;
     // Getters and setters
 }

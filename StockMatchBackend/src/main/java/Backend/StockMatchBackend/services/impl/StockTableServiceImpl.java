@@ -139,20 +139,28 @@ public class StockTableServiceImpl implements StockTableService {
             case 1:
                 spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(preferences.getTimeInMarket()));
                 spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
-                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
                 spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
+                spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
+
                 break;
             case 2:
                 spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
-                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
+
                 spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 break;
             case 3:
-                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
+
                 spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 break;
             default:
-                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
+
                 break;
         }
 //        if (preferences.getTimeInMarket() != null) {
