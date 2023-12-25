@@ -3,8 +3,12 @@ package Backend.StockMatchBackend.services.specifications;
 import Backend.StockMatchBackend.model.StockTable;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
 
 public class StockTableSpecifications {
 
@@ -34,4 +38,24 @@ public class StockTableSpecifications {
                         criteriaBuilder.conjunction() :
                         root.get("id").in(excludedStockIds).not();
     }
+
+    public static Specification<StockTable> hasIndustryList(List<String> industries) {
+        return (root, query, cb) -> {
+            if (industries == null || industries.isEmpty()) {
+                return cb.isTrue(cb.literal(true)); // If no industry list is provided, return all
+            }
+
+            // Create a predicate for each industry
+            List<Predicate> predicates = new ArrayList<>();
+            for (String industry : industries) {
+                predicates.add(cb.equal(root.get("finnhubIndustry"), industry));
+            }
+
+            // Combine the predicates using 'or' (to match any of the industries)
+            Predicate combinedPredicate = cb.or(predicates.toArray(new Predicate[0]));
+
+            return combinedPredicate;
+        };
+    }
+
 }
