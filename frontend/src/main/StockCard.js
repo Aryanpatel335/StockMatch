@@ -178,15 +178,16 @@ const StockCard = (props) => {
 									</Text>
 								</Flex>
 								<Flex justifyContent={"space-between"} w={"100%"}>
-									<Link
+									<a
 										href={`https://finance.yahoo.com/quote/${ticker}/`}
-										isExternal
+										target="_blank"
+										rel="noopener noreferrer"
 										w={"48%"}
 									>
 										<Button colorScheme="blue" aria-label="View Live Price">
 											View Live Price
 										</Button>
-									</Link>
+									</a>
 									<Link href={webUrl} isExternal w={"48%"}>
 										<Button
 											colorScheme="teal"
@@ -201,7 +202,7 @@ const StockCard = (props) => {
 									<Button
 										bg="white"
 										color="black"
-										aria-label="View Live Price"
+										aria-label="Show News"
 										w={"100%"}
 										h={"2em"}
 										onClick={() =>

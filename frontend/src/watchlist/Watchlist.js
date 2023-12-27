@@ -145,19 +145,19 @@ const Watchlist = () => {
 													</Flex>
 												</Flex>
 												<Flex justifyContent={"space-around"}>
-													<Link
+													<a
 														href={`https://finance.yahoo.com/quote/${stock.ticker}/`}
-														isExternal
+														target="_blank"
+														rel="noopener noreferrer"
 													>
 														<Button
-															color="white"
-															bg={"blue.500"}
-															aria-label="View Live Price"
+															colorScheme="blue"
+															aria-label="View Price"
 															size={"md"}
 														>
 															View Price
 														</Button>
-													</Link>
+													</a>
 													<Button
 														color={"white"}
 														bg={"red.500"}
