@@ -1,5 +1,4 @@
 import {
-	Box,
 	Button,
 	Card,
 	CardBody,
@@ -18,40 +17,17 @@ import { userIdSelector, userLoginStatusSelector } from "../store/authSlice";
 
 const Watchlist = () => {
 	const navigate = useNavigate();
-	// const mockWatchlist = [
-	// 	{
-	// 		fullName: "Apple Inc",
-	// 		ticker: "AAPL",
-	// 		exchange: "NASDAQ",
-	// 		companyLogo:
-	// 			"https://static.finnhub.io/logo/87cb30d8-80df-11ea-8951-00000000092a.png",
-	// 	},
-	// 	{
-	// 		fullName: "Texas Instruments Inc",
-	// 		ticker: "TXN",
-	// 		exchange: "NASDAQ",
-	// 		companyLogo:
-	// 			"https://media.zenfs.com/en/us.finance.gurufocus/46b33df5eee32f0e3f1280f21950eade",
-	// 	},
-	// 	{
-	// 		fullName: "Ceridian HCM Holding Inc",
-	// 		ticker: "CDAY",
-	// 		exchange: "NYSE",
-	// 		companyLogo:
-	// 			"https://images.crunchbase.com/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/re8dcjamiepioshqsix5",
-	// 	},
-	// ];
 
 	const [watchlist, setWatchlist] = useState([]);
 
 	const loginStatus = useSelector(userLoginStatusSelector);
 	const userId = useSelector(userIdSelector);
 
-	// useEffect(() => {
-	// 	if (!loginStatus) {
-	// 		navigate("/");
-	// 	}
-	// });
+	useEffect(() => {
+		if (!loginStatus) {
+			navigate("/");
+		}
+	});
 
 	useEffect(() => {
 		try {
@@ -74,11 +50,11 @@ const Watchlist = () => {
 	}, []);
 
 	const removeFromWatchlist = (tickerToRemove) => {
-		const body = { subID: userId, ticker: tickerToRemove, action: "remove" };
+		const body = { subID: userId, symbol: tickerToRemove, action: "remove" };
 
 		try {
 			const updatedWatchlist = watchlist.filter(
-				(stock) => stock.ticker !== tickerToRemove
+				(stock) => stock.symbol !== tickerToRemove
 			);
 			setWatchlist(updatedWatchlist);
 			fetch(`/watchlists/removeFromWatchList`, {
@@ -87,7 +63,7 @@ const Watchlist = () => {
 					Accept: "application/json",
 					"Content-Type": "application/json",
 				},
-				body: body,
+				body: JSON.stringify(body),
 			});
 		} catch (error) {
 			console.log(error);
@@ -129,29 +105,30 @@ const Watchlist = () => {
 												flexDirection={"column"}
 											>
 												<Flex pb={"1em"}>
-													<Image
+													{/* TODO: Add logo back in once API is updated */}
+													{/* <Image
 														boxSize="40px"
 														objectFit="contain"
 														src={stock.companyLogo}
 														alt="StockMatch Logo"
 														borderRadius={"10%"}
 														mr={"0.5em"}
-													/>
+													/> */}
 													<Flex
 														flexDirection={"column"}
 														justifyContent={"flex-start"}
 													>
 														<Heading as="h2" size={"s"}>
-															{stock.fullName}
+															{stock.name}
 														</Heading>
 														<Heading as="h3" size="xs" fontWeight={"medium"}>
-															{`${stock.exchange}:${stock.ticker}`}
+															{stock.symbol}
 														</Heading>
 													</Flex>
 												</Flex>
 												<Flex justifyContent={"space-around"}>
 													<Link
-														href={`https://finance.yahoo.com/quote/${stock.ticker}/`}
+														href={`https://finance.yahoo.com/quote/${stock.symbol}/`}
 														isExternal
 													>
 														<Button
@@ -168,7 +145,7 @@ const Watchlist = () => {
 														bg={"red.500"}
 														aria-label="Remove from watchlist"
 														size={"md"}
-														onClick={() => removeFromWatchlist(stock.ticker)}
+														onClick={() => removeFromWatchlist(stock.symbol)}
 													>
 														Remove
 													</Button>

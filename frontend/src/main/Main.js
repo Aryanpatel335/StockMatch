@@ -94,7 +94,6 @@ const Main = () => {
 	};
 
 	const nextCompany = () => {
-		console.log("nextCompany called");
 		if (currentStock === stocks.length - 1) {
 			console.log("a");
 			setCurrentStock(0);
@@ -104,12 +103,34 @@ const Main = () => {
 		}
 	};
 
+	const addToWatchlist = () => {
+		const body = {
+			subID: userId,
+			ticker: stocks[currentStock].ticker,
+			action: "like",
+		};
+		try {
+			fetch(`/watchlists/addStockToWatchList`, {
+				method: "POST",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(body),
+			}).then(() => {
+				nextCompany();
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const stockRejected = () => {
 		nextCompany();
 	};
 
 	const stockAdded = () => {
-		nextCompany();
+		addToWatchlist();
 	};
 
 	return (
