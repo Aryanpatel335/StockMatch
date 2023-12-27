@@ -1,4 +1,3 @@
-import { Button } from "@chakra-ui/react";
 import { googleLogout } from "@react-oauth/google";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

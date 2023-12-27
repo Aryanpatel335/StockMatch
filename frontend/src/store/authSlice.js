@@ -39,3 +39,12 @@ export const googleSignInUser = (formData, navigate) => async (dispatch) => {
 		console.log(error);
 	}
 };
+
+export const googleSignOutUser = (data, navigate) => async (dispatch) => {
+	try {
+		dispatch(logOutUser(data));
+		navigate("/");
+	} catch (error) {
+		console.log(error);
+	}
+};
