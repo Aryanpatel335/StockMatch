@@ -22,6 +22,7 @@ import {
 import StockCardExpanded from "./StockCardExpanded";
 import { useEffect, useState } from "react";
 import CandleChart from "./CandleChart";
+import moment from "moment";
 
 const mapAttributeColors = {
 	"Low Risk": "red",
@@ -164,7 +165,13 @@ const StockCard = (props) => {
 									justifyContent={"space-between"}
 								>
 									<Text fontSize={"xs"} color={"gray.500"}>
-										Last updated 12:00AM 09/09/2023
+										Last updated{" "}
+										{props.candleInfo.length > 0
+											? moment(
+													props.candleInfo[props.candleInfo.length - 1]
+														.uniqueCandleTimestamp
+											  ).format("lll")
+											: "N/A"}
 									</Text>
 									<Text fontSize={"xs"} color={"gray.500"}>
 										1 month view
