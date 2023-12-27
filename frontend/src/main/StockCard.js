@@ -157,7 +157,7 @@ const StockCard = (props) => {
 										</Badge>
 									))}
 								</Stack>
-								<CandleChart />
+								<CandleChart candleInfo={props.candleInfo} />
 								<Flex
 									flexDirection={"row"}
 									w={"100%"}
@@ -190,8 +190,7 @@ const StockCard = (props) => {
 										</Button>
 									</Link>
 								</Flex>
-								{/* TODO: Add this back in once we get CompanyNews working */}
-								{/* {windowSize.height < 888 && (
+								{windowSize.height < 888 && (
 									<Button
 										bg="white"
 										color="black"
@@ -216,10 +215,10 @@ const StockCard = (props) => {
 											</>
 										)}
 									</Button>
-								)} */}
-								{/* {(windowSize.height >= 888 || expanded) && (
-									<StockCardExpanded companyNews={companyNews} />
-								)} */}
+								)}
+								{(windowSize.height >= 888 || expanded) && (
+									<StockCardExpanded companyNews={props.companyNews} />
+								)}
 							</Stack>
 						</Fade>
 						<Flex

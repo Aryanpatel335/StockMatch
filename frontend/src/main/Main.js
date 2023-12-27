@@ -13,6 +13,7 @@ const Main = () => {
 		localStorage.getItem("profile")
 	);
 	const [candleInfo, setCandleInfo] = useState([]);
+	const [companyNews, setCompanyNews] = useState([]);
 
 	const loginStatus = useSelector(userLoginStatusSelector);
 	const userId = useSelector(userIdSelector);
@@ -25,10 +26,12 @@ const Main = () => {
 	});
 
 	useEffect(() => {
-		if (stocks && currentStock && stocks[currentStock]) {
-			getCandleInfo(stocks[currentStock].ticker);
+		if (stocks.length > 0) {
+			let currentTicker = stocks[currentStock].ticker;
+			getCandleInfo(currentTicker);
+			getCompanyNews(currentTicker);
 		}
-	}, [currentStock]);
+	}, [stocks, currentStock]);
 
 	const isMounted = useRef(true);
 
@@ -119,7 +122,35 @@ const Main = () => {
 					return res.json();
 				})
 				.then((body) => {
+					console.log("candleInfo");
+					console.log(body);
 					setCandleInfo(body);
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const getCompanyNews = (ticker) => {
+		try {
+			fetch(`/companyNews/getCompanyNews?ticker=${ticker}`, {
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+			})
+				.then((res) => {
+					if (!res.ok) {
+						setCompanyNews([]);
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+					return res.json();
+				})
+				.then((body) => {
+					console.log("companyNews");
+					console.log(body);
+					setCompanyNews(body);
 				});
 		} catch (error) {
 			console.log(error);
@@ -185,6 +216,7 @@ const Main = () => {
 						stockRejected={stockRejected}
 						stockAdded={stockAdded}
 						candleInfo={candleInfo}
+						companyNews={companyNews}
 					/>
 				) : (
 					<div>Loading...</div>

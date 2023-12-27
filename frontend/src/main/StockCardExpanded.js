@@ -23,13 +23,13 @@ const StockCardExpanded = (props) => {
 						<Image
 							boxSize={"40px"}
 							objectFit={"cover"}
-							src={article.image}
+							src={article.imageUrl}
 							alt="News article"
 							mr={"0.5em"}
 							borderRadius={"25%"}
 						/>
 						<Flex flexDirection={"column"}>
-							<Link href={article.url} isExternal>
+							<Link href={article.newsUrl} isExternal>
 								<Heading
 									as={"h4"}
 									fontSize={"sm"}
@@ -40,7 +40,7 @@ const StockCardExpanded = (props) => {
 								</Heading>
 							</Link>
 							<Text fontSize={"xs"}>
-								{moment(article.datetime * 1000).format("llll")}
+								{moment(article.datetime).format("llll")}
 							</Text>
 						</Flex>
 					</Flex>
