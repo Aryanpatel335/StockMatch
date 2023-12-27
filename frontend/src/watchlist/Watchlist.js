@@ -38,7 +38,12 @@ const Watchlist = () => {
 					"Content-Type": "application/json",
 				},
 			})
-				.then((res) => res.json())
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+					return res.json();
+				})
 				.then((body) => {
 					if (body) {
 						setWatchlist(body);
@@ -50,13 +55,12 @@ const Watchlist = () => {
 	}, []);
 
 	const removeFromWatchlist = (tickerToRemove) => {
-		const body = { subID: userId, symbol: tickerToRemove, action: "remove" };
+		const body = { subID: userId, ticker: tickerToRemove, action: "remove" };
 
 		try {
 			const updatedWatchlist = watchlist.filter(
-				(stock) => stock.symbol !== tickerToRemove
+				(stock) => stock.ticker !== tickerToRemove
 			);
-			setWatchlist(updatedWatchlist);
 			fetch(`/watchlists/removeFromWatchList`, {
 				method: "DELETE",
 				headers: {
@@ -64,7 +68,13 @@ const Watchlist = () => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(body),
-			});
+			})
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+				})
+				.then(() => setWatchlist(updatedWatchlist));
 		} catch (error) {
 			console.log(error);
 		}
@@ -121,13 +131,13 @@ const Watchlist = () => {
 															{stock.name}
 														</Heading>
 														<Heading as="h3" size="xs" fontWeight={"medium"}>
-															{stock.symbol}
+															{stock.ticker}
 														</Heading>
 													</Flex>
 												</Flex>
 												<Flex justifyContent={"space-around"}>
 													<Link
-														href={`https://finance.yahoo.com/quote/${stock.symbol}/`}
+														href={`https://finance.yahoo.com/quote/${stock.ticker}/`}
 														isExternal
 													>
 														<Button
@@ -144,7 +154,7 @@ const Watchlist = () => {
 														bg={"red.500"}
 														aria-label="Remove from watchlist"
 														size={"md"}
-														onClick={() => removeFromWatchlist(stock.symbol)}
+														onClick={() => removeFromWatchlist(stock.ticker)}
 													>
 														Remove
 													</Button>

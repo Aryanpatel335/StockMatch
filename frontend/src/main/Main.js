@@ -12,6 +12,7 @@ const Main = () => {
 	const [userProfile, setUserProfile] = useState(
 		localStorage.getItem("profile")
 	);
+	const [candleInfo, setCandleInfo] = useState([]);
 
 	const loginStatus = useSelector(userLoginStatusSelector);
 	const userId = useSelector(userIdSelector);
@@ -24,13 +25,9 @@ const Main = () => {
 	});
 
 	useEffect(() => {
-		console.log("stocks");
-		console.log(stocks);
-	}, [stocks]);
-
-	useEffect(() => {
-		console.log("currentStock");
-		console.log(currentStock);
+		if (stocks && currentStock && stocks[currentStock]) {
+			getCandleInfo(stocks[currentStock].ticker);
+		}
 	}, [currentStock]);
 
 	const isMounted = useRef(true);
@@ -45,6 +42,7 @@ const Main = () => {
 	useEffect(() => {
 		getStockView();
 		return () => {
+			console.log("unmounted");
 			updateStockView();
 		};
 	}, []);
@@ -58,7 +56,12 @@ const Main = () => {
 					"Content-Type": "application/json",
 				},
 			})
-				.then((res) => res.json())
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+					return res.json();
+				})
 				.then((body) => {
 					console.log(body);
 					if (body !== null) {
@@ -83,11 +86,41 @@ const Main = () => {
 					Accept: "application/json",
 					"Content-Type": "application/json",
 				},
-			}).then(() => {
-				setUserProfile((oldProfile) => {
-					return { ...oldProfile, currentStockView: currentStock };
+			})
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+				})
+				.then(() => {
+					setUserProfile((oldProfile) => {
+						return { ...oldProfile, currentStockView: currentStock };
+					});
 				});
-			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const getCandleInfo = (ticker) => {
+		try {
+			fetch(`/stockCandles/getStockCandles/${ticker}`, {
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+			})
+				.then((res) => {
+					if (!res.ok) {
+						setCandleInfo([]);
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+					return res.json();
+				})
+				.then((body) => {
+					setCandleInfo(body);
+				});
 		} catch (error) {
 			console.log(error);
 		}
@@ -95,10 +128,8 @@ const Main = () => {
 
 	const nextCompany = () => {
 		if (currentStock === stocks.length - 1) {
-			console.log("a");
 			setCurrentStock(0);
 		} else {
-			console.log("b");
 			setCurrentStock((currentIndex) => currentIndex + 1);
 		}
 	};
@@ -117,9 +148,15 @@ const Main = () => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(body),
-			}).then(() => {
-				nextCompany();
-			});
+			})
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+				})
+				.then(() => {
+					nextCompany();
+				});
 		} catch (error) {
 			console.log(error);
 		}
@@ -147,6 +184,7 @@ const Main = () => {
 						currentStock={stocks[currentStock]}
 						stockRejected={stockRejected}
 						stockAdded={stockAdded}
+						candleInfo={candleInfo}
 					/>
 				) : (
 					<div>Loading...</div>

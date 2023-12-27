@@ -83,9 +83,14 @@ const Preferences = () => {
 				Accept: "application/json",
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ body }),
+			body: JSON.stringify(body),
 		})
-			.then((res) => res.json())
+			.then((res) => {
+				if (!res.ok) {
+					throw new Error(`${res.status} ${res.statusText}`);
+				}
+				return res.json();
+			})
 			.then((body) => {
 				setUserProfile((oldProfile) => {
 					return { ...oldProfile, preferences: userPreferences };
