@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import NavBar from "../common/nav/NavBar";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { userIdSelector, userLoginStatusSelector } from "../store/authSlice";
 
@@ -29,7 +29,16 @@ const Watchlist = () => {
 		}
 	});
 
+	const isMounted = useRef(true);
+
 	useEffect(() => {
+		if (isMounted.current) {
+			fetchWatchlist();
+			isMounted.current = false;
+		}
+	}, []);
+
+	const fetchWatchlist = () => {
 		try {
 			fetch(`/watchlists/getWatchList?subId=${userId}`, {
 				method: "GET",
@@ -52,7 +61,7 @@ const Watchlist = () => {
 		} catch (error) {
 			console.log(error);
 		}
-	}, []);
+	};
 
 	const removeFromWatchlist = (tickerToRemove) => {
 		const body = { subID: userId, ticker: tickerToRemove, action: "remove" };
