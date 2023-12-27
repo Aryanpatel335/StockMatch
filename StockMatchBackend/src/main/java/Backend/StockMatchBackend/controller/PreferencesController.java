@@ -7,6 +7,9 @@ import Backend.StockMatchBackend.services.dto.PreferencesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -33,7 +36,10 @@ public class PreferencesController {
     @PostMapping("/saveUserPreferences")
     public ResponseEntity<?> saveUserPreferences(@RequestBody PreferencesDTO preferencesDTO) {
         preferencesService.saveUserPreferences(preferencesDTO);
-        return ResponseEntity.ok("Preferences saved successfully");
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Preferences saved successfully");
+        return ResponseEntity.ok(response); // Returns a JSON body with the message
+//        return ResponseEntity.ok("Preferences saved successfully");
     }
 
 //    @GetMapping("/getRecommendations")
