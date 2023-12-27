@@ -139,20 +139,28 @@ public class StockTableServiceImpl implements StockTableService {
             case 1:
                 spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(preferences.getTimeInMarket()));
                 spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
-                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
                 spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
+                spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
+
                 break;
             case 2:
                 spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
-                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
+
                 spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 break;
             case 3:
-                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
+
                 spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 break;
             default:
-                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
+
                 break;
         }
 //        if (preferences.getTimeInMarket() != null) {
@@ -188,10 +196,12 @@ public class StockTableServiceImpl implements StockTableService {
             accumulatedRecommendations.addAll(page.getContent().stream().map(StockTable::getId).collect(Collectors.toSet()));
             totalPages += page.getTotalPages();
 
-            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences) || page.getTotalPages() <= pageable.getPageNumber()) {
+//            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences) || page.getTotalPages() <= pageable.getPageNumber()) {
+//                break;
+//            }
+            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences)) {
                 break;
             }
-
             currentPreferences = removeNextSpecification(currentPreferences, iter);
             iter++;
         }
@@ -221,7 +231,7 @@ public class StockTableServiceImpl implements StockTableService {
                 break;
             case 3:
                 // Iteration 3: Remove Beta
-                preferences.setBeta(null);
+                preferences.setRiskLevel(null);
                 break;
 
             case 4:

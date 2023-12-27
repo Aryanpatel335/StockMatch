@@ -1,8 +1,10 @@
 package Backend.StockMatchBackend.model;
 
+import Backend.StockMatchBackend.converter.IndustryListJsonConverter;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -28,6 +30,11 @@ public class Preferences {
     private String industry;
     private String riskLevel;
 
+    // Option 2: Storing as JSON in a single column
+    @Convert(converter = IndustryListJsonConverter.class)
+    private List<String> industryList;
+
+
     public Preferences(Preferences original) {
         // Assuming you don't want to copy the ID and user as they should be unique
         this.beta = original.getBeta();
@@ -36,6 +43,7 @@ public class Preferences {
         this.marketCapMillions = original.getMarketCapMillions();
         this.industry = original.getIndustry();
         this.riskLevel = original.getRiskLevel();
+        this.industryList = original.getIndustryList();
         // Note: User is not copied as it's a reference to another entity
     }
 
