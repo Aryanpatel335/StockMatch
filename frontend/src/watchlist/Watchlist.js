@@ -105,15 +105,14 @@ const Watchlist = () => {
 												flexDirection={"column"}
 											>
 												<Flex pb={"1em"}>
-													{/* TODO: Add logo back in once API is updated */}
-													{/* <Image
+													<Image
 														boxSize="40px"
 														objectFit="contain"
-														src={stock.companyLogo}
+														src={stock.logo}
 														alt="StockMatch Logo"
 														borderRadius={"10%"}
 														mr={"0.5em"}
-													/> */}
+													/>
 													<Flex
 														flexDirection={"column"}
 														justifyContent={"flex-start"}
