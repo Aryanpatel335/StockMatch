@@ -11,7 +11,7 @@
   command = "CI='' npm run build"
   # The directory to publish (relative to the root of your repo).
   # This will contain your built site.
-  publish = "build/"
+  publish = "frontend/build/"
 
 # Redirects all requests to the main index.html where the React app is mounted.
 [[redirects]]
