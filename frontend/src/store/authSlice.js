@@ -12,7 +12,7 @@ const authSlice = createSlice({
 			state.userId = action.payload.subID;
 			localStorage.setItem("profile", JSON.stringify(action.payload));
 		},
-		logOutUser(state) {
+		logOutUser(state, action) {
 			state.userLoginStatus = false;
 			state.userId = "";
 			localStorage.clear();
@@ -30,12 +30,20 @@ export const userIdSelector = (state) => state.auth.userId;
 export const googleSignInUser = (formData, navigate) => async (dispatch) => {
 	try {
 		dispatch(loginUser(formData));
-		console.log(formData);
 		if (!formData.preferences) {
 			navigate("/preferences");
 		} else {
 			navigate("/main");
 		}
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export const googleSignOutUser = (data, navigate) => async (dispatch) => {
+	try {
+		dispatch(logOutUser(data));
+		navigate("/");
 	} catch (error) {
 		console.log(error);
 	}

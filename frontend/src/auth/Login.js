@@ -24,7 +24,12 @@ const Login = () => {
 				},
 				body: JSON.stringify(obj),
 			})
-				.then((res) => res.json())
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+					return res.json();
+				})
 				.then((body) => {
 					if (body.length !== 0) {
 						dispatch(googleSignInUser(body, navigate));

@@ -1,5 +1,4 @@
 import {
-	Box,
 	Button,
 	Card,
 	CardBody,
@@ -9,51 +8,40 @@ import {
 	Heading,
 	Image,
 	Text,
+	Skeleton,
 } from "@chakra-ui/react";
 import NavBar from "../common/nav/NavBar";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { userIdSelector, userLoginStatusSelector } from "../store/authSlice";
 
 const Watchlist = () => {
 	const navigate = useNavigate();
-	// const mockWatchlist = [
-	// 	{
-	// 		fullName: "Apple Inc",
-	// 		ticker: "AAPL",
-	// 		exchange: "NASDAQ",
-	// 		companyLogo:
-	// 			"https://static.finnhub.io/logo/87cb30d8-80df-11ea-8951-00000000092a.png",
-	// 	},
-	// 	{
-	// 		fullName: "Texas Instruments Inc",
-	// 		ticker: "TXN",
-	// 		exchange: "NASDAQ",
-	// 		companyLogo:
-	// 			"https://media.zenfs.com/en/us.finance.gurufocus/46b33df5eee32f0e3f1280f21950eade",
-	// 	},
-	// 	{
-	// 		fullName: "Ceridian HCM Holding Inc",
-	// 		ticker: "CDAY",
-	// 		exchange: "NYSE",
-	// 		companyLogo:
-	// 			"https://images.crunchbase.com/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/re8dcjamiepioshqsix5",
-	// 	},
-	// ];
 
 	const [watchlist, setWatchlist] = useState([]);
+	const [watchlistLoading, setWatchlistLoading] = useState(true);
 
 	const loginStatus = useSelector(userLoginStatusSelector);
 	const userId = useSelector(userIdSelector);
 
-	// useEffect(() => {
-	// 	if (!loginStatus) {
-	// 		navigate("/");
-	// 	}
-	// });
+	useEffect(() => {
+		if (!loginStatus) {
+			navigate("/");
+		}
+	});
+
+	const isMounted = useRef(true);
 
 	useEffect(() => {
+		if (isMounted.current) {
+			fetchWatchlist();
+			isMounted.current = false;
+		}
+	}, []);
+
+	const fetchWatchlist = () => {
+		setWatchlistLoading(true);
 		try {
 			fetch(`/watchlists/getWatchList?subId=${userId}`, {
 				method: "GET",
@@ -62,16 +50,22 @@ const Watchlist = () => {
 					"Content-Type": "application/json",
 				},
 			})
-				.then((res) => res.json())
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+					return res.json();
+				})
 				.then((body) => {
 					if (body) {
 						setWatchlist(body);
 					}
-				});
+				})
+				.finally(() => setWatchlistLoading(false));
 		} catch (error) {
 			console.log(error);
 		}
-	}, []);
+	};
 
 	const removeFromWatchlist = (tickerToRemove) => {
 		const body = { subID: userId, ticker: tickerToRemove, action: "remove" };
@@ -87,7 +81,11 @@ const Watchlist = () => {
 					Accept: "application/json",
 					"Content-Type": "application/json",
 				},
-				body: body,
+				body: JSON.stringify(body),
+			}).then((res) => {
+				if (!res.ok) {
+					throw new Error(`${res.status} ${res.statusText}`);
+				}
 			});
 		} catch (error) {
 			console.log(error);
@@ -118,9 +116,9 @@ const Watchlist = () => {
 								borderColor={"gray.300"}
 								borderWidth={"1px"}
 							/>
-							<Flex flexDirection={"column"}>
-								{watchlist.length > 0 ? (
-									watchlist.map((stock) => (
+							{!watchlistLoading ? (
+								<Flex flexDirection={"column"}>
+									{watchlist.map((stock) => (
 										<>
 											<Flex
 												w={"100%"}
@@ -132,7 +130,7 @@ const Watchlist = () => {
 													<Image
 														boxSize="40px"
 														objectFit="contain"
-														src={stock.companyLogo}
+														src={stock.logo}
 														alt="StockMatch Logo"
 														borderRadius={"10%"}
 														mr={"0.5em"}
@@ -142,27 +140,27 @@ const Watchlist = () => {
 														justifyContent={"flex-start"}
 													>
 														<Heading as="h2" size={"s"}>
-															{stock.fullName}
+															{stock.name}
 														</Heading>
 														<Heading as="h3" size="xs" fontWeight={"medium"}>
-															{`${stock.exchange}:${stock.ticker}`}
+															{stock.ticker}
 														</Heading>
 													</Flex>
 												</Flex>
 												<Flex justifyContent={"space-around"}>
-													<Link
+													<a
 														href={`https://finance.yahoo.com/quote/${stock.ticker}/`}
-														isExternal
+														target="_blank"
+														rel="noopener noreferrer"
 													>
 														<Button
-															color="white"
-															bg={"blue.500"}
-															aria-label="View Live Price"
+															colorScheme="blue"
+															aria-label="View Price"
 															size={"md"}
 														>
 															View Price
 														</Button>
-													</Link>
+													</a>
 													<Button
 														color={"white"}
 														bg={"red.500"}
@@ -180,13 +178,20 @@ const Watchlist = () => {
 												borderWidth={"1px"}
 											/>
 										</>
-									))
-								) : (
-									<Text my={8}>
-										You have no stocks in your watchlist yet...
-									</Text>
-								)}
-							</Flex>
+									))}
+								</Flex>
+							) : (
+								<Flex flexDirection={"column"} gap="5px">
+									<Skeleton height="130px" width="100%" />
+									<Skeleton height="130px" width="100%" />
+									<Skeleton height="130px" width="100%" />
+									<Skeleton height="130px" width="100%" />
+									<Skeleton height="130px" width="100%" />
+								</Flex>
+							)}
+							{watchlist.length === 0 && !watchlistLoading && (
+								<Text my={8}>You have no stocks in your watchlist yet...</Text>
+							)}
 						</CardBody>
 					</Card>
 				</Container>

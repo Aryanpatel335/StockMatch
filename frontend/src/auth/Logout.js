@@ -1,20 +1,22 @@
-import { Button } from "@chakra-ui/react";
 import { googleLogout } from "@react-oauth/google";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { googleSignOutUser } from "../store/authSlice";
+import { useDispatch } from "react-redux";
 
 const Logout = () => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const logout = () => {
 		googleLogout();
+		dispatch(googleSignOutUser([], navigate));
 		navigate("/");
 	};
 
-	return (
-		<div>
-			<Button onClick={logout}>Logout</Button>
-		</div>
-	);
+	useEffect(() => {
+		logout();
+	}, []);
 };
 
 export default Logout;

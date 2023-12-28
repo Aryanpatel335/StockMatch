@@ -12,6 +12,7 @@ import {
 	Image,
 	Link,
 	Fade,
+	Skeleton,
 } from "@chakra-ui/react";
 import {
 	CloseOutlined,
@@ -22,6 +23,7 @@ import {
 import StockCardExpanded from "./StockCardExpanded";
 import { useEffect, useState } from "react";
 import CandleChart from "./CandleChart";
+import moment from "moment";
 
 const mapAttributeColors = {
 	"Low Risk": "red",
@@ -62,7 +64,7 @@ const StockCard = (props) => {
 		parseAttributes();
 	}, [props]);
 
-	const {
+	let {
 		name,
 		ticker,
 		exchange,
@@ -72,7 +74,7 @@ const StockCard = (props) => {
 		marketCapitalization,
 		webUrl,
 		finnhubIndustry,
-	} = props.currentStock;
+	} = props.currentStock || {};
 
 	const parseAttributes = () => {
 		let tmpAttributes = [];
@@ -130,77 +132,104 @@ const StockCard = (props) => {
 									mb={"1"}
 								>
 									<Flex flexDirection={"column"}>
-										<Heading as="h1" size={"md"}>
-											{`${name} (${ticker})`}
-										</Heading>
-										<Heading as="h2" size="xs" fontWeight={"medium"}>
-											{`${exchange}`}
-										</Heading>
+										<Skeleton isLoaded={!props.stockLoading}>
+											<Heading as="h1" size={"md"}>
+												{`${name} (${ticker})`}
+											</Heading>
+										</Skeleton>
+										<Skeleton isLoaded={!props.stockLoading}>
+											<Heading as="h2" size="xs" fontWeight={"medium"}>
+												{`${exchange}`}
+											</Heading>
+										</Skeleton>
 									</Flex>
-									<Image
-										boxSize="50px"
-										objectFit="contain"
-										src={logo}
-										alt="Company Logo"
-										borderRadius={"10%"}
-									/>
+									<Skeleton isLoaded={!props.stockLoading}>
+										<Image
+											boxSize="50px"
+											objectFit="contain"
+											src={logo}
+											alt="Company Logo"
+											borderRadius={"10%"}
+										/>
+									</Skeleton>
 								</Flex>
-								<Stack direction="row" flexWrap="wrap" h={"44px"} mb={"1"}>
-									{attributes.map((attr) => (
-										<Badge
-											colorScheme={mapAttributeColors[attr.type]}
-											key={attr.type}
-										>
-											{attr.detail
-												? `${attr.type}: ${attr.detail}`
-												: `${attr.type}`}
-										</Badge>
-									))}
-								</Stack>
-								<CandleChart />
+								<Skeleton isLoaded={!props.stockLoading}>
+									<Stack direction="row" flexWrap="wrap" h={"44px"} mb={"1"}>
+										{attributes.map((attr) => (
+											<Badge
+												colorScheme={mapAttributeColors[attr.type]}
+												key={attr.type}
+											>
+												{attr.detail
+													? `${attr.type}: ${attr.detail}`
+													: `${attr.type}`}
+											</Badge>
+										))}
+									</Stack>
+								</Skeleton>
+								<CandleChart
+									candleInfo={props.candleInfo}
+									candlesLoading={props.candlesLoading}
+								/>
 								<Flex
 									flexDirection={"row"}
 									w={"100%"}
 									justifyContent={"space-between"}
 								>
-									<Text fontSize={"xs"} color={"gray.500"}>
-										Last updated 12:00AM 09/09/2023
-									</Text>
-									<Text fontSize={"xs"} color={"gray.500"}>
-										1 month view
-									</Text>
+									<Skeleton isLoaded={!props.candlesLoading}>
+										<Text fontSize={"xs"} color={"gray.500"}>
+											Last updated{" "}
+											{props.candleInfo.length > 0
+												? moment(
+														props.candleInfo[props.candleInfo.length - 1]
+															.uniqueCandleTimestamp
+												  ).format("lll")
+												: "N/A"}
+										</Text>
+									</Skeleton>
+									<Skeleton isLoaded={!props.candlesLoading}>
+										<Text fontSize={"xs"} color={"gray.500"}>
+											1 month view
+										</Text>
+									</Skeleton>
 								</Flex>
 								<Flex justifyContent={"space-between"} w={"100%"}>
-									<Link
+									<a
 										href={`https://finance.yahoo.com/quote/${ticker}/`}
-										isExternal
+										target="_blank"
+										rel="noopener noreferrer"
 										w={"48%"}
 									>
-										<Button colorScheme="blue" aria-label="View Live Price">
+										<Button
+											colorScheme="blue"
+											aria-label="View Live Price"
+											isDisabled={props.stockLoading}
+										>
 											View Live Price
 										</Button>
-									</Link>
+									</a>
 									<Link href={webUrl} isExternal w={"48%"}>
 										<Button
 											colorScheme="teal"
 											aria-label="Company Website"
 											w={"100%"}
+											isDisabled={props.stockLoading}
 										>
 											Company Site
 										</Button>
 									</Link>
 								</Flex>
-								{/* TODO: Add this back in once we get CompanyNews working */}
-								{/* {windowSize.height < 888 && (
+								{windowSize.height < 888 && (
 									<Button
 										bg="white"
 										color="black"
-										aria-label="View Live Price"
+										aria-label="Show News"
 										w={"100%"}
 										h={"2em"}
 										onClick={() =>
 											setExpanded((current_state) => !current_state)
 										}
+										isDisabled={props.stockLoading}
 									>
 										{expanded ? (
 											<>
@@ -216,10 +245,13 @@ const StockCard = (props) => {
 											</>
 										)}
 									</Button>
-								)} */}
-								{/* {(windowSize.height >= 888 || expanded) && (
-									<StockCardExpanded companyNews={companyNews} />
-								)} */}
+								)}
+								{(windowSize.height >= 888 || expanded) && (
+									<StockCardExpanded
+										companyNews={props.companyNews}
+										newsLoading={props.newsLoading}
+									/>
+								)}
 							</Stack>
 						</Fade>
 						<Flex
@@ -240,6 +272,7 @@ const StockCard = (props) => {
 									setTriggerTransition(false);
 									props.stockRejected();
 								}}
+								isDisabled={props.stockLoading}
 							/>
 							<IconButton
 								color="white"
@@ -254,6 +287,7 @@ const StockCard = (props) => {
 									setTriggerTransition(false);
 									props.stockAdded();
 								}}
+								isDisabled={props.stockLoading}
 							/>
 						</Flex>
 					</Flex>

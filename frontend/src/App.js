@@ -10,7 +10,7 @@ function App() {
 			<ChakraProvider theme={theme}>
 				<Flex
 					className="App"
-					h={"100vh"}
+					h={"99.9vh"}
 					flexDirection={"column"}
 					style={{ overflowX: "hidden" }}
 				>

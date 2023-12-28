@@ -10,12 +10,18 @@ const Main = () => {
 	const [stocks, setStocks] = useState([]);
 	const [currentStock, setCurrentStock] = useState(0);
 	const [userProfile, setUserProfile] = useState(
-		localStorage.getItem("profile")
+		JSON.stringify(localStorage.getItem("profile"))
 	);
+	const [candleInfo, setCandleInfo] = useState([]);
+	const [companyNews, setCompanyNews] = useState([]);
 
 	const loginStatus = useSelector(userLoginStatusSelector);
 	const userId = useSelector(userIdSelector);
 	const navigate = useNavigate();
+
+	const [stockLoading, setStockLoading] = useState(true);
+	const [candlesLoading, setCandlesLoading] = useState(true);
+	const [newsLoading, setNewsLoading] = useState(true);
 
 	useEffect(() => {
 		if (!loginStatus) {
@@ -24,14 +30,12 @@ const Main = () => {
 	});
 
 	useEffect(() => {
-		console.log("stocks");
-		console.log(stocks);
-	}, [stocks]);
-
-	useEffect(() => {
-		console.log("currentStock");
-		console.log(currentStock);
-	}, [currentStock]);
+		if (stocks.length > 0) {
+			let currentTicker = stocks[currentStock].ticker;
+			getCandleInfo(currentTicker);
+			getCompanyNews(currentTicker);
+		}
+	}, [stocks, currentStock]);
 
 	const isMounted = useRef(true);
 
@@ -50,6 +54,7 @@ const Main = () => {
 	}, []);
 
 	const fetchRecommendations = () => {
+		setStockLoading(true);
 		try {
 			fetch(`/users/${userId}/stocks/recommendations?page=0`, {
 				method: "GET",
@@ -58,12 +63,19 @@ const Main = () => {
 					"Content-Type": "application/json",
 				},
 			})
-				.then((res) => res.json())
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+					return res.json();
+				})
 				.then((body) => {
-					console.log(body);
 					if (body !== null) {
 						setStocks(body.content);
 					}
+				})
+				.finally(() => {
+					setStockLoading(false);
 				});
 		} catch (error) {
 			console.log(error);
@@ -83,24 +95,115 @@ const Main = () => {
 					Accept: "application/json",
 					"Content-Type": "application/json",
 				},
-			}).then(() => {
-				setUserProfile((oldProfile) => {
-					return { ...oldProfile, currentStockView: currentStock };
+			})
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+				})
+				.then(() => {
+					setUserProfile((oldProfile) => {
+						return { ...oldProfile, currentStockView: currentStock };
+					});
 				});
-			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const getCandleInfo = (ticker) => {
+		setCandlesLoading(true);
+		try {
+			fetch(`/stockCandles/getStockCandles/${ticker}`, {
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+			})
+				.then((res) => {
+					if (!res.ok) {
+						setCandleInfo([]);
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+					return res.json();
+				})
+				.then((body) => {
+					console.log("candleInfo");
+					console.log(body);
+					setCandleInfo(body);
+				})
+				.finally(() => {
+					setCandlesLoading(false);
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const getCompanyNews = (ticker) => {
+		setNewsLoading(true);
+		try {
+			fetch(`/companyNews/getCompanyNews?ticker=${ticker}`, {
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+			})
+				.then((res) => {
+					if (!res.ok) {
+						setCompanyNews([]);
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+					return res.json();
+				})
+				.then((body) => {
+					console.log("companyNews");
+					console.log(body);
+					setCompanyNews(body);
+				})
+				.finally(() => {
+					setNewsLoading(false);
+				});
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
 	const nextCompany = () => {
-		console.log("nextCompany called");
 		if (currentStock === stocks.length - 1) {
-			console.log("a");
 			setCurrentStock(0);
 		} else {
-			console.log("b");
 			setCurrentStock((currentIndex) => currentIndex + 1);
+		}
+	};
+
+	const addToWatchlist = () => {
+		const body = {
+			subID: userId,
+			ticker: stocks[currentStock].ticker,
+			action: "like",
+		};
+		try {
+			fetch(`/watchlists/addStockToWatchList`, {
+				method: "POST",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(body),
+			})
+				.then((res) => {
+					if (!res.ok) {
+						throw new Error(`${res.status} ${res.statusText}`);
+					}
+				})
+				.then(() => {
+					nextCompany();
+				});
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
@@ -109,7 +212,7 @@ const Main = () => {
 	};
 
 	const stockAdded = () => {
-		nextCompany();
+		addToWatchlist();
 	};
 
 	return (
@@ -120,16 +223,16 @@ const Main = () => {
 				flexDirection={"column"}
 				flexGrow={"1"}
 			>
-				{" "}
-				{stocks?.length > 0 ? (
-					<StockCard
-						currentStock={stocks[currentStock]}
-						stockRejected={stockRejected}
-						stockAdded={stockAdded}
-					/>
-				) : (
-					<div>Loading...</div>
-				)}
+				<StockCard
+					currentStock={stocks[currentStock]}
+					stockRejected={stockRejected}
+					stockAdded={stockAdded}
+					candleInfo={candleInfo}
+					companyNews={companyNews}
+					stockLoading={stockLoading}
+					candlesLoading={candlesLoading}
+					newsLoading={newsLoading}
+				/>
 			</Flex>
 		</Flex>
 	);

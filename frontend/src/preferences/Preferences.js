@@ -39,7 +39,7 @@ const Preferences = () => {
 		if (!loginStatus) {
 			navigate("/");
 		} else {
-			setUserProfile(localStorage.getItem("profile"));
+			setUserProfile(JSON.parse(localStorage.getItem("profile")));
 			if (userProfile?.preferences) {
 				navigate("/main");
 			}
@@ -71,8 +71,8 @@ const Preferences = () => {
 				formData.companyAge === "" ? null : parseFloat(formData.companyAge),
 			marketCapMillions:
 				formData.companySize === "" ? null : parseFloat(formData.companySize),
-			// TODO: This is a temporary fix until the backend schema is updated
 			industry: formData.sectors[0],
+			industryList: formData.sectors,
 		};
 
 		const body = { subID: userId, ...userPreferences };
@@ -83,9 +83,14 @@ const Preferences = () => {
 				Accept: "application/json",
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ body }),
+			body: JSON.stringify(body),
 		})
-			.then((res) => res.json())
+			.then((res) => {
+				if (!res.ok) {
+					throw new Error(`${res.status} ${res.statusText}`);
+				}
+				return res.json();
+			})
 			.then((body) => {
 				setUserProfile((oldProfile) => {
 					return { ...oldProfile, preferences: userPreferences };
@@ -176,13 +181,13 @@ const Preferences = () => {
 									>
 										<Stack direction="column">
 											<Radio value={"0"} colorScheme={"green"}>
-												Smaller Companies (Low Market Cap)
+												Smaller Companies
 											</Radio>
 											<Radio value={"2000"} colorScheme={"green"}>
-												Medium-Size Companies (Mid Market Cap)
+												Medium-Size Companies
 											</Radio>
 											<Radio value={"10000"} colorScheme={"green"}>
-												Larger Companies (High Market Cap)
+												Larger Companies
 											</Radio>
 											<Radio value={""} colorScheme={"green"}>
 												No Preference
@@ -243,8 +248,29 @@ const Preferences = () => {
 											<Checkbox value="Real Estate" colorScheme={"green"}>
 												Real Estate
 											</Checkbox>
+											<Checkbox
+												value="Aerospace & Defense"
+												colorScheme={"green"}
+											>
+												Aerospace & Defense
+											</Checkbox>
 											<Checkbox value="Energy" colorScheme={"green"}>
 												Energy
+											</Checkbox>
+											<Checkbox value="Pharmaceuticals" colorScheme={"green"}>
+												Pharmaceuticals
+											</Checkbox>
+											<Checkbox value="Telecommunication" colorScheme={"green"}>
+												Telecommunication
+											</Checkbox>
+											<Checkbox value="Banking" colorScheme={"green"}>
+												Banking
+											</Checkbox>
+											<Checkbox
+												value="Logistics & Transportation"
+												colorScheme={"green"}
+											>
+												Logistics & Transportation
 											</Checkbox>
 										</Stack>
 									</CheckboxGroup>

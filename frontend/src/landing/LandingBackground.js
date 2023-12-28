@@ -70,7 +70,7 @@ const LandingBackground = () => {
 				src={imgMoney}
 				alt="Money Bag Emoji"
 				className="floating4 hidden-on-mobile"
-				style={{ position: "relative", top: "-60vh", left: "85vw" }}
+				style={{ position: "relative", top: "-52vh", left: "85vw" }}
 			/>
 		</Box>
 	);

@@ -8,12 +8,13 @@ import {
 	Stack,
 	Image,
 	Heading,
+	Divider,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import imgLogo from "../../resources/StockMatch Logo.png";
 import { Link } from "react-router-dom";
 
-const Links = [
+const links = [
 	{ text: "Watchlist", link: "/watchlist" },
 	{ text: "Log Out", link: "" },
 ];
@@ -43,48 +44,15 @@ const NavBar = (props) => {
 
 	return (
 		<>
-			<Box h={14} px={4} boxShadow="md">
+			<Box h={14} px={4} boxShadow="md" position="relative" zIndex="1000">
 				<Flex h={14} alignItems={"center"} justifyContent={"space-between"}>
-					{!isPreferencesPage ? (
-						<HStack
-							spacing={8}
-							alignItems={"center"}
-							justifyContent={"space-between"}
-							w={"100vw"}
-						>
-							<Link to="/main">
-								<Flex className="logo" alignItems={"center"}>
-									<Image
-										boxSize="40px"
-										objectFit="contain"
-										src={imgLogo}
-										alt="StockMatch Logo"
-									/>
-									<Heading as="h1" fontSize={"lg"}>
-										StockMatch
-									</Heading>
-								</Flex>
-							</Link>
-							<HStack
-								as={"nav"}
-								spacing={4}
-								display={{ base: "none", md: "flex" }}
-								justifyContent={"flex-end"}
-							>
-								{Links.map((l) => (
-									<Link to={l.link}>
-										<NavLink key={l.text}>{l.text}</NavLink>
-									</Link>
-								))}
-							</HStack>
-						</HStack>
-					) : (
-						<HStack
-							spacing={8}
-							alignItems={"center"}
-							justifyContent={"space-between"}
-							w={"100vw"}
-						>
+					<HStack
+						spacing={8}
+						alignItems={"center"}
+						justifyContent={"space-between"}
+						w={"100vw"}
+					>
+						<Link to="/main">
 							<Flex className="logo" alignItems={"center"}>
 								<Image
 									boxSize="40px"
@@ -96,8 +64,17 @@ const NavBar = (props) => {
 									StockMatch
 								</Heading>
 							</Flex>
+						</Link>
+						<HStack
+							as={"nav"}
+							spacing={8}
+							display={{ base: "none", md: "flex" }}
+							justifyContent={"flex-end"}
+						>
+							{!isPreferencesPage && <Link to={"/watchlist"}>Watchlist</Link>}
+							<Link to={"/logout"}>Logout</Link>
 						</HStack>
-					)}
+					</HStack>
 
 					{!isPreferencesPage && (
 						<IconButton
@@ -112,13 +89,20 @@ const NavBar = (props) => {
 				</Flex>
 
 				{isOpen && !isPreferencesPage ? (
-					<Box pb={4} display={{ md: "none" }}>
+					<Box
+						px={4}
+						mx={-4}
+						pb={4}
+						display={{ md: "none" }}
+						bg={"white"}
+						width={"100vw"}
+						boxShadow="md"
+					>
 						<Stack as={"nav"} spacing={4}>
-							{Links.map((l) => (
-								<Link to={l.link}>
-									<NavLink key={l.text}>{l.text}</NavLink>
-								</Link>
-							))}
+							<Divider />
+							<Link to={"/watchlist"}>Watchlist</Link>
+							<Divider />
+							<Link to={"/logout"}>Logout</Link>
 						</Stack>
 					</Box>
 				) : null}
