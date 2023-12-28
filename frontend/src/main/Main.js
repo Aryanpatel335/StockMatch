@@ -8,9 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 const Main = () => {
 	const [stocks, setStocks] = useState([]);
-	const [currentStock, setCurrentStock] = useState(0);
-	const [userProfile, setUserProfile] = useState(
-		JSON.stringify(localStorage.getItem("profile"))
+	const [currentStock, setCurrentStock] = useState(
+		parseInt(localStorage.getItem("currentStockIndex"))
 	);
 	const [candleInfo, setCandleInfo] = useState([]);
 	const [companyNews, setCompanyNews] = useState([]);
@@ -47,11 +46,8 @@ const Main = () => {
 	}, []);
 
 	useEffect(() => {
-		getStockView();
-		return () => {
-			updateStockView();
-		};
-	}, []);
+		updateStockView();
+	}, [currentStock]);
 
 	const fetchRecommendations = () => {
 		setStockLoading(true);
@@ -82,11 +78,6 @@ const Main = () => {
 		}
 	};
 
-	const getStockView = () => {
-		const current = userProfile.currentStockView;
-		setCurrentStock(!current ? 0 : current);
-	};
-
 	const updateStockView = () => {
 		try {
 			fetch(`/users/${userId}/userStockView?lastStockView=${currentStock}`, {
@@ -102,9 +93,10 @@ const Main = () => {
 					}
 				})
 				.then(() => {
-					setUserProfile((oldProfile) => {
-						return { ...oldProfile, currentStockView: currentStock };
-					});
+					localStorage.setItem(
+						"currentStockIndex",
+						JSON.stringify(currentStock)
+					);
 				});
 		} catch (error) {
 			console.log(error);
@@ -129,8 +121,6 @@ const Main = () => {
 					return res.json();
 				})
 				.then((body) => {
-					console.log("candleInfo");
-					console.log(body);
 					setCandleInfo(body);
 				})
 				.finally(() => {
@@ -159,8 +149,6 @@ const Main = () => {
 					return res.json();
 				})
 				.then((body) => {
-					console.log("companyNews");
-					console.log(body);
 					setCompanyNews(body);
 				})
 				.finally(() => {
