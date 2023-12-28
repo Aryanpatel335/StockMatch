@@ -14,7 +14,7 @@ const LandingBackground = () => {
 				src={imgChart}
 				alt="Chart Emoji"
 				className="floating3"
-				style={{ position: "relative", top: "18vh", left: "50vw" }}
+				style={{ position: "relative", top: "18svh", left: "50vw" }}
 			/>
 			<Image
 				boxSize="55px"
@@ -22,7 +22,7 @@ const LandingBackground = () => {
 				src={imgCross}
 				alt="Cross Button"
 				className="floating"
-				style={{ position: "relative", top: "18vh", left: "10vw" }}
+				style={{ position: "relative", top: "18svh", left: "10vw" }}
 			/>
 			<Image
 				boxSize="70px"
@@ -30,7 +30,7 @@ const LandingBackground = () => {
 				src={imgLike}
 				alt="Like Button"
 				className="floating2"
-				style={{ position: "relative", top: "45vh", left: "70vw" }}
+				style={{ position: "relative", top: "45svh", left: "70vw" }}
 			/>
 			<Image
 				boxSize="85px"
@@ -38,7 +38,7 @@ const LandingBackground = () => {
 				src={imgMoney}
 				alt="Money Bag Emoji"
 				className="floating4"
-				style={{ position: "relative", top: "28vh", left: "20vw" }}
+				style={{ position: "relative", top: "28svh", left: "20vw" }}
 			/>
 			<Image
 				boxSize="70px"
@@ -46,7 +46,7 @@ const LandingBackground = () => {
 				src={imgChart}
 				alt="Chart Emoji"
 				className="floating3 hidden-on-mobile"
-				style={{ position: "relative", top: "10vh", left: "6vw" }}
+				style={{ position: "relative", top: "10svh", left: "6vw" }}
 			/>
 			<Image
 				boxSize="65px"
@@ -54,7 +54,7 @@ const LandingBackground = () => {
 				src={imgCross}
 				alt="Cross Button"
 				className="floating hidden-on-mobile"
-				style={{ position: "relative", top: "-20vh", left: "75vw" }}
+				style={{ position: "relative", top: "-20svh", left: "75vw" }}
 			/>
 			<Image
 				boxSize="90px"
@@ -62,7 +62,7 @@ const LandingBackground = () => {
 				src={imgLike}
 				alt="Like Button"
 				className="floating2 hidden-on-mobile"
-				style={{ position: "relative", top: "-35vh", left: "30vw" }}
+				style={{ position: "relative", top: "-35svh", left: "30vw" }}
 			/>
 			<Image
 				boxSize="60px"
@@ -70,7 +70,7 @@ const LandingBackground = () => {
 				src={imgMoney}
 				alt="Money Bag Emoji"
 				className="floating4 hidden-on-mobile"
-				style={{ position: "relative", top: "-52vh", left: "85vw" }}
+				style={{ position: "relative", top: "-52svh", left: "85vw" }}
 			/>
 		</Box>
 	);
