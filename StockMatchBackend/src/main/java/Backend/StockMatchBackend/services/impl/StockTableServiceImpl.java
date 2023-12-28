@@ -228,7 +228,7 @@ public class StockTableServiceImpl implements StockTableService {
             List<StockTable> pageContent = new ArrayList<>(page.getContent());
 
             // Shuffle the page content if iter is less than or equal to 4
-            if (iter <= 4) {
+            if (iter <= 8) {
                 Collections.shuffle(pageContent);
             }
 
