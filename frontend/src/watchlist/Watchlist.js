@@ -70,6 +70,7 @@ const Watchlist = () => {
 			const updatedWatchlist = watchlist.filter(
 				(stock) => stock.ticker !== tickerToRemove
 			);
+			setWatchlist(updatedWatchlist);
 			fetch(`/watchlists/removeFromWatchList`, {
 				method: "DELETE",
 				headers: {
@@ -77,13 +78,11 @@ const Watchlist = () => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(body),
-			})
-				.then((res) => {
-					if (!res.ok) {
-						throw new Error(`${res.status} ${res.statusText}`);
-					}
-				})
-				.then(() => setWatchlist(updatedWatchlist));
+			}).then((res) => {
+				if (!res.ok) {
+					throw new Error(`${res.status} ${res.statusText}`);
+				}
+			});
 		} catch (error) {
 			console.log(error);
 		}
