@@ -6,10 +6,13 @@ import Backend.StockMatchBackend.repository.WatchlistRepository;
 import Backend.StockMatchBackend.services.WatchlistService;
 import Backend.StockMatchBackend.services.dto.WatchListDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -43,12 +46,16 @@ public class WatchlistController {
     @PostMapping("/addStockToWatchList")
     public ResponseEntity<?> addToWatchlist(@RequestBody WatchListDTO watchlistDTO) {
         watchlistService.addToWatchlist(watchlistDTO);
-        return ResponseEntity.ok("Added to watchlist");
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Added to watchlist"); // Although this should probably say "Removed from watchlist"
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/removeFromWatchList")
     public ResponseEntity<?> removeFromWatchlist(@RequestBody WatchListDTO watchListDTO) {
         watchlistService.removeFromWatchlist(watchListDTO);
-        return ResponseEntity.ok("Stock removed from watchlist");
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Removed from watchlist"); // Although this should probably say "Removed from watchlist"
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -17,9 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 
 @RestController
@@ -87,18 +85,33 @@ public class UserController {
         return ResponseEntity.ok(dtoStockTablePage);
     }
 
+//    @PostMapping("/{subID}/userStockView")
+//    public ResponseEntity<?> setUserStockView(@PathVariable String subID, @RequestParam(defaultValue = "0") Integer lastStockView){
+//        Optional<User> userOptional = userRepository.findBySubID(subID);
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+//            user.setCurrentStockView(lastStockView);
+//            userRepository.save(user);
+//            return ResponseEntity.ok().build(); // Successfully updated
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+//        }
+//    }
     @PostMapping("/{subID}/userStockView")
-    public ResponseEntity<?> setUserStockView(@PathVariable String subID, @RequestParam(defaultValue = "0") Integer lastStockView){
+    public ResponseEntity<?> setUserStockView(@PathVariable String subID, @RequestParam(defaultValue = "0") Integer lastStockView) {
         Optional<User> userOptional = userRepository.findBySubID(subID);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setCurrentStockView(lastStockView);
             userRepository.save(user);
-            return ResponseEntity.ok().build(); // Successfully updated
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "User stock view set successfully");
+            return ResponseEntity.ok(response); // Returns a JSON body with the message
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
+
 
     @GetMapping("/{subID}/userStockView")
     public ResponseEntity<?> getUserStockView(@PathVariable String subID) {
