@@ -8,6 +8,7 @@ import {
 	Heading,
 	Image,
 	Text,
+	Skeleton,
 } from "@chakra-ui/react";
 import NavBar from "../common/nav/NavBar";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,6 +20,7 @@ const Watchlist = () => {
 	const navigate = useNavigate();
 
 	const [watchlist, setWatchlist] = useState([]);
+	const [watchlistLoading, setWatchlistLoading] = useState(true);
 
 	const loginStatus = useSelector(userLoginStatusSelector);
 	const userId = useSelector(userIdSelector);
@@ -39,6 +41,7 @@ const Watchlist = () => {
 	}, []);
 
 	const fetchWatchlist = () => {
+		setWatchlistLoading(true);
 		try {
 			fetch(`/watchlists/getWatchList?subId=${userId}`, {
 				method: "GET",
@@ -57,7 +60,8 @@ const Watchlist = () => {
 					if (body) {
 						setWatchlist(body);
 					}
-				});
+				})
+				.finally(() => setWatchlistLoading(false));
 		} catch (error) {
 			console.log(error);
 		}
@@ -112,9 +116,9 @@ const Watchlist = () => {
 								borderColor={"gray.300"}
 								borderWidth={"1px"}
 							/>
-							<Flex flexDirection={"column"}>
-								{watchlist.length > 0 ? (
-									watchlist.map((stock) => (
+							{!watchlistLoading ? (
+								<Flex flexDirection={"column"}>
+									{watchlist.map((stock) => (
 										<>
 											<Flex
 												w={"100%"}
@@ -174,13 +178,20 @@ const Watchlist = () => {
 												borderWidth={"1px"}
 											/>
 										</>
-									))
-								) : (
-									<Text my={8}>
-										You have no stocks in your watchlist yet...
-									</Text>
-								)}
-							</Flex>
+									))}
+								</Flex>
+							) : (
+								<Flex flexDirection={"column"} gap="5px">
+									<Skeleton height="130px" width="100%" />
+									<Skeleton height="130px" width="100%" />
+									<Skeleton height="130px" width="100%" />
+									<Skeleton height="130px" width="100%" />
+									<Skeleton height="130px" width="100%" />
+								</Flex>
+							)}
+							{watchlist.length === 0 && !watchlistLoading && (
+								<Text my={8}>You have no stocks in your watchlist yet...</Text>
+							)}
 						</CardBody>
 					</Card>
 				</Container>

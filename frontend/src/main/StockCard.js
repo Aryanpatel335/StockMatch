@@ -220,32 +220,31 @@ const StockCard = (props) => {
 									</Link>
 								</Flex>
 								{windowSize.height < 888 && (
-									<Skeleton isLoaded={!props.stockLoading}>
-										<Button
-											bg="white"
-											color="black"
-											aria-label="Show News"
-											w={"100%"}
-											h={"2em"}
-											onClick={() =>
-												setExpanded((current_state) => !current_state)
-											}
-										>
-											{expanded ? (
-												<>
-													<UpCircleOutlined />
-													<span>&nbsp;&nbsp;</span>
-													Hide Relevant News
-												</>
-											) : (
-												<>
-													<DownCircleOutlined />
-													<span>&nbsp;&nbsp;</span>
-													Show Relevant News
-												</>
-											)}
-										</Button>
-									</Skeleton>
+									<Button
+										bg="white"
+										color="black"
+										aria-label="Show News"
+										w={"100%"}
+										h={"2em"}
+										onClick={() =>
+											setExpanded((current_state) => !current_state)
+										}
+										isDisabled={props.stockLoading}
+									>
+										{expanded ? (
+											<>
+												<UpCircleOutlined />
+												<span>&nbsp;&nbsp;</span>
+												Hide Relevant News
+											</>
+										) : (
+											<>
+												<DownCircleOutlined />
+												<span>&nbsp;&nbsp;</span>
+												Show Relevant News
+											</>
+										)}
+									</Button>
 								)}
 								{(windowSize.height >= 888 || expanded) && (
 									<StockCardExpanded

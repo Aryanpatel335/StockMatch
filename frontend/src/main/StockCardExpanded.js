@@ -54,10 +54,10 @@ const StockCardExpanded = (props) => {
 						</Flex>
 					))
 				) : (
-					<Flex flexDirection={"column"} alignItems={"center"} gap={"10px"}>
-						<Skeleton height={"50px"} width={"100%"} />
-						<Skeleton height={"50px"} width={"100%"} />
-						<Skeleton height={"50px"} width={"100%"} />
+					<Flex flexDirection={"column"} alignItems={"center"} gap={"0.5rem"}>
+						<Skeleton height={"55px"} width={"100%"} />
+						<Skeleton height={"55px"} width={"100%"} />
+						<Skeleton height={"55px"} width={"100%"} />
 					</Flex>
 				)}
 			</Stack>
