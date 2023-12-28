@@ -3,6 +3,7 @@ package Backend.StockMatchBackend.controller;
 import Backend.StockMatchBackend.model.Preferences;
 import Backend.StockMatchBackend.model.StockTable;
 import Backend.StockMatchBackend.model.User;
+import Backend.StockMatchBackend.repository.PreferencesRepository;
 import Backend.StockMatchBackend.repository.UserRepository;
 import Backend.StockMatchBackend.services.dto.StockTableResponseDTO;
 import Backend.StockMatchBackend.services.dto.UserStockViewDTO;
@@ -32,6 +33,9 @@ public class UserController {
 
     @Autowired
     private StockTableServiceImpl stockTableImpl;
+
+    @Autowired
+    private PreferencesRepository preferencesRepository;
 
 
     private UserStockViewDTO userStockViewDTO;
@@ -138,8 +142,45 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/{subID}")
+    public ResponseEntity<?> deleteUserBySubID(@PathVariable String subID) {
+        // Check if user exists
+        Optional<User> userOptional = userRepository.findBySubID(subID);
+        if (!userOptional.isPresent()) {
+            Map<String, String> responseNotFound = new HashMap<>();
+            responseNotFound.put("message", "User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseNotFound);
+        }
 
-//    @PutMapping("/{subID}/userStockView")
+        // Check for foreign key constraints with Preferences
+        List<Preferences> preferences = preferencesRepository.findByUserId(userOptional.get().getId());
+        if (!preferences.isEmpty()) {
+            // Delete the preferences
+            preferencesRepository.deleteAll(preferences);
+
+            // Optionally, you can handle preferences in another way, like setting the foreign key to null
+            // This is commented out for this example
+            // preferences.forEach(preference -> {
+            //     preference.setUserId(null);
+            //     preferencesRepository.save(preference);
+            // });
+        }
+
+        // Delete the user after handling the preferences
+        userRepository.delete(userOptional.get());
+
+        // Prepare response map
+        Map<String, String> responseSuccess = new HashMap<>();
+        responseSuccess.put("message", "User with ID " + subID + " and all related preferences successfully deleted");
+
+        return ResponseEntity.ok(responseSuccess);
+    }
+
+
+
+
+
+    //    @PutMapping("/{subID}/userStockView")
 //    public ResponseEntity<?> updateUserStockView(@PathVariable String subID, @RequestBody UserStockViewDTO stockViewUpdateDTO) {
 //        Optional<User> userOptional = userRepository.findBySubID(subID);
 //
