@@ -184,7 +184,13 @@ public class StockTableServiceImpl implements StockTableService {
     // Experimental approach to only show recommended stocks etc
 
     public Page<StockTable> getFilteredStocksIteratively(Preferences preferences, Set<UUID> alreadyInWatchList, Pageable pageable) {
-        Set<UUID> accumulatedRecommendations = new HashSet<>(alreadyInWatchList);
+        //this is older where we remove the already in watchlist
+        // this was removed to be empty list as per Martin we
+        // should also include all stocks whether they are part of watchlist or not.
+        //CHANGED
+//        Set<UUID> accumulatedRecommendations = new HashSet<>(alreadyInWatchList);
+        Set<UUID> accumulatedRecommendations = new HashSet<>();
+
         List<StockTable> allRecommendations = new ArrayList<>();
         int totalPages = 0;
 
@@ -193,7 +199,9 @@ public class StockTableServiceImpl implements StockTableService {
         while (true) {
             Page<StockTable> page = getFilteredStocks(currentPreferences, accumulatedRecommendations, pageable, iter);
             allRecommendations.addAll(page.getContent());
-            accumulatedRecommendations.addAll(page.getContent().stream().map(StockTable::getId).collect(Collectors.toSet()));
+
+            //CHANGED
+            //accumulatedRecommendations.addAll(page.getContent().stream().map(StockTable::getId).collect(Collectors.toSet()));
             totalPages += page.getTotalPages();
 
 //            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences) || page.getTotalPages() <= pageable.getPageNumber()) {
