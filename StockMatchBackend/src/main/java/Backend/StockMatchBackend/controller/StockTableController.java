@@ -15,7 +15,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/stocks")
+@RequestMapping("/api/stocks")
 public class StockTableController {
 
     @Autowired

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/companyNews")
+@RequestMapping("/api/companyNews")
 public class CompanyNewsController {
 
     private final CompanyNewsService companyNewsService;

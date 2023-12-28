@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/stockCandles")
+@RequestMapping("/api/stockCandles")
 public class StockCandleController {
 
     @Autowired

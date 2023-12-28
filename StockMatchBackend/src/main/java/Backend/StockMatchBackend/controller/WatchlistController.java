@@ -17,7 +17,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/watchlists")
+@RequestMapping("/api/watchlists")
 public class WatchlistController {
 
     @Autowired

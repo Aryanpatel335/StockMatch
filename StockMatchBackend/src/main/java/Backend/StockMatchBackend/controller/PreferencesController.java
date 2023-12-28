@@ -14,7 +14,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/preferences")
+@RequestMapping("/api/preferences")
 public class PreferencesController {
 
     @Autowired
