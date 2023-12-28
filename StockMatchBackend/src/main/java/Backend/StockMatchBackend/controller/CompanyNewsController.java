@@ -9,9 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.time.Instant;
 
 @RestController
 @RequestMapping("/companyNews")
@@ -52,10 +52,11 @@ public class CompanyNewsController {
     public ResponseEntity<List<CompanyNewsResponseDTO>> getCompanyNews(@RequestParam String ticker) {
         List<CompanyNewsResponseDTO> newsDtoList = companyNewsService.findByTicker(ticker);
         if (newsDtoList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(newsDtoList, HttpStatus.OK);
     }
+
 
 
 
