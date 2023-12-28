@@ -1,5 +1,5 @@
 import CanvasJSReact from "@canvasjs/react-charts";
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { mockCandles } from "../common/mockData";
@@ -54,6 +54,22 @@ const CandleChart = ({ candleInfo }) => {
 
 	return (
 		<Flex w={"100%"} h={"246px"} className="candlechart-flex">
+			{candleInfo.length === 0 && (
+				<Box
+					position="absolute"
+					top="140px"
+					left="0"
+					right="0"
+					bottom="0"
+					backgroundColor="rgba(255, 255, 255, 0.7)"
+					display="flex"
+					alignItems="center"
+					justifyContent="center"
+					zIndex={1}
+				>
+					<span>No data available</span>
+				</Box>
+			)}
 			<CanvasJSChart
 				className="candlechart-canvasjschart"
 				height={246}
