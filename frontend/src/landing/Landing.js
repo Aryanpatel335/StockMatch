@@ -7,6 +7,7 @@ import {
 	Image,
 	Link,
 	Text,
+	IconButton,
 } from "@chakra-ui/react";
 import imgLogo from "../resources/StockMatch Logo.png";
 import imgScreenshot0 from "../resources/screenshots/stockmatchScreenshot0.png";
@@ -15,6 +16,7 @@ import imgScreenshot2 from "../resources/screenshots/stockmatchScreenshot2.png";
 import imgScreenshot3 from "../resources/screenshots/stockmatchScreenshot3.png";
 import LandingBackground from "./LandingBackground";
 import Login from "../auth/Login.js";
+import { GithubOutlined } from "@ant-design/icons";
 
 const Landing = () => {
 	return (
@@ -142,7 +144,20 @@ const Landing = () => {
 						</Heading>
 					</Flex>
 
-					<Link color={"white"}>Contact Us</Link>
+					<a
+						href="https://github.com/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<IconButton
+							color="#9c7cf4"
+							backgroundColor={"transparent"}
+							aria-label="Github"
+							borderRadius={"45%"}
+							fontSize={"2em"}
+							icon={<GithubOutlined />}
+						/>
+					</a>
 				</HStack>
 			</VStack>
 		</Container>
