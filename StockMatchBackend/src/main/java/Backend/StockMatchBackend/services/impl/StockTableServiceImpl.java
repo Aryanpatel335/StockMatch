@@ -157,11 +157,36 @@ public class StockTableServiceImpl implements StockTableService {
 
                 spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 break;
-            default:
+
+            case 4:
 //                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
                 spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
 
+            case 5:
+                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(5.0)); // Hardcoded value for time in market
+                spec = spec.and(StockTableSpecifications.hasRiskLevel("high")); // Hardcoded value for risk level
                 break;
+            case 6:
+                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(10000.0)); // Hardcoded value for market cap
+                spec = spec.and(StockTableSpecifications.hasIndustryList(Arrays.asList("Technology", "Finance"))); // Hardcoded industry list
+                break;
+            case 7:
+                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(10.0)); // Hardcoded value for time in market
+                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(5000.0)); // Hardcoded value for market cap
+                break;
+            case 8:
+                spec = spec.and(StockTableSpecifications.hasRiskLevel("medium")); // Hardcoded value for risk level
+                break;
+            case 9:
+                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(5.0));; // Hardcoded industry list
+                break;
+            default:
+                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(3.0)); // Hardcoded value for time in market
+                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(1.0)); // Hardcoded value for market cap
+
+                break;
+
+
         }
 //        if (preferences.getTimeInMarket() != null) {
 //            spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(preferences.getTimeInMarket()));
@@ -207,7 +232,10 @@ public class StockTableServiceImpl implements StockTableService {
 //            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences) || page.getTotalPages() <= pageable.getPageNumber()) {
 //                break;
 //            }
-            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences)) {
+//            if (iter == 10 ||!shouldRemoveNextSpecification(currentPreferences)) {
+//                break;
+//            }
+            if(iter==10){
                 break;
             }
             currentPreferences = removeNextSpecification(currentPreferences, iter);
