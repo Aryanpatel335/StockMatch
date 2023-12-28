@@ -3,15 +3,9 @@
 # Global settings applied to the whole site.
 # “build” is a required context for Netlify since it’s where the build commands are stored.
 [build]
-  # Directory to change to before starting a build.
-  # This is where we will look for package.json/.nvmrc/etc.
-  base = "/"
-
-  # The command to run to build the site.
-  command = "CI='' npm run build"
-  # The directory to publish (relative to the root of your repo).
-  # This will contain your built site.
-  publish = "frontend/build/"
+    base = "StockMatch/frontend/"
+    publish = "StockMatch/frontend/build/"
+    command = "CI='' npm run build"
 
 # Redirects all requests to the main index.html where the React app is mounted.
 [[redirects]]
