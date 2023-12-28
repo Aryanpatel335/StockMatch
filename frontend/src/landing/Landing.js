@@ -46,7 +46,7 @@ const Landing = () => {
 				<Flex
 					flexDirection={"column"}
 					textAlign={"center"}
-					h={"75vh"}
+					h={"75svh"}
 					alignItems={"center"}
 					w={"100vw"}
 					justifyContent={"center"}

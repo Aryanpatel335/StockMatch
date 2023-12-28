@@ -96,7 +96,7 @@ const Watchlist = () => {
 	};
 
 	return (
-		<Flex h={"100vh"} flexDirection={"column"}>
+		<Flex h={"100svh"} flexDirection={"column"}>
 			<NavBar />
 			<Flex flexDirection={"column"} w={"100vw"} bg={"gray.100"} flexGrow={"1"}>
 				<Container maxW={"sm"} pt={"2"} pb={"2"} minH={"100%"}>

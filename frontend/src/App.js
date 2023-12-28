@@ -8,7 +8,7 @@ function App() {
 	return (
 		<BrowserRouter>
 			<ChakraProvider theme={theme}>
-				<Flex className="App" h={"99.9vh"} flexDirection={"column"}>
+				<Flex className="App" h={"99.9svh"} flexDirection={"column"}>
 					<Layout />
 				</Flex>
 			</ChakraProvider>

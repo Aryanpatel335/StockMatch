@@ -7,7 +7,7 @@ import "./LandingBackground.css";
 
 const LandingBackground = () => {
 	return (
-		<Box w={"100vw"} h={"100vh"} className="backgroundBox">
+		<Box w={"100vw"} h={"100svh"} className="backgroundBox">
 			<Image
 				boxSize="95px"
 				objectFit="contain"

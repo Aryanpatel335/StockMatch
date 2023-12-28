@@ -222,7 +222,7 @@ const Main = () => {
 	};
 
 	return (
-		<Flex h={"100vh"} flexDirection={"column"}>
+		<Flex h={"100svh"} flexDirection={"column"}>
 			<NavBar />
 			<Flex
 				bg={useColorModeValue("gray.100", "gray.900")}

@@ -104,7 +104,7 @@ const Preferences = () => {
 	};
 
 	return (
-		<Box h={"100vh"}>
+		<Box h={"100svh"}>
 			<NavBar isPreferencesPage={true} />
 			<Flex flexDirection={"column"} w={"100vw"} bg={"gray.100"} minH={"100%"}>
 				<Container maxW={"sm"} pt={"2"} pb={"2"} minH={"100%"}>
