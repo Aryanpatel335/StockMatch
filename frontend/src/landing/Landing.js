@@ -145,7 +145,7 @@ const Landing = () => {
 					</Flex>
 
 					<a
-						href="https://github.com/"
+						href="https://github.com/Aryanpatel335/StockMatch/"
 						target="_blank"
 						rel="noopener noreferrer"
 					>

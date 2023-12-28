@@ -8,9 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 const Main = () => {
 	const [stocks, setStocks] = useState([]);
-	const [currentStock, setCurrentStock] = useState(0);
-	const [userProfile, setUserProfile] = useState(
-		JSON.stringify(localStorage.getItem("profile"))
+	const [currentStock, setCurrentStock] = useState(
+		parseInt(localStorage.getItem("currentStockIndex")) || 0
 	);
 	const [candleInfo, setCandleInfo] = useState([]);
 	const [companyNews, setCompanyNews] = useState([]);
@@ -41,20 +40,22 @@ const Main = () => {
 
 	useEffect(() => {
 		if (isMounted.current) {
-			fetchRecommendations();
+			const cachedStocks = JSON.parse(localStorage.getItem("cachedStocks"));
+			if (cachedStocks) {
+				setStocks(cachedStocks);
+				setStockLoading(false);
+			} else {
+				fetchRecommendations();
+			}
 			isMounted.current = false;
 		}
 	}, []);
 
 	useEffect(() => {
-		getStockView();
-		return () => {
-			updateStockView();
-		};
-	}, []);
+		updateStockView();
+	}, [currentStock]);
 
 	const fetchRecommendations = () => {
-		setStockLoading(true);
 		try {
 			fetch(`/users/${userId}/stocks/recommendations?page=0`, {
 				method: "GET",
@@ -72,6 +73,7 @@ const Main = () => {
 				.then((body) => {
 					if (body !== null) {
 						setStocks(body.content);
+						localStorage.setItem("cachedStocks", JSON.stringify(body.content));
 					}
 				})
 				.finally(() => {
@@ -80,11 +82,6 @@ const Main = () => {
 		} catch (error) {
 			console.log(error);
 		}
-	};
-
-	const getStockView = () => {
-		const current = userProfile.currentStockView;
-		setCurrentStock(!current ? 0 : current);
 	};
 
 	const updateStockView = () => {
@@ -102,9 +99,10 @@ const Main = () => {
 					}
 				})
 				.then(() => {
-					setUserProfile((oldProfile) => {
-						return { ...oldProfile, currentStockView: currentStock };
-					});
+					localStorage.setItem(
+						"currentStockIndex",
+						JSON.stringify(currentStock)
+					);
 				});
 		} catch (error) {
 			console.log(error);
@@ -129,8 +127,6 @@ const Main = () => {
 					return res.json();
 				})
 				.then((body) => {
-					console.log("candleInfo");
-					console.log(body);
 					setCandleInfo(body);
 				})
 				.finally(() => {
@@ -159,8 +155,6 @@ const Main = () => {
 					return res.json();
 				})
 				.then((body) => {
-					console.log("companyNews");
-					console.log(body);
 					setCompanyNews(body);
 				})
 				.finally(() => {
