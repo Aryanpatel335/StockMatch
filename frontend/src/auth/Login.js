@@ -46,7 +46,14 @@ const Login = () => {
 		console.log("Google Sign Up unsuccessful");
 	};
 
-	return <GoogleLogin onSuccess={googleSuccess} onError={googleFailure} />;
+	return (
+		<GoogleLogin
+			onSuccess={googleSuccess}
+			onError={googleFailure}
+			theme="filled_black"
+			text="continue_with"
+		/>
+	);
 };
 
 export default Login;
