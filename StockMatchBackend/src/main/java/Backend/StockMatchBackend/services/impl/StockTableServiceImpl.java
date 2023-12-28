@@ -222,8 +222,17 @@ public class StockTableServiceImpl implements StockTableService {
         Preferences currentPreferences = new Preferences(preferences); // Copy initial preferences
         int iter = 1;
         while (true) {
+//            Page<StockTable> page = getFilteredStocks(currentPreferences, accumulatedRecommendations, pageable, iter);
+//            allRecommendations.addAll(page.getContent());
             Page<StockTable> page = getFilteredStocks(currentPreferences, accumulatedRecommendations, pageable, iter);
-            allRecommendations.addAll(page.getContent());
+            List<StockTable> pageContent = new ArrayList<>(page.getContent());
+
+            // Shuffle the page content if iter is less than or equal to 4
+            if (iter <= 4) {
+                Collections.shuffle(pageContent);
+            }
+
+            allRecommendations.addAll(pageContent);
 
             //CHANGED
             //accumulatedRecommendations.addAll(page.getContent().stream().map(StockTable::getId).collect(Collectors.toSet()));
