@@ -52,7 +52,7 @@ public class CompanyNewsController {
     public ResponseEntity<List<CompanyNewsResponseDTO>> getCompanyNews(@RequestParam String ticker) {
         List<CompanyNewsResponseDTO> newsDtoList = companyNewsService.findByTicker(ticker);
         if (newsDtoList.isEmpty()) {
-            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
         }
         return new ResponseEntity<>(newsDtoList, HttpStatus.OK);
     }
