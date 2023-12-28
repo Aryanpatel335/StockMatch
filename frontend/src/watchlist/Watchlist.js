@@ -43,13 +43,16 @@ const Watchlist = () => {
 	const fetchWatchlist = () => {
 		setWatchlistLoading(true);
 		try {
-			fetch(`/watchlists/getWatchList?subId=${userId}`, {
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-			})
+			fetch(
+				`${process.env.REACT_APP_BACKEND}/watchlists/getWatchList?subId=${userId}`,
+				{
+					method: "GET",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json",
+					},
+				}
+			)
 				.then((res) => {
 					if (!res.ok) {
 						throw new Error(`${res.status} ${res.statusText}`);
@@ -75,7 +78,7 @@ const Watchlist = () => {
 				(stock) => stock.ticker !== tickerToRemove
 			);
 			setWatchlist(updatedWatchlist);
-			fetch(`/watchlists/removeFromWatchList`, {
+			fetch(`${process.env.REACT_APP_BACKEND}/watchlists/removeFromWatchList`, {
 				method: "DELETE",
 				headers: {
 					Accept: "application/json",

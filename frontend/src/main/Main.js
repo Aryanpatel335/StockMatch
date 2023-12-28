@@ -57,13 +57,16 @@ const Main = () => {
 
 	const fetchRecommendations = () => {
 		try {
-			fetch(`/users/${userId}/stocks/recommendations?page=0`, {
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-			})
+			fetch(
+				`${process.env.REACT_APP_BACKEND}/users/${userId}/stocks/recommendations?page=0`,
+				{
+					method: "GET",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json",
+					},
+				}
+			)
 				.then((res) => {
 					if (!res.ok) {
 						throw new Error(`${res.status} ${res.statusText}`);
@@ -86,13 +89,16 @@ const Main = () => {
 
 	const updateStockView = () => {
 		try {
-			fetch(`/users/${userId}/userStockView?lastStockView=${currentStock}`, {
-				method: "POST",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-			})
+			fetch(
+				`${process.env.REACT_APP_BACKEND}/users/${userId}/userStockView?lastStockView=${currentStock}`,
+				{
+					method: "POST",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json",
+					},
+				}
+			)
 				.then((res) => {
 					if (!res.ok) {
 						throw new Error(`${res.status} ${res.statusText}`);
@@ -112,13 +118,16 @@ const Main = () => {
 	const getCandleInfo = (ticker) => {
 		setCandlesLoading(true);
 		try {
-			fetch(`/stockCandles/getStockCandles/${ticker}`, {
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-			})
+			fetch(
+				`${process.env.REACT_APP_BACKEND}/stockCandles/getStockCandles/${ticker}`,
+				{
+					method: "GET",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json",
+					},
+				}
+			)
 				.then((res) => {
 					if (!res.ok) {
 						setCandleInfo([]);
@@ -140,13 +149,16 @@ const Main = () => {
 	const getCompanyNews = (ticker) => {
 		setNewsLoading(true);
 		try {
-			fetch(`/companyNews/getCompanyNews?ticker=${ticker}`, {
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-			})
+			fetch(
+				`${process.env.REACT_APP_BACKEND}/companyNews/getCompanyNews?ticker=${ticker}`,
+				{
+					method: "GET",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json",
+					},
+				}
+			)
 				.then((res) => {
 					if (!res.ok) {
 						setCompanyNews([]);
@@ -180,7 +192,7 @@ const Main = () => {
 			action: "like",
 		};
 		try {
-			fetch(`/watchlists/addStockToWatchList`, {
+			fetch(`${process.env.REACT_APP_BACKEND}/watchlists/addStockToWatchList`, {
 				method: "POST",
 				headers: {
 					Accept: "application/json",

@@ -77,7 +77,7 @@ const Preferences = () => {
 
 		const body = { subID: userId, ...userPreferences };
 
-		fetch(`/preferences/saveUserPreferences`, {
+		fetch(`${process.env.REACT_APP_BACKEND}/preferences/saveUserPreferences`, {
 			method: "POST",
 			headers: {
 				Accept: "application/json",

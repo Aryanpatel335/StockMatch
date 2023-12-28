@@ -16,7 +16,7 @@ const Login = () => {
 			const email = data.email;
 			const name = data.name;
 			const obj = { sub, email, name };
-			await fetch(`/users/login`, {
+			await fetch(`${process.env.REACT_APP_BACKEND}/users/login`, {
 				method: "POST",
 				headers: {
 					Accept: "application/json",
