@@ -60,6 +60,16 @@ const StockCardExpanded = (props) => {
 						<Skeleton height={"55px"} width={"100%"} />
 					</Flex>
 				)}
+				{!props.newsLoading && companyNews.length === 0 && (
+					<Flex
+						flexDirection={"row"}
+						alignItems={"center"}
+						justifyContent={"center"}
+						py={8}
+					>
+						<Text>No news to display...</Text>
+					</Flex>
+				)}
 			</Stack>
 		</Stack>
 	);
