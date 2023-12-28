@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const Main = () => {
 	const [stocks, setStocks] = useState([]);
 	const [currentStock, setCurrentStock] = useState(
-		parseInt(localStorage.getItem("currentStockIndex"))
+		parseInt(localStorage.getItem("currentStockIndex")) || 0
 	);
 	const [candleInfo, setCandleInfo] = useState([]);
 	const [companyNews, setCompanyNews] = useState([]);
@@ -40,7 +40,13 @@ const Main = () => {
 
 	useEffect(() => {
 		if (isMounted.current) {
-			fetchRecommendations();
+			const cachedStocks = JSON.parse(localStorage.getItem("cachedStocks"));
+			if (cachedStocks) {
+				setStocks(cachedStocks);
+				setStockLoading(false);
+			} else {
+				fetchRecommendations();
+			}
 			isMounted.current = false;
 		}
 	}, []);
@@ -50,7 +56,6 @@ const Main = () => {
 	}, [currentStock]);
 
 	const fetchRecommendations = () => {
-		setStockLoading(true);
 		try {
 			fetch(`/users/${userId}/stocks/recommendations?page=0`, {
 				method: "GET",
@@ -68,6 +73,7 @@ const Main = () => {
 				.then((body) => {
 					if (body !== null) {
 						setStocks(body.content);
+						localStorage.setItem("cachedStocks", JSON.stringify(body.content));
 					}
 				})
 				.finally(() => {
