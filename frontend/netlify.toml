@@ -8,8 +8,7 @@
   base = "/"
 
   # The command to run to build the site.
-  command = "npm run build"
-
+  command = "CI= npm run build"
   # The directory to publish (relative to the root of your repo).
   # This will contain your built site.
   publish = "build/"
