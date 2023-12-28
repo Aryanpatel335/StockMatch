@@ -39,7 +39,7 @@ const Preferences = () => {
 		if (!loginStatus) {
 			navigate("/");
 		} else {
-			setUserProfile(localStorage.getItem("profile"));
+			setUserProfile(JSON.parse(localStorage.getItem("profile")));
 			if (userProfile?.preferences) {
 				navigate("/main");
 			}

@@ -1,11 +1,11 @@
 import CanvasJSReact from "@canvasjs/react-charts";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Skeleton } from "@chakra-ui/react";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { mockCandles } from "../common/mockData";
 import "./CandleChart.css";
 
-const CandleChart = ({ candleInfo }) => {
+const CandleChart = ({ candleInfo, candlesLoading }) => {
 	const [candles, setCandles] = useState(mockCandles);
 
 	useEffect(() => {
@@ -52,7 +52,7 @@ const CandleChart = ({ candleInfo }) => {
 		],
 	};
 
-	return (
+	return !candlesLoading ? (
 		<Flex w={"100%"} h={"246px"} className="candlechart-flex">
 			{candleInfo.length === 0 && (
 				<Box
@@ -77,6 +77,8 @@ const CandleChart = ({ candleInfo }) => {
 				onRef={(ref) => (chartRef.current = ref)}
 			/>
 		</Flex>
+	) : (
+		<Skeleton height="246px" width="100%" />
 	);
 };
 

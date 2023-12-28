@@ -10,7 +10,7 @@ const Main = () => {
 	const [stocks, setStocks] = useState([]);
 	const [currentStock, setCurrentStock] = useState(0);
 	const [userProfile, setUserProfile] = useState(
-		localStorage.getItem("profile")
+		JSON.stringify(localStorage.getItem("profile"))
 	);
 	const [candleInfo, setCandleInfo] = useState([]);
 	const [companyNews, setCompanyNews] = useState([]);
@@ -18,6 +18,10 @@ const Main = () => {
 	const loginStatus = useSelector(userLoginStatusSelector);
 	const userId = useSelector(userIdSelector);
 	const navigate = useNavigate();
+
+	const [stockLoading, setStockLoading] = useState(true);
+	const [candlesLoading, setCandlesLoading] = useState(true);
+	const [newsLoading, setNewsLoading] = useState(true);
 
 	useEffect(() => {
 		if (!loginStatus) {
@@ -45,12 +49,12 @@ const Main = () => {
 	useEffect(() => {
 		getStockView();
 		return () => {
-			console.log("unmounted");
 			updateStockView();
 		};
 	}, []);
 
 	const fetchRecommendations = () => {
+		setStockLoading(true);
 		try {
 			fetch(`/users/${userId}/stocks/recommendations?page=0`, {
 				method: "GET",
@@ -66,10 +70,12 @@ const Main = () => {
 					return res.json();
 				})
 				.then((body) => {
-					console.log(body);
 					if (body !== null) {
 						setStocks(body.content);
 					}
+				})
+				.finally(() => {
+					setStockLoading(false);
 				});
 		} catch (error) {
 			console.log(error);
@@ -106,6 +112,7 @@ const Main = () => {
 	};
 
 	const getCandleInfo = (ticker) => {
+		setCandlesLoading(true);
 		try {
 			fetch(`/stockCandles/getStockCandles/${ticker}`, {
 				method: "GET",
@@ -125,6 +132,9 @@ const Main = () => {
 					console.log("candleInfo");
 					console.log(body);
 					setCandleInfo(body);
+				})
+				.finally(() => {
+					setCandlesLoading(false);
 				});
 		} catch (error) {
 			console.log(error);
@@ -132,6 +142,7 @@ const Main = () => {
 	};
 
 	const getCompanyNews = (ticker) => {
+		setNewsLoading(true);
 		try {
 			fetch(`/companyNews/getCompanyNews?ticker=${ticker}`, {
 				method: "GET",
@@ -151,6 +162,9 @@ const Main = () => {
 					console.log("companyNews");
 					console.log(body);
 					setCompanyNews(body);
+				})
+				.finally(() => {
+					setNewsLoading(false);
 				});
 		} catch (error) {
 			console.log(error);
@@ -209,18 +223,16 @@ const Main = () => {
 				flexDirection={"column"}
 				flexGrow={"1"}
 			>
-				{" "}
-				{stocks?.length > 0 ? (
-					<StockCard
-						currentStock={stocks[currentStock]}
-						stockRejected={stockRejected}
-						stockAdded={stockAdded}
-						candleInfo={candleInfo}
-						companyNews={companyNews}
-					/>
-				) : (
-					<div>Loading...</div>
-				)}
+				<StockCard
+					currentStock={stocks[currentStock]}
+					stockRejected={stockRejected}
+					stockAdded={stockAdded}
+					candleInfo={candleInfo}
+					companyNews={companyNews}
+					stockLoading={stockLoading}
+					candlesLoading={candlesLoading}
+					newsLoading={newsLoading}
+				/>
 			</Flex>
 		</Flex>
 	);

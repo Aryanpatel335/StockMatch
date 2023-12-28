@@ -7,7 +7,7 @@ import {
 	Divider,
 	Text,
 	Link,
-	Box,
+	Skeleton,
 } from "@chakra-ui/react";
 import moment from "moment";
 
@@ -20,7 +20,7 @@ const StockCardExpanded = (props) => {
 				<Heading as="h3" fontSize="md">
 					Relevant News
 				</Heading>
-				{companyNews.length > 0 ? (
+				{!props.newsLoading ? (
 					companyNews.slice(0, 3).map((article) => (
 						<Flex flexDirection={"row"} alignItems={"center"} key={article.id}>
 							{article.imageUrl !== "" ? (
@@ -54,8 +54,10 @@ const StockCardExpanded = (props) => {
 						</Flex>
 					))
 				) : (
-					<Flex justifyContent={"center"} my={"2em"}>
-						<div>No news to display...</div>
+					<Flex flexDirection={"column"} alignItems={"center"} gap={"10px"}>
+						<Skeleton height={"50px"} width={"100%"} />
+						<Skeleton height={"50px"} width={"100%"} />
+						<Skeleton height={"50px"} width={"100%"} />
 					</Flex>
 				)}
 			</Stack>
