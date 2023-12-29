@@ -2,7 +2,13 @@ import requests
 import time
 
 
-with open('resources/sp500_symbols.txt', 'r') as file:
+# with open('resources/sp500_symbols.txt', 'r') as file:
+#     symbols = file.read().splitlines()
+
+# with open('resources/nasdaq100Dow30.txt', 'r') as file:
+#     symbols = file.read().splitlines()
+
+with open('resources/allStocks.txt', 'r') as file:
     symbols = file.read().splitlines()
 
 # Base URL
@@ -14,4 +20,4 @@ for symbol in symbols:
     
     print(response)
     
-    time.sleep(5)
+    time.sleep(2)
