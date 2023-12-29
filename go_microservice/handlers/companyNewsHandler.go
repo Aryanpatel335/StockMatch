@@ -59,7 +59,7 @@ func CompanyNewsHandler(w http.ResponseWriter, r *http.Request) {
         log.Fatal("SPRING_API_URL is not set")
     }
 
-    springURL := springAPIBaseURL + "/companyNews/receiveCompanyNews"
+    springURL := springAPIBaseURL + "/api/companyNews/receiveCompanyNews"
     fmt.Println("Company News URL:", springURL)
 
     err = sendToSpringBackendCompanyNews(jsonData, springURL)

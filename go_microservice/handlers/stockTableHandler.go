@@ -200,7 +200,7 @@ func StockTableHandler(w http.ResponseWriter, r *http.Request) {
     }
 
 
-    springURL := springAPIBaseURL + "/stocks/addStock"
+    springURL := springAPIBaseURL + "/api/stocks/addStock"
     // fmt.Println("Stock Candles URL:", springURL)
     err = sendToSpringBackend(jsonData, springURL)
     if err != nil {

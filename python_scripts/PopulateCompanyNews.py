@@ -14,4 +14,4 @@ for symbol in symbols:
     
     print(response)
     
-    time.sleep(5)
+    time.sleep(10)

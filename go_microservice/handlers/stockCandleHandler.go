@@ -63,7 +63,7 @@ func StockCandlesHandler(w http.ResponseWriter, r *http.Request) {
     }
 
 	// Define the URL of your Spring backend endpoint
-	springURL := springAPIBaseURL + "/stockCandles/receiveStockCandles"
+	springURL := springAPIBaseURL + "/api/stockCandles/receiveStockCandles"
 	fmt.Println("Stock Candles URL:", springURL)
 	// Send the JSON data to the Spring backend
 	err = sendToSpringBackendStockCandles(jsonData, springURL)
