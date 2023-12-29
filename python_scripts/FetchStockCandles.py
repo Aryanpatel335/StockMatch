@@ -27,7 +27,7 @@ def fetch_and_send_stock(ticker):
     }
 
     # Specify your Spring backend endpoint
-    spring_endpoint = 'http://localhost:8080/stockCandles/receiveStockCandles'
+    spring_endpoint = 'http://localhost:8080/api/stockCandles/receiveStockCandles'
 
 
     # Send data to Spring backend
