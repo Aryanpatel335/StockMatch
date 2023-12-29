@@ -2,7 +2,7 @@ import requests
 import time
 
 # Read symbols from the file
-with open('resources/sp500_symbols.txt', 'r') as file:
+with open('resources/allStocks.txt', 'r') as file:
     symbols = file.read().splitlines()
 
 # Base URL
