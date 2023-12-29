@@ -22,7 +22,7 @@ COPY hit_endpoint.sh .
 RUN chmod +x hit_endpoint.sh
 
 # Add your cron job
-RUN echo "*/10 * * * * /hit_endpoint.sh >> /var/log/cron.log 2>&1" | crontab -
+RUN echo "*/14 * * * * /hit_endpoint.sh >> /var/log/cron.log 2>&1" | crontab -
 
 # Create the log file to be able to run tail
 RUN touch /var/log/cron.log
