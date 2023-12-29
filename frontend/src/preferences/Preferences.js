@@ -10,8 +10,13 @@ import {
 	FormControl,
 	FormLabel,
 	Heading,
+	Modal,
+	ModalBody,
+	ModalContent,
+	ModalOverlay,
 	Radio,
 	RadioGroup,
+	Spinner,
 	Stack,
 	Text,
 } from "@chakra-ui/react";
@@ -34,6 +39,7 @@ const Preferences = () => {
 	const loginStatus = useSelector(userLoginStatusSelector);
 	const userId = useSelector(userIdSelector);
 	const [userProfile, setUserProfile] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		if (!loginStatus) {
@@ -77,6 +83,8 @@ const Preferences = () => {
 
 		const body = { subID: userId, ...userPreferences };
 
+		setIsLoading(true);
+
 		fetch(`${process.env.REACT_APP_BACKEND}/preferences/saveUserPreferences`, {
 			method: "POST",
 			headers: {
@@ -96,7 +104,10 @@ const Preferences = () => {
 					return { ...oldProfile, preferences: userPreferences };
 				});
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.log(error))
+			.finally(() => {
+				setIsLoading(false);
+			});
 	};
 
 	const handleSubmit = () => {
@@ -104,7 +115,7 @@ const Preferences = () => {
 	};
 
 	return (
-		<Box h={"100svh"}>
+		<Box h={"100svh"} overflowX={"hidden"}>
 			<NavBar isPreferencesPage={true} />
 			<Flex flexDirection={"column"} w={"100vw"} bg={"gray.100"} minH={"100%"}>
 				<Container maxW={"sm"} pt={"2"} pb={"2"} minH={"100%"}>
@@ -289,6 +300,29 @@ const Preferences = () => {
 					</Card>
 				</Container>
 			</Flex>
+
+			{/* Modal with Spinner */}
+			<Modal isOpen={isLoading} closeOnOverlayClick={false} isCentered>
+				<ModalOverlay />
+				<ModalContent
+					px={"1em"}
+					py={"2em"}
+					textAlign={"center"}
+					w={"20em"}
+					maxW={"70vw"}
+				>
+					<Flex
+						flexDirection="column"
+						alignContent="center"
+						justifyContent="center"
+					>
+						<ModalBody>
+							<Spinner size="xl" color={"#9C7CF4"} />
+							<Text>Personalizing stock picks...</Text>
+						</ModalBody>
+					</Flex>
+				</ModalContent>
+			</Modal>
 		</Box>
 	);
 };
