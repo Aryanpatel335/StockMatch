@@ -39,7 +39,7 @@ public class WatchlistController {
     @GetMapping("/getWatchList")
     public ResponseEntity<List<StockTable>> getWatchlist(@RequestParam String subId) {
         List<StockTable> watchlist = watchlistService.getWatchlistByUserSubId(subId);
-        System.out.println(watchlist);
+        //System.out.println(watchlist);
         return ResponseEntity.ok(watchlist);
     }
 
