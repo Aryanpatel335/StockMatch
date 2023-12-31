@@ -81,8 +81,6 @@ The React-based frontend provides a clean and intuitive user experience, while P
 
 StockMatch is a tool for anyone interested in a hands-on approach to learning and enhancing their investment knowledge.
 
-For a closer look at the project, visit: [StockMatch](https://stockmatch.netlify.app/)
-
 #### Key Features:
 
 - **Custom Investment Criteria**: Users can set parameters to align with their investment goals.
@@ -98,11 +96,26 @@ Discover how StockMatch can enhance your investment strategy by visiting our liv
 
 Watch the StockMatch application in action:
 
-[![StockMatch Demo]
-
 ## Demo Images
 
-Images here
+<p align="center">
+<img width="375" alt="StockMatch" src="">
+  <p align="center">
+      Figure 1: Login with Google screen on mobile
+    </p>
+</p>
+<p align="center">
+<img width="375" alt="StockMatch" src="">
+  <p align="center">
+      Figure 2: Home screen on mobile
+    </p>
+</p>
+<p align="center">
+<img width="375" alt="StockMatch" src="">
+  <p align="center">
+      Figure 3: Users watchlist screen on mobile
+    </p>
+</p>
 
 ### Built With
 
