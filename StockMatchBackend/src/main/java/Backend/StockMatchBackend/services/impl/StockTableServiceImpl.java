@@ -127,8 +127,6 @@ public class StockTableServiceImpl implements StockTableService {
     }
 
     private int matchScore(StockTable stock, Preferences preferences) {
-        // Implement your scoring logic here
-        // Example: simple scoring based on matching industry
         return stock.getFinnhubIndustry().equals(preferences.getIndustry()) ? 0 : 1;
     }
 
@@ -163,26 +161,26 @@ public class StockTableServiceImpl implements StockTableService {
                 spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
 
             case 5:
-                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(5.0)); // Hardcoded value for time in market
-                spec = spec.and(StockTableSpecifications.hasRiskLevel("high")); // Hardcoded value for risk level
+                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(5.0));
+                spec = spec.and(StockTableSpecifications.hasRiskLevel("high"));
                 break;
             case 6:
-                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(10000.0)); // Hardcoded value for market cap
-                spec = spec.and(StockTableSpecifications.hasIndustryList(Arrays.asList("Technology", "Finance"))); // Hardcoded industry list
+                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(10000.0));
+                spec = spec.and(StockTableSpecifications.hasIndustryList(Arrays.asList("Technology", "Finance")));
                 break;
             case 7:
-                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(10.0)); // Hardcoded value for time in market
-                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(5000.0)); // Hardcoded value for market cap
+                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(10.0));
+                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(5000.0));
                 break;
             case 8:
-                spec = spec.and(StockTableSpecifications.hasRiskLevel("medium")); // Hardcoded value for risk level
+                spec = spec.and(StockTableSpecifications.hasRiskLevel("medium"));
                 break;
             case 9:
-                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(5.0));; // Hardcoded industry list
+                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(5.0));
                 break;
             default:
-                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(3.0)); // Hardcoded value for time in market
-                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(1.0)); // Hardcoded value for market cap
+                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(3.0));
+                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(1.0));
 
                 break;
 

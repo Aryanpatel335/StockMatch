@@ -15,5 +15,4 @@ public class PreferencesDTO {
     private Double marketCapMillions;
     private String industry;
     private List<String> industryList;
-    // Getters and setters
 }

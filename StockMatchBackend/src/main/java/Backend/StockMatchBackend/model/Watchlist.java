@@ -21,7 +21,7 @@ public class Watchlist {
     @JsonBackReference
     private User user;
 
-    // Assuming there is a separate entity for Stock
+
     @ManyToOne
     @JoinColumn(name = "stock_id")
     @JsonBackReference

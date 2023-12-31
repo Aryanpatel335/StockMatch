@@ -44,7 +44,6 @@ public class StockCandleServiceImpl implements StockCandleService {
 
     @Override
     public List<StockCandle> getStockCandlesForGraph(String ticker) {
-        // Assuming the repository has a method to find candles by ticker
         return stockCandleRepository.findByTicker(ticker);
     }
     @Override

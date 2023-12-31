@@ -37,7 +37,6 @@ public class StockTableController {
         return stockTableRepository.save(stockTable);
     }
 
-    // Additional CRUD operations (update, delete) can be added here
 
     @PostMapping("/addStock")
     public ResponseEntity<StockTable> addStockInfo(@RequestBody StockTableDTO stockTableDTO) {

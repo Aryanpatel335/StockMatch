@@ -26,7 +26,6 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
     @Override
     @Transactional
     public CompanyNews saveCompanyNews(CompanyNews companyNews) {
-        // Here you can add any business logic before saving the company news
         return companyNewsRepository.save(companyNews);
     }
 

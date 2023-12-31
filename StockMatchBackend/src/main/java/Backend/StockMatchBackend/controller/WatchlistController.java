@@ -47,7 +47,7 @@ public class WatchlistController {
     public ResponseEntity<?> addToWatchlist(@RequestBody WatchListDTO watchlistDTO) {
         watchlistService.addToWatchlist(watchlistDTO);
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Added to watchlist"); // Although this should probably say "Removed from watchlist"
+        response.put("message", "Added to watchlist");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -55,7 +55,7 @@ public class WatchlistController {
     public ResponseEntity<?> removeFromWatchlist(@RequestBody WatchListDTO watchListDTO) {
         watchlistService.removeFromWatchlist(watchListDTO);
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Removed from watchlist"); // Although this should probably say "Removed from watchlist"
+        response.put("message", "Removed from watchlist");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

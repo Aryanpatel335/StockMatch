@@ -39,9 +39,6 @@ public class PreferencesController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Preferences saved successfully");
         return ResponseEntity.ok(response); // Returns a JSON body with the message
-//        return ResponseEntity.ok("Preferences saved successfully");
     }
-
-//    @GetMapping("/getRecommendations")
 
 }

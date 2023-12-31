@@ -19,7 +19,4 @@ public class CompanyNewsResponseDTO {
     private String newsUrl;
     private String related;
     private Instant datetime;
-
-    // Getters and setters
-    // Add constructors if needed
 }

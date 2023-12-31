@@ -9,5 +9,5 @@ public class UserDTO {
     private String name;
     private String sub;
     private String email;
-    // Getters and setters
+
 }

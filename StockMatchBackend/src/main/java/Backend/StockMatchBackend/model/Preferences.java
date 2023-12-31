@@ -30,13 +30,13 @@ public class Preferences {
     private String industry;
     private String riskLevel;
 
-    // Option 2: Storing as JSON in a single column
+
     @Convert(converter = IndustryListJsonConverter.class)
     private List<String> industryList;
 
 
     public Preferences(Preferences original) {
-        // Assuming you don't want to copy the ID and user as they should be unique
+
         this.beta = original.getBeta();
         this.analystScore = original.getAnalystScore();
         this.timeInMarket = original.getTimeInMarket();

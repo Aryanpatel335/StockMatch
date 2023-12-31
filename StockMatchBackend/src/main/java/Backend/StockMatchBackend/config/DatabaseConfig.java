@@ -15,8 +15,6 @@ public class DatabaseConfig {
     @Value("${spring.datasource.password}")
     private String dbPassword;
 
-    // Getters and possibly setters for the fields
-
     public String getDbUrl() {
         return dbUrl;
     }

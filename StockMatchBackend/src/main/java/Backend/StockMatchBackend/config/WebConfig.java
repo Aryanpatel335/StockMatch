@@ -13,11 +13,11 @@ public class WebConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // or specify a pattern like "/api/**"
-                        .allowedOrigins("*") // specify the allowed origin
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
                         .allowedMethods("GET", "POST", "PUT", "DELETE") // allowed HTTP methods
                         .allowedHeaders("*") // allowed headers
-                        .allowCredentials(false) // if you need cookies or authentication
+                        .allowCredentials(false)
                         .maxAge(3600); // cache duration for browser
             }
         };

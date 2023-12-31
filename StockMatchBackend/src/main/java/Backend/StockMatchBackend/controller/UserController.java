@@ -202,7 +202,7 @@ public class UserController {
         dto.setCountry(stockTable.getCountry());
         dto.setCurrency(stockTable.getCurrency());
         dto.setExchange(stockTable.getExchange());
-        dto.setIpo(stockTable.getIpo()); // Consider converting this to a date object if needed
+        dto.setIpo(stockTable.getIpo());
         dto.setMarketCapitalization(stockTable.getMarketCapitalization());
         dto.setName(stockTable.getName());
         dto.setTicker(stockTable.getTicker());
@@ -211,7 +211,7 @@ public class UserController {
         dto.setFinnhubIndustry(stockTable.getFinnhubIndustry());
         dto.setWeekHigh(stockTable.getWeekHigh());
         dto.setWeekLow(stockTable.getWeekLow());
-        dto.setWeekLowDate(stockTable.getWeekLowDate()); // Consider converting this to a date object if needed
+        dto.setWeekLowDate(stockTable.getWeekLowDate());
         dto.setBeta(stockTable.getBeta());
         dto.setMarketLink1(stockTable.getMarketLink1());
         dto.setMarketLink2(stockTable.getMarketLink2());
@@ -219,8 +219,6 @@ public class UserController {
         dto.setRiskLevel(stockTable.getRiskLevel());
         dto.setYearsInMarket(stockTable.getYearsInMarket());
 
-        // Exclude relationships like 'watchlist' and 'stockCandles' from the DTO
-        // If needed, map them to corresponding DTOs and add to the list in StockTableResponseDTO
 
         return dto;
     }

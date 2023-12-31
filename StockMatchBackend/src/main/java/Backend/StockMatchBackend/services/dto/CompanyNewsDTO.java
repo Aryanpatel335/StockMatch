@@ -14,7 +14,7 @@ import java.time.Instant;
 public class CompanyNewsDTO {
     private String ticker;
     private String category;
-    private Instant datetime; // Or use String and then convert it manually
+    private Instant datetime;
     private String headline;
     private int id;
     private String image;

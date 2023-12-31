@@ -42,7 +42,6 @@ public class StockCandleController {
         return stockCandleRepository.save(stockCandle);
     }
 
-    // Additional CRUD operations (update, delete) can be added here
 
     //sample (using for testing the string received for json data)
 //    @PostMapping("/receiveStockQuote")
@@ -61,11 +60,6 @@ public class StockCandleController {
 //    }
     @PostMapping("/receiveStockCandles")
     public ResponseEntity<?> saveStockCandles(@RequestBody StockCandleDTO stockCandleDTO) {
-        // Convert DTOs to Entities
-//        List<StockCandle> candles = stockCandleDTO.getC().stream()
-//                .map(c -> new StockCandle(/* initialize fields with values from stockCandleDTO */))
-//                .collect(Collectors.toList());
-
         // Check if the ticker already exists and replace the existing candles
         // we delete this ticker and replace the ticker data accordingly
 
@@ -84,11 +78,6 @@ public class StockCandleController {
     }
 
     public ResponseEntity<?> replaceStockCandles(@PathVariable String ticker, @RequestBody StockCandleDTO newCandles) {
-        // Flatten the list of lists into a single list using flatMap
-//        List<StockCandle> newCandles = candleDTOs.stream()
-//                .flatMap(dto -> convertStockCandleDtoToEntity(dto).stream()) // Use flatMap to flatten the nested lists
-//                .collect(Collectors.toList());
-
         // Use the service to replace existing candles with new ones
         stockCandleService.replaceStockCandles(ticker, newCandles);
         return ResponseEntity.ok("Stock candles replaced successfully");

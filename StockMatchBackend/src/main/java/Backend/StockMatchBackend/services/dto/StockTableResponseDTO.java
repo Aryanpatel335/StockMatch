@@ -37,7 +37,5 @@ public class StockTableResponseDTO {
     private String marketLink3;
     private String riskLevel;
     private Integer yearsInMarket;
-
     // Exclude relationships like 'watchlist' and 'stockCandles' if they are not needed in the DTO
-    // If they are needed, consider adding a list of DTOs for these entities as well
 }

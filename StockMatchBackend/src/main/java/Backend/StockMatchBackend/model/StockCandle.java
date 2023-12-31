@@ -22,7 +22,7 @@ public class StockCandle {
     private StockTable stock;
 
     private String ticker;
-    private Instant uniqueCandleTimestamp; // Consider renaming this to reflect its purpose, e.g., "candleTimestamp"
+    private Instant uniqueCandleTimestamp;
 
     // Using BigDecimal for financial data to avoid precision issues
     private BigDecimal open;
@@ -33,6 +33,4 @@ public class StockCandle {
     // Additional field for volume, nullable
     private Long volume;
 
-    // If you don't need two separate timestamps, consider removing one
-    // private Instant uniqueCandleTimestamp;
 }

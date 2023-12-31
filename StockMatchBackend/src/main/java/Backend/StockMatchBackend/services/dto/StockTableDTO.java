@@ -27,6 +27,4 @@ public class StockTableDTO {
     private String marketLink1;
     private String marketLink2;
     private String marketLink3;
-
-    // Getters and setters
 }
