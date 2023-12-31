@@ -19,10 +19,6 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![Contributors][contributors-shield]][contributors-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -35,14 +31,14 @@
   <p align="center">
     StockMatch is an app that offers tailored stock recommendations based on user preferences, simplifying the search for ideal investment opportunities.
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Aryanpatel335/StockMatch"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://stockmatch.netlify.app/">View Demo</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/Aryanpatel335/StockMatch/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/Aryanpatel335/StockMatch/issues">Request Feature</a>
   </p>
 </div>
 
@@ -53,6 +49,8 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
+        <li><a href="#demo-video">Demo Video</a></li>
+        <li><a href="#demo-images">Demo Images</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
@@ -60,7 +58,7 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#installations-and-setups">Installations and Setups</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -68,7 +66,6 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -81,6 +78,14 @@
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Demo Video
+
+Watch the StockMatch application in action:
+
+[![StockMatch Demo]
+
+## Demo Images
 
 ### Built With
 
@@ -102,41 +107,98 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+This guide will outline the steps necessary to set up StockMatch environment with Go, Python, Spring/Java backend, and a React frontend. Follow these instructions to prepare your local development environment.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+Before you begin, ensure you have the following installed:
 
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
+- **Go**: Download and install from the [official Go website](https://golang.org/dl/).
 
-### Installation
+- **Python**: Download and install from the [official Python website](https://www.python.org/downloads/).
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+- **Node.js and npm**: npm is distributed with Node.js which means that when you download Node.js, you automatically get npm installed on your computer. Download Node.js and npm from the [official Node.js website](https://nodejs.org/en/).
+
+<!-- INSTALLATIONS AND SETUPS -->
+
+## Installations and Setups
+
+#### Go Installation
+
+1. Confirm Go installation by checking the version in your terminal:
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   go version
    ```
-3. Install NPM packages
+
+#### Python Installation
+
+1. Confirm Python installation by checking the version in your terminal:
    ```sh
+   python --version
+   # or for Python 3
+   python3 --version
+   ```
+
+#### Spring / Java Setup
+
+1. Download and install the Java Development Kit (JDK) from [Oracle](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) or use an OpenJDK distribution.
+2. Download and install Maven from the [official Apache Maven project website](https://maven.apache.org/download.cgi).
+3. Configure environment variables for Java and Maven if needed.
+
+### Project Installation
+
+1. Clone the repositories:
+   ```sh
+   git clone https://github.com/Aryanpatel335/StockMatch.git
+   ```
+2. Install dependencies for the Spring/Java application:
+   ```sh
+   cd StockMatchBackend
+   mvn install
+   ```
+3. Install NPM packages for the React frontend:
+   ```sh
+   cd frontend
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
+
+### Running the Application
+
+1. Start the Spring/Java server:
+
+   ```sh
+   cd StockMatchBackend
+   mvn spring-boot:run
    ```
 
+   The server should be accessible at `http://localhost:8080`.
+
+2. In a new terminal, launch the React frontend:
+   ```sh
+   cd frontend
+   npm start
+   ```
+   The React app should now be available at `http://localhost:3000`.
+
+You are now ready to run and contribute to StockMatch!
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- USAGE EXAMPLES -->
+
+## Usage
+
+Try it out: [https://stockmatch.netlify.app/](https://stockmatch.netlify.app/)
+
+<!-- ROADMAP -->
+
+## Roadmap
+
+See the [open issues](https://github.com/Aryanpatel335/StockMatch/issues) for a list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
 
 ## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
@@ -157,23 +219,27 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- CONTACT -->
+<!-- CONTACTS -->
 
-## Contact
+## Contacts
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+- Aryan Patel:
+  - Personal: aryanp862002@gmail.com
+  - School: patea156@mcmaster.ca
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+---
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- Martin Ivanov:
+  - Personal: martinivnv2002@gmail.com
 
-<!-- ACKNOWLEDGMENTS -->
+---
 
-## Acknowledgments
+- Areez Visram:
+  - Personal: areez.visram@gmail.com
 
-- []()
-- []()
-- []()
+Project Link: [https://github.com/Aryanpatel335/StockMatch](https://github.com/Aryanpatel335/StockMatch)
+
+Live Link: [https://stockmatch.netlify.app/](https://stockmatch.netlify.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
