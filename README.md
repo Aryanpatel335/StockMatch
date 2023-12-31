@@ -23,7 +23,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Aryanpatel335/StockMatch">
-    <img src="images/logo.png" alt="Logo" width="" height="80">
+    <img width="516" alt="StockMatch" src="https://github.com/Aryanpatel335/StockMatch/assets/42017629/2823bdb6-6698-4f2f-8f58-8f7532d3ace4">
   </a>
 
 <h3 align="center">StockMatch</h3>
@@ -83,6 +83,7 @@ StockMatch is a tool for anyone interested in a hands-on approach to learning an
 
 #### Key Features:
 
+
 - **Custom Investment Criteria**: Users can set parameters to align with their investment goals.
 - **Personalized Stock Recommendations**: Our system analyzes market data to suggest stocks that match user preferences.
 - **Real-Time Data**: Live stock information is sourced from reliable APIs, offering up-to-date market insights.
@@ -96,22 +97,26 @@ Discover how StockMatch can enhance your investment strategy by visiting our liv
 
 Watch the StockMatch application in action:
 
+
+https://github.com/Aryanpatel335/StockMatch/assets/42017629/280e0d42-031a-4a95-9e35-c9b0e48122b6
+
+
 ## Demo Images
 
 <p align="center">
-<img width="375" alt="StockMatch" src="">
+  <img width="366" alt="StockMatch" src="https://github.com/Aryanpatel335/StockMatch/assets/42017629/ae208a00-6fe4-4c85-b9a1-87c8c5f35b24">
   <p align="center">
       Figure 1: Login with Google screen on mobile
     </p>
 </p>
 <p align="center">
-<img width="375" alt="StockMatch" src="">
+  <img width="287" alt="StockMatch" src="https://github.com/Aryanpatel335/StockMatch/assets/42017629/db8aed41-6227-4250-bd55-f8fcd7240c63">
   <p align="center">
       Figure 2: Home screen on mobile
     </p>
 </p>
 <p align="center">
-<img width="375" alt="StockMatch" src="">
+  <img width="287" alt="Screenshot 2023-12-31 at 12 13 00 PM" src="https://github.com/Aryanpatel335/StockMatch/assets/42017629/10126d87-7a20-4827-9649-02a0f2655ca0">
   <p align="center">
       Figure 3: Users watchlist screen on mobile
     </p>
@@ -129,9 +134,8 @@ Watch the StockMatch application in action:
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Powered By
-
-<img src="images/finnhubLogo.png" alt="Logo" width="" height="80">
-<img src="images/Yahoo!_Finance_logo_2021.png" alt="Logo" width="150" height="90">
+<img src="https://github.com/Aryanpatel335/StockMatch/assets/42017629/fad93b20-2bfc-41a1-82cf-4b328331cc92" alt="Logo" width="" height="80">
+<img src="https://github.com/Aryanpatel335/StockMatch/assets/42017629/8774930e-08ea-4d82-8895-183f366db847" alt="Logo" width="150" height="90">
 
 <!-- GETTING STARTED -->
 
@@ -274,32 +278,3 @@ Project Link: [https://github.com/Aryanpatel335/StockMatch](https://github.com/A
 Live Link: [https://stockmatch.netlify.app/](https://stockmatch.netlify.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/Aryanpatel335/StockMatch/graphs/contributors
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/Aryanpatel335/StockMatch/blob/main/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com
-[Java-pic]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white
-[Java-url]: https://www.java.com/en/
