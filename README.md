@@ -73,9 +73,32 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+StockMatch is an investment tool that leverages modern technology to deliver tailored stock recommendations. Designed with a mobile-first approach, the application offers a user-centric experience for both seasoned traders and newcomers to the stock market.
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+### React Frontend
+
+The frontend of StockMatch is built using React, a powerful JavaScript library for building user interfaces. Our UI is designed to be intuitive, responsive, and visually appealing, ensuring a seamless user experience on any device. The interactive elements allow users to swipe through stock options, mark favorites, and curate a personalized watchlist with ease.
+
+### Java Spring API
+
+At the heart of StockMatch is a robust backend developed with Java Spring. This API is the backbone of the application, handling requests and serving data with high efficiency. It is designed to scale, managing the influx of user interactions and data processing without compromising performance.
+
+### Postgres Database
+
+Data persistence in StockMatch is managed by PostgreSQL, an advanced open-source relational database. It stores user preferences, watchlist entries, and other crucial data, maintaining data integrity and providing fast query responses for a smooth application experience.
+
+### Go and Python Microservices
+
+To provide real-time financial data, StockMatch utilizes microservices written in Go and Python. These microservices interact with external APIs such as Finnhub and yFinance to fetch the latest stock information. By incorporating microservices architecture, the application ensures that each service is maintainable, scalable, and independently deployable.
+
+#### Key Features:
+
+- **Custom Investment Criteria**: Users can set parameters to align with their investment goals.
+- **Personalized Stock Recommendations**: Our system analyzes market data to suggest stocks that match user preferences.
+- **Real-Time Data**: Live stock information is sourced from reliable APIs, offering up-to-date market insights.
+- **Engaging UI**: A sleek, modern interface that emphasizes usability and aesthetic appeal.
+
+Discover how StockMatch can enhance your investment strategy by visiting our live site: [StockMatch](https://stockmatch.netlify.app/).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -86,6 +109,8 @@ Watch the StockMatch application in action:
 [![StockMatch Demo]
 
 ## Demo Images
+
+Images here
 
 ### Built With
 
@@ -236,6 +261,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 - Areez Visram:
   - Personal: areez.visram@gmail.com
+
+---
 
 Project Link: [https://github.com/Aryanpatel335/StockMatch](https://github.com/Aryanpatel335/StockMatch)
 
