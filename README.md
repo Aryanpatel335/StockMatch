@@ -83,7 +83,6 @@ StockMatch is a tool for anyone interested in a hands-on approach to learning an
 
 #### Key Features:
 
-
 - **Custom Investment Criteria**: Users can set parameters to align with their investment goals.
 - **Personalized Stock Recommendations**: Our system analyzes market data to suggest stocks that match user preferences.
 - **Real-Time Data**: Live stock information is sourced from reliable APIs, offering up-to-date market insights.
@@ -97,9 +96,7 @@ Discover how StockMatch can enhance your investment strategy by visiting our liv
 
 Watch the StockMatch application in action:
 
-
 https://github.com/Aryanpatel335/StockMatch/assets/42017629/280e0d42-031a-4a95-9e35-c9b0e48122b6
-
 
 ## Demo Images
 
@@ -134,6 +131,7 @@ https://github.com/Aryanpatel335/StockMatch/assets/42017629/280e0d42-031a-4a95-9
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Powered By
+
 <img src="https://github.com/Aryanpatel335/StockMatch/assets/42017629/fad93b20-2bfc-41a1-82cf-4b328331cc92" alt="Logo" width="" height="80">
 <img src="https://github.com/Aryanpatel335/StockMatch/assets/42017629/8774930e-08ea-4d82-8895-183f366db847" alt="Logo" width="150" height="90">
 
@@ -278,3 +276,8 @@ Project Link: [https://github.com/Aryanpatel335/StockMatch](https://github.com/A
 Live Link: [https://stockmatch.netlify.app/](https://stockmatch.netlify.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Java-pic]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white
+[Java-url]: https://www.java.com/en/
