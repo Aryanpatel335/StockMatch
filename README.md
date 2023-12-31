@@ -73,23 +73,15 @@
 
 ## About The Project
 
-StockMatch is an investment tool that leverages modern technology to deliver tailored stock recommendations. Designed with a mobile-first approach, the application offers a user-centric experience for both seasoned traders and newcomers to the stock market.
+StockMatch is a project aimed at investors who prefer a straightforward and interactive approach to stock management and discovery. It's built to streamline the process of creating a personalized watchlist with an easy-to-use interface that responds to the user's investment preferences.
 
-### React Frontend
+Utilizing real-time financial data from Finnhub and yFinance, StockMatch keeps users informed with the latest stock updates. The robust backend, built on Java Spring and supported by a Postgres database, ensures efficient data management.
 
-The frontend of StockMatch is built using React, a powerful JavaScript library for building user interfaces. Our UI is designed to be intuitive, responsive, and visually appealing, ensuring a seamless user experience on any device. The interactive elements allow users to swipe through stock options, mark favorites, and curate a personalized watchlist with ease.
+The React-based frontend provides a clean and intuitive user experience, while Python and Go microservices fetch financial data, aiding users in their stock selection journey.
 
-### Java Spring API
+StockMatch is a tool for anyone interested in a hands-on approach to learning and enhancing their investment knowledge.
 
-At the heart of StockMatch is a robust backend developed with Java Spring. This API is the backbone of the application, handling requests and serving data with high efficiency. It is designed to scale, managing the influx of user interactions and data processing without compromising performance.
-
-### Postgres Database
-
-Data persistence in StockMatch is managed by PostgreSQL, an advanced open-source relational database. It stores user preferences, watchlist entries, and other crucial data, maintaining data integrity and providing fast query responses for a smooth application experience.
-
-### Go and Python Microservices
-
-To provide real-time financial data, StockMatch utilizes microservices written in Go and Python. These microservices interact with external APIs such as Finnhub and yFinance to fetch the latest stock information. By incorporating microservices architecture, the application ensures that each service is maintainable, scalable, and independently deployable.
+For a closer look at the project, visit: [StockMatch](https://stockmatch.netlify.app/)
 
 #### Key Features:
 
