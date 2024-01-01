@@ -212,16 +212,6 @@ public class StockTableServiceImpl implements StockTableService {
         return new PageImpl<>(allRecommendations, pageable, totalPages);
     }
 
-    //time in market
-    // x < 10 , x >= 10
-
-    //market cap
-    // 0 < x < 2000, 2000 <= x < 10000, x >= 10000
-
-    //risk level
-    // high, medium, low
-    //36
-
 
 //=======================================================================================================
     public Set<UUID> getWatchlistStockIds(String subId) {
