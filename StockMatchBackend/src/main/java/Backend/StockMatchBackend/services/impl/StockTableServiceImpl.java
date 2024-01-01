@@ -41,7 +41,6 @@ public class StockTableServiceImpl implements StockTableService {
     public StockTable addStockInfo(StockTableDTO stockTableDTO) {
         StockTable stockTable = stockTableRepository.findBySymbol(stockTableDTO.getSymbol())
                 .orElse(new StockTable());
-//        System.out.println(stockTableDTO.getFinnhubIndustry());
 
         mapDtoToStockInfo(stockTable, stockTableDTO);
 

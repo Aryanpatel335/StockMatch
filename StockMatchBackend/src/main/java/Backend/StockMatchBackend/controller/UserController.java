@@ -40,17 +40,6 @@ public class UserController {
 
     private UserStockViewDTO userStockViewDTO;
 
-//    @GetMapping("/{id}")
-//    public User getUserById(@PathVariable UUID id) {
-//        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-//    }
-
-    //testing purpose only we wont use this here
-//    @PostMapping
-//    public User createUser(@RequestBody User user) {
-//        return userRepository.save(user);
-//    }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
         System.out.println(userDTO);
@@ -116,7 +105,6 @@ public class UserController {
         }
     }
 
-
     @GetMapping("/{subID}/userStockView")
     public ResponseEntity<?> getUserStockView(@PathVariable String subID) {
         Optional<User> userOptional = userRepository.findBySubID(subID);
@@ -167,23 +155,6 @@ public class UserController {
         return ResponseEntity.ok(responseSuccess);
     }
 
-
-
-
-
-    //    @PutMapping("/{subID}/userStockView")
-//    public ResponseEntity<?> updateUserStockView(@PathVariable String subID, @RequestBody UserStockViewDTO stockViewUpdateDTO) {
-//        Optional<User> userOptional = userRepository.findBySubID(subID);
-//
-//        if (userOptional.isPresent()) {
-//            User user = userOptional.get();
-//            user.setCurrentStockView(stockViewUpdateDTO.getCurrentStockView());
-//            userRepository.save(user);
-//            return ResponseEntity.ok().build(); // Successfully updated
-//        } else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-//        }
-//    }
     public StockTableResponseDTO mapToStockTableResponseDTO(StockTable stockTable) {
         StockTableResponseDTO dto = new StockTableResponseDTO();
 

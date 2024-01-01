@@ -21,8 +21,6 @@ public class StockTableController {
     @Autowired
     private StockTableRepository stockTableRepository;
 
-//    @Autowired
-//    private ObjectMapper objectMapper;
     @Autowired
     private StockTableServiceImpl stockTableService;
 
