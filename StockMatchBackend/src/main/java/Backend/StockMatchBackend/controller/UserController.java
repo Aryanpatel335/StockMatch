@@ -157,19 +157,10 @@ public class UserController {
         if (!preferences.isEmpty()) {
             // Delete the preferences
             preferencesRepository.deleteAll(preferences);
-
-            // Optionally, you can handle preferences in another way, like setting the foreign key to null
-            // This is commented out for this example
-            // preferences.forEach(preference -> {
-            //     preference.setUserId(null);
-            //     preferencesRepository.save(preference);
-            // });
         }
 
-        // Delete the user after handling the preferences
         userRepository.delete(userOptional.get());
 
-        // Prepare response map
         Map<String, String> responseSuccess = new HashMap<>();
         responseSuccess.put("message", "User with ID " + subID + " and all related preferences successfully deleted");
 

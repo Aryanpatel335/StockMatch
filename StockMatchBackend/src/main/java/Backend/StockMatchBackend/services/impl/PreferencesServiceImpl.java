@@ -48,31 +48,28 @@ public class PreferencesServiceImpl implements PreferencesService {
     public void saveUserPreferences(PreferencesDTO preferencesDTO) {
         Optional<User> userOptional = userRepository.findBySubID(preferencesDTO.getSubID());
         if (!userOptional.isPresent()) {
-            throw new RuntimeException("User not found"); // Replace with appropriate exception handling
+            throw new RuntimeException("User not found");
         }
         User user = userOptional.get();
 
-        // Check if preferences for this user already exist
         Optional<Preferences> existingPreferences = preferencesRepository.findByUser(user);
         Preferences preferences = existingPreferences.orElse(new Preferences());
 
-        // Set or update the preferences fields
         preferences.setUser(user);
         preferences.setBeta(preferencesDTO.getBeta());
         preferences.setAnalystScore(preferencesDTO.getAnalystScore());
         preferences.setTimeInMarket(preferencesDTO.getTimeInMarket());
         preferences.setMarketCapMillions(preferencesDTO.getMarketCapMillions());
-        preferences.setIndustryList(preferencesDTO.getIndustryList()); // Set the industry list
+        preferences.setIndustryList(preferencesDTO.getIndustryList());
         preferences.setRiskLevel(categorizeRiskLevel(preferencesDTO.getBeta()));
 
-        // Save or update the preferences in the database
         preferencesRepository.save(preferences);
     }
 
 
     private String categorizeRiskLevel(Double beta) {
         if (beta == null) {
-            return "unknown"; // or handle null as you see fit
+            return "unknown";
         }
         if (beta < 1.0) {
             return "low";

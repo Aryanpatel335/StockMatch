@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Repository
 public interface WatchlistRepository extends JpaRepository<Watchlist, UUID> {
-    // Custom database queries can be added here
     Optional<Watchlist> findByUserAndStock(User user, StockTable stock);
     List<Watchlist> findByUser(User user);
 }

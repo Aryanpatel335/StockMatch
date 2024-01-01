@@ -29,7 +29,7 @@ public class CompanyNews {
     private String headline;
     private String imageUrl;
     private String source;
-    @Column(name = "summary", length = 5000) // adjust the length as necessary
+    @Column(name = "summary", length = 5000)
     private String summary;
     private String newsUrl;
     private String related;

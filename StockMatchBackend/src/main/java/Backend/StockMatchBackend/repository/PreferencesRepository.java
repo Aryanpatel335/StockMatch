@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface PreferencesRepository extends JpaRepository<Preferences, UUID> {
-    // Custom database queries can be added here
+
     Optional<Preferences> findByUser(User user);
 
     List<Preferences> findByUserId(UUID userID);

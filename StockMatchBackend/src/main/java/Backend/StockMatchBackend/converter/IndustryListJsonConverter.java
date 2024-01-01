@@ -28,7 +28,7 @@ public class IndustryListJsonConverter implements AttributeConverter<List<String
     @Override
     public List<String> convertToEntityAttribute(String dbData) {
         if (dbData == null || dbData.isEmpty()) {
-            return null; // or return new ArrayList<>() for empty list
+            return null;
         }
         try {
             return objectMapper.readValue(dbData, new TypeReference<List<String>>() {});

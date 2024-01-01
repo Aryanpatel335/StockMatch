@@ -30,10 +30,10 @@ import java.util.stream.Collectors;
 @Service
 public class StockTableServiceImpl implements StockTableService {
     @Autowired
-    private StockTableRepository stockTableRepository; // Assuming you have a repository
+    private StockTableRepository stockTableRepository;
 
     @Autowired
-    private WatchlistRepository watchlistRepository; // Assuming this repository exists
+    private WatchlistRepository watchlistRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -77,7 +77,7 @@ public class StockTableServiceImpl implements StockTableService {
 
     private String categorizeRiskLevel(BigDecimal beta) {
         if (beta == null) {
-            return "unknown"; // or handle null as you see fit
+            return "unknown";
         }
         BigDecimal one = new BigDecimal("1.0");
         BigDecimal onePointFive = new BigDecimal("1.5");
@@ -92,7 +92,7 @@ public class StockTableServiceImpl implements StockTableService {
 
     public Integer calculateYearsSinceIPO(String ipoDateString) {
         if (ipoDateString == null || ipoDateString.isEmpty()) {
-            return null; // Return null for error or invalid cases
+            return null;
         }
 
         LocalDate ipoDate;
@@ -100,18 +100,18 @@ public class StockTableServiceImpl implements StockTableService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             ipoDate = LocalDate.parse(ipoDateString, formatter);
         } catch (DateTimeParseException e) {
-            return null; // Return null if parsing fails
+            return null;
         }
 
         LocalDate currentDate = LocalDate.now();
         Period period = Period.between(ipoDate, currentDate);
-        return period.getYears(); // Autoboxing converts int to Integer
+        return period.getYears();
     }
 
     public Page<StockTable> getRecommendedStocks(Preferences preferences, Pageable pageable) {
         List<StockTable> allStocks = stockTableRepository.findAll();
 
-        // Sort stocks based on preferences (this is a simplified example)
+
         List<StockTable> sortedStocks = allStocks.stream()
                 .sorted(Comparator.comparing(stock -> matchScore(stock, preferences)))
                 .collect(Collectors.toList());
@@ -159,7 +159,7 @@ public class StockTableServiceImpl implements StockTableService {
             case 4:
 //                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
                 spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
-
+                break;
             case 5:
                 spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(5.0));
                 spec = spec.and(StockTableSpecifications.hasRiskLevel("high"));
@@ -251,16 +251,6 @@ public class StockTableServiceImpl implements StockTableService {
 
         return new PageImpl<>(allRecommendations, pageable, totalPages);
     }
-
-    private boolean shouldRemoveNextSpecification(Preferences preferences) {
-        // Logic to determine if another specification should be removed
-        // Return false if there are no more specifications to remove
-        if (preferences.getIndustry() != null){
-            return true;
-        }
-        return false;
-    }
-
     public Preferences removeNextSpecification(Preferences preferences, int iteration) {
 
         switch (iteration) {
@@ -293,12 +283,11 @@ public class StockTableServiceImpl implements StockTableService {
     public Set<UUID> getWatchlistStockIds(String subId) {
         Optional<User> userOptional = userRepository.findBySubID(subId);
         if (!userOptional.isPresent()) {
-            throw new RuntimeException("User not found"); // Or handle this more gracefully
+            throw new RuntimeException("User not found");
         }
 
         User user = userOptional.get();
 
-        // Fetch the watchlist entries for the user and extract the stock IDs
         List<Watchlist> watchlistEntries = watchlistRepository.findByUser(user);
         return watchlistEntries.stream()
                 .map(Watchlist::getStock)

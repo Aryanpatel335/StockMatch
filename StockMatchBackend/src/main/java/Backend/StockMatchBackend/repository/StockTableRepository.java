@@ -11,6 +11,5 @@ import java.util.UUID;
 
 @Repository
 public interface StockTableRepository extends JpaRepository<StockTable, UUID>, JpaSpecificationExecutor<StockTable> {
-    // Custom database queries can be added here
     Optional<StockTable> findBySymbol(String symbol);
 }

@@ -39,34 +39,23 @@ public class UserServiceImpl implements UserService {
 
     private User createUserFromDTO(UserDTO userDTO) {
         User user = new User();
-        // Set user properties from DTO
         user.setSubID(userDTO.getSub());
         user.setEmail(userDTO.getEmail());
         user.setUsername(userDTO.getName());
-        // Initialize or set preferences and watchlists if necessary
         return user;
     }
 
     private void updateUserFromDTO(User user, UserDTO userDTO) {
-        // Update user properties from DTO
         user.setEmail(userDTO.getEmail());
         user.setUsername(userDTO.getName());
-        // Update preferences and watchlists if necessary
     }
 
     public Preferences getUserPreferences(String subId) {
         User user = userRepository.findBySubID(subId)
-                .orElseThrow(() -> new RuntimeException("User not found")); // Replace with appropriate exception handling
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
 
         return preferencesRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("Preferences not found")); // Replace with appropriate exception handling
-    }
-
-    public Page<StockTable> getUserStockRecommendations(String subId, Pageable pageable) {
-        User user = userRepository.findBySubID(subId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        return stockTableService.getRecommendedStocks(user.getPreferences(), pageable);
+                .orElseThrow(() -> new RuntimeException("Preferences not found"));
     }
 }

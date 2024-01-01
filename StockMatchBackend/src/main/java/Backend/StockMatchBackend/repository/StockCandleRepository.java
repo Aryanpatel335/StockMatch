@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Repository
 public interface StockCandleRepository extends JpaRepository<StockCandle, UUID> {
-    // Custom database queries can be added here
     boolean existsByTicker(String ticker);
     List<StockCandle> findByTicker(String ticker);
     @Transactional

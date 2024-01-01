@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class PreferencesDTO {
-    private String subID; // Use the identifier received from the frontend
+    private String subID;
     private Double beta;
     private Double analystScore;
     private Double timeInMarket;

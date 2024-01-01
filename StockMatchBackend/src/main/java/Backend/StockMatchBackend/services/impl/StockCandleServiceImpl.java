@@ -26,20 +26,19 @@ public class StockCandleServiceImpl implements StockCandleService {
         List<StockCandle> candles = new ArrayList<>();
         for (int i = 0; i < stockCandleDTO.getT().size(); i++) {
             StockCandle candle = new StockCandle();
-            candle.setId(UUID.randomUUID()); // Assuming ID is not auto-generated
+            candle.setId(UUID.randomUUID());
             candle.setTicker(stockCandleDTO.getTicker());
             candle.setUniqueCandleTimestamp(Instant.ofEpochSecond(stockCandleDTO.getT().get(i)));
             candle.setOpen(stockCandleDTO.getO().get(i));
             candle.setHigh(stockCandleDTO.getH().get(i));
             candle.setLow(stockCandleDTO.getL().get(i));
             candle.setClose(stockCandleDTO.getC().get(i));
-            // Set volume if it's not null
             if (stockCandleDTO.getV() != null) {
                 candle.setVolume(stockCandleDTO.getV().get(i));
             }
             candles.add(candle);
         }
-        stockCandleRepository.saveAll(candles); // Batch insert
+        stockCandleRepository.saveAll(candles);
     }
 
     @Override
@@ -54,10 +53,7 @@ public class StockCandleServiceImpl implements StockCandleService {
     @Override
     @Transactional
     public void replaceStockCandles(String ticker,StockCandleDTO newCandles) {
-        // Delete all existing candles with the given ticker
         stockCandleRepository.deleteByTicker(ticker);
-
-        // Save new candles
        saveStockCandles(newCandles);
     }
 

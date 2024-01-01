@@ -24,7 +24,7 @@ public class StockTable {
     private String country;
     private String currency;
     private String exchange;
-    private String ipo; // Assuming this is a date in String format
+    private String ipo;
     private BigDecimal marketCapitalization;
     private String name;
     private String ticker;

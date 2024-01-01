@@ -19,7 +19,6 @@ public class StockTableResponseDTO {
     private String country;
     private String currency;
     private String exchange;
-    // Note: Consider converting the IPO date into a proper date object
     private String ipo;
     private BigDecimal marketCapitalization;
     private String name;
@@ -29,7 +28,6 @@ public class StockTableResponseDTO {
     private String finnhubIndustry;
     private BigDecimal weekHigh;
     private BigDecimal weekLow;
-    // Note: Consider converting the weekLowDate into a proper date object
     private String weekLowDate;
     private BigDecimal beta;
     private String marketLink1;
@@ -37,5 +35,4 @@ public class StockTableResponseDTO {
     private String marketLink3;
     private String riskLevel;
     private Integer yearsInMarket;
-    // Exclude relationships like 'watchlist' and 'stockCandles' if they are not needed in the DTO
 }

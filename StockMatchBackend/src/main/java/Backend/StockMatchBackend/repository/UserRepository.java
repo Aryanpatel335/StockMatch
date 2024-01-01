@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
-    // Custom database queries can be added here
+
 //    User findBySubID(String subID);
     Optional<User> findBySubID(String subID);
 }
