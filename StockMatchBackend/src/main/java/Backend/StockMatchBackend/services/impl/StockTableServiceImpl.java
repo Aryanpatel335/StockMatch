@@ -132,82 +132,53 @@ public class StockTableServiceImpl implements StockTableService {
 
     public Page<StockTable> getFilteredStocks(Preferences preferences, Set<UUID> alreadyRecommended , Pageable pageable, int iter) {
         Specification<StockTable> spec = Specification.where(null);
-
+        Specification<StockTable> marketCapSpec = StockTableSpecifications.buildMarketCapSpecification(preferences.getMarketCapMillions());
+        Specification<StockTable> timeInMarketSpec = StockTableSpecifications.buildTimeInMarketSpecification(preferences.getTimeInMarket());
         switch (iter){
             case 1:
-                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(preferences.getTimeInMarket()));
-                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
-//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                //spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(preferences.getTimeInMarket()));
+                //spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
+                spec = spec.and(marketCapSpec);
+                spec = spec.and(timeInMarketSpec);
                 spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
-
                 break;
             case 2:
-                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
-//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
+                spec = spec.and(marketCapSpec);
                 spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
-
                 spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 break;
             case 3:
-//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
                 spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
-
                 spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 break;
-
             case 4:
-//                spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
                 spec = spec.and(StockTableSpecifications.hasIndustryList(preferences.getIndustryList()));
                 break;
             case 5:
-                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(5.0));
-                spec = spec.and(StockTableSpecifications.hasRiskLevel("high"));
+                // case 1 without industry list
+                spec = spec.and(marketCapSpec);
+                spec = spec.and(timeInMarketSpec);
+                spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 break;
             case 6:
-                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(10000.0));
-                spec = spec.and(StockTableSpecifications.hasIndustryList(Arrays.asList("Technology", "Finance")));
-                break;
-            case 7:
-                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(10.0));
-                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(5000.0));
-                break;
-            case 8:
-                spec = spec.and(StockTableSpecifications.hasRiskLevel("medium"));
-                break;
-            case 9:
-                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(5.0));
+                // case 2 without industry list
+                spec = spec.and(marketCapSpec);
+                spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 break;
             default:
-                spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(3.0));
-                spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(1.0));
-
+                // case 3 without industry list
+                spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
                 break;
-
-
         }
-//        if (preferences.getTimeInMarket() != null) {
-//            spec = spec.and(StockTableSpecifications.hasMinimumTimeInMarket(preferences.getTimeInMarket()));
-//        }
-//        if (preferences.getMarketCapMillions() != null) {
-//            spec = spec.and(StockTableSpecifications.hasMinimumMarketCap(preferences.getMarketCapMillions()));
-//        }
-//        if (preferences.getIndustry() != null) {
-//            spec = spec.and(StockTableSpecifications.hasIndustry(preferences.getIndustry()));
-//        }
-//        if (preferences.getRiskLevel() != null) {
-//            spec = spec.and(StockTableSpecifications.hasRiskLevel(preferences.getRiskLevel()));
-//        }
 
         spec = spec.and(StockTableSpecifications.notInStockIds(alreadyRecommended));
 
         return stockTableRepository.findAll(spec, pageable);
     }
-//=======================================================================================================
-    // Experimental approach to only show recommended stocks etc
 
     public Page<StockTable> getFilteredStocksIteratively(Preferences preferences, Set<UUID> alreadyInWatchList, Pageable pageable) {
-        //this is older where we remove the already in watchlist
+        // this is older where we remove the already in watchlist
         // this was removed to be empty list as per Martin we
         // should also include all stocks whether they are part of watchlist or not.
         //CHANGED
@@ -225,57 +196,20 @@ public class StockTableServiceImpl implements StockTableService {
             Page<StockTable> page = getFilteredStocks(currentPreferences, accumulatedRecommendations, pageable, iter);
             List<StockTable> pageContent = new ArrayList<>(page.getContent());
 
-            // Shuffle the page content if iter is less than or equal to 4
-            if (iter <= 8) {
-                Collections.shuffle(pageContent);
-            }
-
+            Collections.shuffle(pageContent);
             allRecommendations.addAll(pageContent);
 
             //CHANGED
             //accumulatedRecommendations.addAll(page.getContent().stream().map(StockTable::getId).collect(Collectors.toSet()));
             totalPages += page.getTotalPages();
 
-//            if (iter == 4 ||!shouldRemoveNextSpecification(currentPreferences) || page.getTotalPages() <= pageable.getPageNumber()) {
-//                break;
-//            }
-//            if (iter == 10 ||!shouldRemoveNextSpecification(currentPreferences)) {
-//                break;
-//            }
-            if(iter==10){
+            if(iter==7){
                 break;
             }
-            currentPreferences = removeNextSpecification(currentPreferences, iter);
             iter++;
         }
 
         return new PageImpl<>(allRecommendations, pageable, totalPages);
-    }
-    public Preferences removeNextSpecification(Preferences preferences, int iteration) {
-
-        switch (iteration) {
-            case 1:
-                // Iteration 1: Remove YearsInMarket
-                preferences.setTimeInMarket(null);
-                break;
-            case 2:
-                // Iteration 2: Remove MarketCap
-                preferences.setMarketCapMillions(null);
-                break;
-            case 3:
-                // Iteration 3: Remove Beta
-                preferences.setRiskLevel(null);
-                break;
-
-            case 4:
-                preferences.setIndustry(null);
-                break;
-            default:
-
-                break;
-        }
-
-        return preferences;
     }
 
 
